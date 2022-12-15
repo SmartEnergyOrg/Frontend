@@ -6,17 +6,21 @@ import { AppComponent } from './app.component';
 import { NavComponent } from './shared/nav/nav.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { BarChartComponent } from './shared/widgets/bar-chart/bar-chart.component';
+import { DashboardModule } from './pages/dashboard/dashboard.module';
+import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
     FooterComponent,
-    BarChartComponent
+    BarChartComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    DashboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
