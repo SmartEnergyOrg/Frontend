@@ -11,6 +11,25 @@
         <span class="slider round"></span>
       </label>
       <p *ngIf="showText">frontendkoning Sylvester is in the building</p>
+
+      <hr />
+      <div>
+        <p>Daltarief aan/uit</p>
+        <label class="switch">
+          <input type="checkbox" (change)="disableOffPeakRate()" />
+          <span class="slider round"></span>
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label for="peakrate">Piektarief</label>
+        <input type="number" name="peakrate" class="form-control" />
+      </div>
+
+      <div class="form-group" *ngIf="showOffPeakRate">
+        <label for="offpeakrate">Daltarief</label>
+        <input type="number" name="offpeakrate" class="form-control" />
+      </div>
     </div>
   </div>
 </div>
