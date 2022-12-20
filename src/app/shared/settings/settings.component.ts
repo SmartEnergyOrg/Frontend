@@ -3,13 +3,17 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.css']
+  styleUrls: ['./settings.component.css'],
 })
 export class SettingsComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
+  showText = false;
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  showWeatherInNavbar(): void {
+    console.log('er is op geklikt');
+    this.showText = !this.showText;
   }
-
 }
