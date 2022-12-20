@@ -12,13 +12,15 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SettingsComponent } from './shared/settings/settings.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
     FooterComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
