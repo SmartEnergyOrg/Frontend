@@ -1,3 +1,36 @@
+/* House theme */
+.theme-color-1 {
+  background-color: #fdc507;
+}
+
+.theme-color-2 {
+  background-color: #0c9900;
+}
+
+.theme-color-3 {
+  background-color: #008fd1;
+}
+
+.theme-color-4 {
+  background-color: #9a0ce8;
+}
+
+.theme-color-5 {
+  background-color: #de3e0b;
+}
+
+.theme-color-6 {
+  background-color: #ffffff;
+}
+
+.theme-color-7 {
+  background-color: #f4f4f4;
+}
+
+.theme-color-8 {
+  background-color: #000000;
+}
+
 /* Settings page */
 /* The switch - the box around the slider */
 .switch {
