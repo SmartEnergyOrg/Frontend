@@ -2,12 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 
-const routes: Routes = [
-    { path: '**', component: PageNotFoundComponent },  // Wildcard route for a 404 page
-];
+const routes: Routes = [];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }
