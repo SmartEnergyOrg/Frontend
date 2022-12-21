@@ -3,13 +3,20 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css']
+  styleUrls: ['./form.component.css'],
 })
 export class FormComponent implements OnInit {
+  componentExists = false;
 
-  constructor() { }
+  widget = {
+    Title: '',
+    DashboardId: '',
+    Type_Of_Graph: '',
+    DefaultRange: '',
+    Color_Graph: '',
+  };
 
-  ngOnInit(): void {
-  }
+  constructor() {}
 
+  ngOnInit(): void {}
 }
