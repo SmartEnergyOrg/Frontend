@@ -1,1 +1,39 @@
-<p>form works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h1 *ngIf="!componentExists">Widget aanmaak formulier</h1>
+      <h1 *ngIf="componentExists">Widget verander formulier</h1>
+    </div>
+  </div>
+  <hr />
+  <div class="row">
+    <div class="col-12">
+      <form>
+        <div class="col-12">
+          <label for="title">Titel widget</label>
+          <input type="text" />
+        </div>
+        <hr />
+        <div class="col-12">
+          <p>Grafiek configuratie</p>
+          <label for="typeofgraphic">Type grafiek</label>
+          <select>
+            <option value="barchart">Bar Chart</option>
+            <option value="line">Line Chart</option>
+            <option value="doughnut">Doughtnut Chart</option>
+            <option value="pie">Pie Chart</option>
+          </select>
+        </div>
+        <div class="col-12">
+          <label for="datasource">Databron</label>
+          <input type="text" />
+        </div>
+        <hr />
+        <div class="col-12">
+          <label for="colorofgraphic">Kleur grafiek</label>
+          <input type="color" value="#008fd1" />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
