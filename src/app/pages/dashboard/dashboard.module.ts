@@ -6,17 +6,10 @@ import { FormComponent } from './form/form.component';
 import { IndexComponent } from './index/index.component';
 import { ViewComponent } from './view/view.component';
 import { WidgetComponent } from 'src/app/shared/widget/widget.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    ViewComponent,
-    IndexComponent,
-    FormComponent,
-    WidgetComponent
-  ],
-  imports: [
-    CommonModule,
-    DashboardRoutingModule
-  ]
+  declarations: [ViewComponent, IndexComponent, FormComponent, WidgetComponent],
+  imports: [CommonModule, DashboardRoutingModule, FormsModule],
 })
-export class DashboardModule { }
+export class DashboardModule {}

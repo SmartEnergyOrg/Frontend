@@ -8,6 +8,14 @@ import { Component, OnInit } from '@angular/core';
 export class FormComponent implements OnInit {
   componentExists = false;
 
+  widget = {
+    Title: '',
+    DashboardId: '',
+    Type_Of_Graph: '',
+    DefaultRange: '',
+    Color_Graph: '',
+  };
+
   constructor() {}
 
   ngOnInit(): void {}
