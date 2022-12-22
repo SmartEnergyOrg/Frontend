@@ -1,6 +1,10 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of, throwError } from 'rxjs';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { Widget } from 'src/app/models/widget.model';
 import { environment } from 'src/environments/environment';
 
@@ -42,8 +46,18 @@ export class WidgetService {
   }
 
   updateWidget(widget: Widget): Observable<string> {
-    //update implementatie
-    return of('test');
+    const httpOptions = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const endpoint = `${environment.SERVER_API_URL}/api/widgetsConfig/${widget.id}`;
+
+    return this.httpClient
+      .put<string>(endpoint, widget, { ...httpOptions })
+      .pipe(
+        map((result) => {
+          console.log(result);
+          return result;
+        }),
+        catchError(this.handleError)
+      );
   }
 
   public handleError(error: HttpErrorResponse): Observable<any> {
