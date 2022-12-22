@@ -4,27 +4,29 @@ import { Widget } from 'src/app/models/widget.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WidgetService {
   private readonly apiUrl = environment.api_url;
 
-  constructor(
-    private readonly httpClient: HttpClient
-  ) { }
+  constructor(private readonly httpClient: HttpClient) {}
 
   getAll() {
-    console.log("Get all widgets");
-    return this.httpClient.get<any>(this.apiUrl + "/api/widgetsConfig");
+    console.log('Get all widgets');
+    return this.httpClient.get<any>(this.apiUrl + '/api/widgetsConfig');
   }
 
-  getOne(id: number) {
-    console.log("Get all widgets");
-    return this.httpClient.get<any>(`${ this.apiUrl }/api/widgetsConfig/${ id }`);
+  // waarom is het nu .get<any> we weten toch dat het een widget is?
+  getWidgetById(id: number) {
+    console.log('Get all widgets');
+    return this.httpClient.get<any>(`${this.apiUrl}/api/widgetsConfig/${id}`);
   }
 
+  // de parameter moet widget id zijn
   getDataOfWidget(widget: Widget) {
-    console.log(`Get data of widget with id ${ widget.id }`);
-    return this.httpClient.get<any>(`${ this.apiUrl }/api/widgetsConfig/poll/${ widget.id }`);
+    console.log(`Get data of widget with id ${widget.id}`);
+    return this.httpClient.get<any>(
+      `${this.apiUrl}/api/widgetsConfig/poll/${widget.id}`
+    );
   }
 }
