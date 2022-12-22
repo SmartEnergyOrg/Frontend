@@ -11,13 +11,13 @@
       <form #widget$EditForm="ngForm" name="form">
         <div class="col-12">
           <label for="title">Titel widget</label><br />
-          <input type="text" [(ngModel)]="widget.Title" />
+          <input type="text" [(ngModel)]="widget.title" />
         </div>
         <hr />
         <div class="col-12">
           <p>Grafiek configuratie</p>
           <label for="typeofgraphic">Type grafiek</label><br />
-          <select [(ngModel)]="widget.Type_Of_Graph">
+          <select [(ngModel)]="widget.type">
             <option value="barchart">Bar Chart</option>
             <option value="line">Line Chart</option>
             <option value="doughnut">Doughtnut Chart</option>
@@ -31,7 +31,7 @@
         <hr />
         <div class="col-12">
           <label for="DefaultRange">Default Range</label><br />
-          <select [(ngModel)]="widget.Type_Of_Graph">
+          <select [(ngModel)]="widget.defaultRange">
             <option value="1m">1 minuut</option>
             <option value="5m">5 minuten</option>
             <option value="15m">15 minuten</option>
@@ -48,11 +48,7 @@
         <hr />
         <div class="col-12">
           <label for="colorofgraphic">Kleur grafiek</label><br />
-          <input
-            type="color"
-            value="#008fd1"
-            [(ngModel)]="widget.Type_Of_Graph"
-          />
+          <input type="color" value="#008fd1" [(ngModel)]="widget.type" />
         </div>
       </form>
     </div>
