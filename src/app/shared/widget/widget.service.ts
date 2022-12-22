@@ -43,7 +43,7 @@ export class WidgetService {
 
     const endpoint = `${environment.SERVER_API_URL}/api/widgetsConfig`;
 
-    return this.httpClient.post<string>(endpoint, widget).pipe(
+    return this.httpClient.post<number>(endpoint, widget).pipe(
       map((result) => {
         console.log(result);
         return result;
@@ -60,7 +60,7 @@ export class WidgetService {
     const endpoint = `${environment.SERVER_API_URL}/api/widgetsConfig/${widget.id}`;
 
     return this.httpClient
-      .put<string>(endpoint, widget, { ...httpOptions })
+      .put<number>(endpoint, widget, { ...httpOptions })
       .pipe(
         map((result) => {
           console.log(result);

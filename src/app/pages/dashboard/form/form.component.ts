@@ -14,7 +14,7 @@ export class FormComponent implements OnInit {
   developerEnabled = false;
 
   widget: Widget = {
-    id: '',
+    id: undefined,
     title: '',
     defaultRange: 60,
     color: '#008fd1',

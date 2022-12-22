@@ -21,7 +21,7 @@ export class IndexComponent implements OnInit {
         res = res.result;
 
         let widget: Widget = {
-          id: '',
+          id: undefined,
           title: '',
           defaultRange: 60,
           color: '',

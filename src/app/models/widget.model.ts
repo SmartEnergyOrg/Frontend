@@ -21,7 +21,7 @@ import { ChartType } from 'chart.js';
 // }
 
 export interface Widget {
-  id?: string | undefined;
+  id?: number | undefined;
   title: string | undefined;
   defaultRange: number | undefined;
   color: string | undefined;
