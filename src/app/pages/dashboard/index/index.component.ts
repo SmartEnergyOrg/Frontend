@@ -25,7 +25,7 @@ export class IndexComponent implements OnInit {
           title: '',
           defaultRange: '',
           color: '',
-          type: 'bar',
+          typeofgraphic: 'bar',
         };
 
         res.forEach((element: any) => {

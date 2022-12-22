@@ -25,5 +25,5 @@ export interface Widget {
   title: string | undefined;
   defaultRange: string | undefined;
   color: string | undefined;
-  type: ChartType;
+  typeofgraphic: ChartType;
 }

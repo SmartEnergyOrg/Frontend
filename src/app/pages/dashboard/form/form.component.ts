@@ -16,8 +16,8 @@ export class FormComponent implements OnInit {
     id: '',
     title: '',
     defaultRange: '',
-    color: '',
-    type: 'bar',
+    color: '#008fd1',
+    typeofgraphic: 'bar',
   };
 
   subscription: Subscription | undefined;
