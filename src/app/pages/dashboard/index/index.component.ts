@@ -1,80 +1,44 @@
-import { formatDate } from '@angular/common';
-import { Component, LOCALE_ID, OnInit } from '@angular/core';
-import { ChartType } from 'chart.js';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Solar } from 'src/app/models/solar.model';
-import { SolarService } from 'src/app/models/solar.service';
+import { Widget } from 'src/app/models/widget.model';
+import { WidgetService } from 'src/app/shared/widget/widget.service';
+import { ChartType } from 'chart.js';
 
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
-  styleUrls: ['./index.component.css']
+  styleUrls: ['./index.component.css'],
 })
 export class IndexComponent implements OnInit {
-  solarSubscription: Subscription | undefined;
-  solar: any[] = [];
+  widgetSubscription: Subscription | undefined;
+  widgets: Widget[] = [];
 
-  chartType: ChartType = 'line';
-  chartLabels: string[] = []
-  chartDataSets: Object[] = []
-
-  data: Solar[] = [
-    {
-      "_time": "2022-12-18T21:17:05.213Z",
-      "_value": 357
-    },
-    {
-      "_time": "2022-12-18T21:18:05.213Z",
-      "_value": 236
-    },
-    {
-      "_time": "2022-12-18T21:19:05.213Z",
-      "_value": 27
-    },
-    {
-      "_time": "2022-12-18T21:20:05.213Z",
-      "_value": 413
-    },
-    {
-      "_time": "2022-12-18T21:21:05.213Z",
-      "_value": 889
-    },
-    {
-      "_time": "2022-12-18T21:22:05.213Z",
-      "_value": 296
-    },
-    {
-      "_time": "2022-12-18T21:23:05.213Z",
-      "_value": 117
-    },
-    {
-      "_time": "2022-12-18T21:24:05.213Z",
-      "_value": 129,
-    }]
-
-  constructor(
-    private readonly solarService: SolarService
-  ) { }
+  constructor(private readonly widgetService: WidgetService) {}
 
   ngOnInit(): void {
-    const data: string[] = []
-    const dataSet = {
-      label: "Solar",
-      data: data
-    }
+    this.widgetSubscription = this.widgetService.getAll().subscribe({
+      next: (res) => {
+        res = res.result;
 
-    this.data.forEach(element => {
-      this.chartLabels.push(formatDate(element._time!, "EE dd HH:M", "en-US"));
-      data.push(element._value!.toString());
+        let widget: Widget = {
+          id: '',
+          title: '',
+          defaultRange: 60,
+          color: '',
+          typeofgraphic: 'bar',
+        };
+
+        res.forEach((element: any) => {
+          (widget.id = element.WidgetId),
+            (widget.title = element.Title),
+            (widget.defaultRange = element.DefaultRange),
+            (widget.color = element.Color_Graph);
+          this.widgets.push(widget);
+        });
+      },
+      error: (err) => {
+        // TODO implement error handling
+      },
     });
-
-    this.chartDataSets.push(dataSet)
-
-    // this.solarSubscription = this.solarService.getAll().subscribe({
-    //   next: (res) => {
-    //     this.solar = res.completeTimeline;
-    //   }
-    //   // Add error handling and complete function
-    // })
   }
 }

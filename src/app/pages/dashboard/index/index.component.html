@@ -1,10 +1,7 @@
 <div class="container-fluid">
   <div class="row m-3">
-    <div class="col-sm-6">
-      <app-widget [chartLabels]=chartLabels [chartDataSets]=chartDataSets [chartType]=chartType></app-widget>
-    </div>
-    <div class="col-sm-6">
-      <app-widget [chartLabels]=chartLabels [chartDataSets]=chartDataSets [chartType]=chartType></app-widget>
+    <div *ngFor="let widget of widgets" class="col-sm-6">
+      <app-widget [widget]="widget"></app-widget>
     </div>
   </div>
 </div>

@@ -1,8 +1,5 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/fr';
-registerLocaleData(localeFr);
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule } from './app-routing.module';
@@ -12,7 +9,7 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { HttpClientModule } from '@angular/common/http';
-import { SettingsComponent } from './shared/settings/settings.component';
+import { SettingsComponent } from './pages/settings/settings.component';
 
 @NgModule({
   declarations: [
