@@ -1,63 +1,92 @@
 <div class="container">
   <div class="row pt-4">
-    <div class="col-12">
-      <h1 *ngIf="!componentExists">Widget aanmaak formulier</h1>
-      <h1 *ngIf="componentExists">Widget verander formulier</h1>
+    <div class="col-11">
+      <h1 *ngIf="!componentExists">Create widget</h1>
+      <h1 *ngIf="componentExists">Edit widget</h1>
+    </div>
+    <div class="col-1">
+      <label for="enableDeveloperOptions">Developer</label>
+      <input
+        type="checkbox"
+        name="enableDeveloperOptions"
+        (change)="enableDeveloper()"
+      />
     </div>
   </div>
   <hr />
   <div class="row theme-color-7 p-4 border-radius">
     <div class="col-8">
-      <form #widget$EditForm="ngForm" name="form">
+      <form #widget$EditForm="ngForm" name="form" (ngSubmit)="onSubmit()">
         <div class="col-12">
-          <label for="title">Titel widget</label><br />
-          <input type="text" [(ngModel)]="widget.Title" />
+          <label for="title">Title</label><br />
+          <input
+            type="text"
+            name="title"
+            #title="ngModel"
+            [(ngModel)]="widget.title"
+          />
         </div>
         <hr />
         <div class="col-12">
           <p>Grafiek configuratie</p>
-          <label for="typeofgraphic">Type grafiek</label><br />
-          <select [(ngModel)]="widget.Type_Of_Graph">
-            <option value="barchart">Bar Chart</option>
+          <label for="typeofgraphic">Type of chart</label><br />
+          <select
+            [(ngModel)]="widget.chartType"
+            name="typeofgraphic"
+            #typeofgraphic="ngModel"
+          >
+            <option value="bar">Bar Chart</option>
             <option value="line">Line Chart</option>
             <option value="doughnut">Doughtnut Chart</option>
             <option value="pie">Pie Chart</option>
           </select>
         </div>
-        <div class="col-12">
+        <!-- <div class="col-12">
           <label for="datasource">Databron</label><br />
           <input type="text" />
-        </div>
+        </div> -->
         <hr />
         <div class="col-12">
-          <label for="DefaultRange">Default Range</label><br />
-          <select [(ngModel)]="widget.Type_Of_Graph">
-            <option value="1m">1 minuut</option>
-            <option value="5m">5 minuten</option>
-            <option value="15m">15 minuten</option>
-            <option value="1h">1 uur</option>
-            <option value="3h">3 uren</option>
-            <option value="6h">6 uren</option>
-            <option value="12h">12 uren</option>
-            <option value="24h">1 dag</option>
-            <option value="2d">2 dagen</option>
-            <option value="7d">7 dagen</option>
-            <option value="30d">30 dagen</option>
+          <label for="defaultRange">Range</label><br />
+          <select
+            [(ngModel)]="widget.range"
+            name="defaultRange"
+            #defaultRange="ngModel"
+          >
+            <option value="60">1 minute</option>
+            <option value="300">5 minutes</option>
+            <option value="900">15 minutes</option>
+            <option value="3600">1 hour</option>
+            <option value="10800">3 hours</option>
+            <option value="21600">6 hours</option>
+            <option value="43200">12 hours</option>
+            <option value="86400">1 day</option>
+            <option value="172800">2 days</option>
+            <option value="604800">7 days</option>
+            <option value="2592000">30 days</option>
           </select>
         </div>
         <hr />
         <div class="col-12">
-          <label for="colorofgraphic">Kleur grafiek</label><br />
-          <input
-            type="color"
-            value="#008fd1"
-            [(ngModel)]="widget.Type_Of_Graph"
-          />
+          <button
+            type="submit"
+            class="button theme-color-3"
+            [disabled]="!widget$EditForm.valid"
+          >
+            Save
+          </button>
         </div>
       </form>
     </div>
     <div class="col-4">
-      <img src="assets/images/stekker.png" alt="stekker" />
+      <div *ngIf="!developerEnabled">
+        <img src="assets/images/stekker.png" alt="stekker" />
+      </div>
+      <div *ngIf="developerEnabled">
+        <pre
+          >{{ widget | json }}
+        </pre>
+      </div>
     </div>
   </div>
 </div>

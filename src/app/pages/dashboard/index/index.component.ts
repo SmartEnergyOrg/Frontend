@@ -6,40 +6,38 @@ import { WidgetService } from 'src/app/shared/widget/widget.service';
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
-  styleUrls: ['./index.component.css']
+  styleUrls: ['./index.component.css'],
 })
 export class IndexComponent implements OnInit {
   widgetSubscription: Subscription | undefined;
   widgets: Widget[] = [];
   timeInterval = interval(6000)
 
-  constructor(
-    private readonly widgetService: WidgetService
-  ) { }
+  constructor(private readonly widgetService: WidgetService) { }
 
   ngOnInit(): void {
     this.widgetSubscription = this.widgetService.getAll().subscribe({
-      next: res => {
-        res = res.result
-        res.forEach((element: any)=> {
-          this.widgets.push(
-            new Widget(
-              element.WidgetId,
-              element.DashboardId,
-              element.Title,
-              element.Range,
-              element.Frequence,
-              element.IsActive,
-              element.Position,
-              element.Graphs
-            )
-          )
+      next: (res) => {
+        res = res.result;
+
+        res.forEach((element: any) => {
+          let widget: Widget = {
+            id: element.WidgetId,
+            dashboardId: element.DashboardId,
+            title: element.Title,
+            range: element.Range,
+            chartType: element.ChartType,
+            frequence: element.Frequence,
+            isActive: element.IsActive,
+            position: element.Position,
+            graphs: element.Graphs
+          };
+          this.widgets.push(widget);
         });
       },
-      error: err => {
+      error: (err) => {
         // TODO implement error handling
       }
     })
-    console.log(this.widgets)
   }
 }
