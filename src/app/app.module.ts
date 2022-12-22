@@ -12,7 +12,7 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { HttpClientModule } from '@angular/common/http';
-import { DragAndDropComponent } from './shared/widgets/drag-and-drop/drag-and-drop/drag-and-drop.component';
+import { DragAndDropComponent } from './shared/widget/drag-and-drop/drag-and-drop.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
@@ -21,6 +21,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     NavComponent,
     FooterComponent,
     DragAndDropComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,6 +32,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     DragDropModule,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'nl_NL' }],
-  bootstrap: [AppComponent, PageNotFoundComponent],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
