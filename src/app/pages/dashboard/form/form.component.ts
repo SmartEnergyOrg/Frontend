@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { WidgetService } from 'src/app/shared/widget/widget.service';
 
 @Component({
   selector: 'app-form',
@@ -16,7 +18,11 @@ export class FormComponent implements OnInit {
     Color_Graph: '',
   };
 
-  constructor() {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private widgetService: WidgetService
+  ) {}
 
   ngOnInit(): void {}
 }
