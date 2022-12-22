@@ -73,5 +73,10 @@ export class FormComponent implements OnInit {
   //show json in browser
   enableDeveloper() {
     this.developerEnabled = !this.developerEnabled;
+    if (this.developerEnabled) {
+      console.log(`${FormComponent.name} developer enabled`);
+    } else {
+      console.log(`${FormComponent.name} developer disabled`);
+    }
   }
 }

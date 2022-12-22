@@ -38,14 +38,24 @@ export class WidgetService {
   }
 
   addWidget(widget: Widget): Observable<string> {
+    console.log(`${WidgetService.name} addWidget called`);
+    console.log(widget);
+
     const endpoint = `${environment.SERVER_API_URL}/api/widgetsConfig`;
 
-    return this.httpClient
-      .post<Widget>(endpoint, widget)
-      .pipe(catchError(this.handleError));
+    return this.httpClient.post<string>(endpoint, widget).pipe(
+      map((result) => {
+        console.log(result);
+        return result;
+      }),
+      catchError(this.handleError)
+    );
   }
 
   updateWidget(widget: Widget): Observable<string> {
+    console.log(`${WidgetService.name} updateWidget called`);
+    console.log(widget);
+
     const httpOptions = new HttpHeaders({ 'Content-Type': 'application/json' });
     const endpoint = `${environment.SERVER_API_URL}/api/widgetsConfig/${widget.id}`;
 
