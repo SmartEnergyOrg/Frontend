@@ -11,6 +11,7 @@ import { WidgetService } from 'src/app/shared/widget/widget.service';
 })
 export class FormComponent implements OnInit {
   componentExists = false;
+  developerEnabled = false;
 
   widget: Widget = {
     id: '',
@@ -67,5 +68,10 @@ export class FormComponent implements OnInit {
 
       this.router.navigate(['../dashboard']);
     }
+  }
+
+  //show json in browser
+  enableDeveloper() {
+    this.developerEnabled = !this.developerEnabled;
   }
 }
