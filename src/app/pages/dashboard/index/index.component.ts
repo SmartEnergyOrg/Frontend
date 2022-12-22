@@ -3,8 +3,8 @@ import { formatDate } from '@angular/common';
 import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { ChartType } from 'chart.js';
 import { Subscription } from 'rxjs';
-import { Solar } from 'src/app/models/solar.model';
-import { SolarService } from 'src/app/models/solar.service';
+import { Widget } from 'src/app/models/widget.model';
+import { WidgetService } from 'src/app/shared/widget/widget.service';
 
 @Component({
   selector: 'app-index',
@@ -12,74 +12,34 @@ import { SolarService } from 'src/app/models/solar.service';
   styleUrls: ['./index.component.css'],
 })
 export class IndexComponent implements OnInit {
-  solarSubscription: Subscription | undefined;
-  solar: any[] = [];
+  widgetSubscription: Subscription | undefined;
+  widgets: Widget[] = [];
 
-  chartType: ChartType = 'line';
-  chartLabels: string[] = [];
-  chartDataSets: Object[] = [];
-
-  data: Solar[] = [
-    {
-      _time: '2022-12-18T21:17:05.213Z',
-      _value: 357,
-    },
-    {
-      _time: '2022-12-18T21:18:05.213Z',
-      _value: 236,
-    },
-    {
-      _time: '2022-12-18T21:19:05.213Z',
-      _value: 27,
-    },
-    {
-      _time: '2022-12-18T21:20:05.213Z',
-      _value: 413,
-    },
-    {
-      _time: '2022-12-18T21:21:05.213Z',
-      _value: 889,
-    },
-    {
-      _time: '2022-12-18T21:22:05.213Z',
-      _value: 296,
-    },
-    {
-      _time: '2022-12-18T21:23:05.213Z',
-      _value: 117,
-    },
-    {
-      _time: '2022-12-18T21:24:05.213Z',
-      _value: 129,
-    },
-  ];
-
-  constructor(private readonly solarService: SolarService) {}
+  constructor(private readonly widgetService: WidgetService) {}
 
   ngOnInit(): void {
-    const data: string[] = [];
-    const dataSet = {
-      label: 'Solar',
-      data: data,
-    };
-
-    this.data.forEach((element) => {
-      this.chartLabels.push(formatDate(element._time!, 'EE dd HH:M', 'en-US'));
-      data.push(element._value!.toString());
+    this.widgetSubscription = this.widgetService.getAll().subscribe({
+      next: (res) => {
+        res = res.result;
+        res.forEach((element: any) => {
+          this.widgets.push(
+            new Widget(
+              element.WidgetId,
+              element.Title,
+              element.DefaultRange,
+              element.Color_Graph
+            )
+          );
+        });
+      },
+      error: (err) => {
+        // TODO implement error handling
+      },
     });
-
-    this.chartDataSets.push(dataSet);
-
-    // this.solarSubscription = this.solarService.getAll().subscribe({
-    //   next: (res) => {
-    //     this.solar = res.completeTimeline;
-    //   }
-    //   // Add error handling and complete function
-    // })
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.data, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.widgets, event.previousIndex, event.currentIndex);
 
     console.log(
       'Widget moved from index ' +
@@ -88,6 +48,6 @@ export class IndexComponent implements OnInit {
         event.currentIndex
     );
 
-    console.log(this.data);
+    console.log(this.widgets);
   }
 }

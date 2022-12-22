@@ -1,13 +1,6 @@
 <div class="container-fluid">
   <div class="row m-3">
-    <div class="col-sm-6">
-      <div cdkDropList cdkDropListOrientation="horizontal" class="example-list" (cdkDropListDropped)="drop($event)">
-        <app-widget cdkDrag [chartLabels]=chartLabels [chartDataSets]=chartDataSets [chartType]=chartType></app-widget>
-      </div>
-    </div>
-    <div class="col-sm-6">
-      <div cdkDropList cdkDropListOrientation="horizontal" class="example-list" (cdkDropListDropped)="drop($event)">
-        <app-widget cdkDrag [chartLabels]=chartLabels [chartDataSets]=chartDataSets [chartType]=chartType></app-widget>
-      </div>
+    <div *ngFor="let widget of widgets" class="col-sm-6">
+      <app-widget [widget]="widget"></app-widget>
     </div>
   </div>

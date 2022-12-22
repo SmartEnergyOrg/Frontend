@@ -1,8 +1,5 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/fr';
-registerLocaleData(localeFr);
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule } from './app-routing.module';
@@ -14,6 +11,7 @@ import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.co
 import { HttpClientModule } from '@angular/common/http';
 import { DragAndDropComponent } from './shared/widget/drag-and-drop/drag-and-drop.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { SettingsComponent } from './pages/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +20,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     FooterComponent,
     DragAndDropComponent,
     PageNotFoundComponent,
+    PageNotFoundComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,

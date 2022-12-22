@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row pt-4">
+    <div class="col-12"><h1>Instellingen</h1></div>
+  </div>
+  <div class="row theme-color-7 p-4 border-radius">
+    <div class="col-12">
+      <p>
+        Weer weergeven in navigatiebalk
+
+        <i class="fa-solid fa-temperature-half"></i>
+      </p>
+      <label class="switch">
+        <input type="checkbox" (change)="showWeatherInNavbar()" />
+        <span class="slider round"></span>
+      </label>
+      <p *ngIf="showText">Actie: weer uitschakelen in navbar</p>
+
+      <hr />
+      <div>
+        <p>Daltarief aan/uit</p>
+        <label class="switch">
+          <input type="checkbox" (change)="disableOffPeakRate()" />
+          <span class="slider round"></span>
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label for="peakrate">Piektarief</label>
+        <input type="number" name="peakrate" class="form-control" />
+      </div>
+
+      <div class="form-group" *ngIf="showOffPeakRate">
+        <label for="offpeakrate">Daltarief</label>
+        <input type="number" name="offpeakrate" class="form-control" />
+      </div>
+    </div>
+  </div>
+</div>
