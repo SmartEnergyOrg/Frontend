@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { Widget } from 'src/app/models/widget.model';
 import { environment } from 'src/environments/environment';
 
@@ -28,5 +29,15 @@ export class WidgetService {
     return this.httpClient.get<any>(
       `${this.apiUrl}/api/widgetsConfig/poll/${widget.id}`
     );
+  }
+
+  addWidget(widget: Widget): Observable<string> {
+    //add implementatie
+    return of('test');
+  }
+
+  updateWidget(widget: Widget): Observable<string> {
+    //update implementatie
+    return of('test');
   }
 }

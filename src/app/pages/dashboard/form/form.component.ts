@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { of, Subscription, switchMap, tap } from 'rxjs';
+import { Widget } from 'src/app/models/widget.model';
 import { WidgetService } from 'src/app/shared/widget/widget.service';
 
 @Component({
@@ -11,13 +12,12 @@ import { WidgetService } from 'src/app/shared/widget/widget.service';
 export class FormComponent implements OnInit {
   componentExists = false;
 
-  widget = {
-    Id: '',
-    Title: '',
-    DashboardId: '',
-    Type_Of_Graph: '',
-    DefaultRange: '',
-    Color_Graph: '',
+  widget: Widget = {
+    id: '',
+    title: '',
+    defaultRange: '',
+    color: '',
+    type: 'bar',
   };
 
   subscription: Subscription | undefined;
@@ -48,5 +48,24 @@ export class FormComponent implements OnInit {
         tap(console.log)
       )
       .subscribe((widget) => (this.widget = widget));
+  }
+
+  // deze functie wordt aangeroepen als het form wordt verzonden met de ngsubmit
+  onSubmit() {
+    console.log(`${FormComponent.name} onSubmit() called`);
+    console.log(
+      `${FormComponent.name} onSubmit() componentExists ${this.componentExists}`
+    );
+
+    if (this.componentExists) {
+      this.widgetService.updateWidget(this.widget).subscribe(() => {
+        this.router.navigateByUrl('/dashboard');
+      });
+    } else {
+      // Create new entry
+      this.widgetService.addWidget(this.widget);
+
+      this.router.navigate(['../dashboard']);
+    }
   }
 }
