@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Chart, ChartType } from 'chart.js/auto';
+import { Chart } from 'chart.js/auto';
+import { Widget } from 'src/app/models/widget.model';
+import { WidgetService } from './widget.service';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-widget',
@@ -7,39 +10,52 @@ import { Chart, ChartType } from 'chart.js/auto';
   styleUrls: ['./widget.component.css']
 })
 export class WidgetComponent implements OnInit {
-  chartId: string = "chart" + Math.floor((Math.random() * 6) + 1);
+  // TODO implement better random id
+  chartId: string = uuid ()
 
   @Input()
-  chartType: ChartType = "bar";
+  widget: Widget | undefined;
 
-  @Input()
-  chartLabels: string[] = []
+  constructor(
+    private readonly widgetService: WidgetService
+  ) { }
 
-  @Input()
-  chartDataSets: any;
+  ngOnInit(): void {
+    if (this.widget != undefined) {
+      this.widgetService.getDataOfWidget(this.widget).subscribe({
+        next: res => {
+          this.createChart(res);
+        },
+        error: err => {
+          // TODO implement error handling
+        }
+      })
+    } else {
+      // TODO implement error handling
+    }
 
-  constructor() { }
-
-  ngOnInit(): void { }
-
-  ngAfterViewInit(): void {
-    this.createChart();
   }
 
-  createChart() {
-    new Chart(this.chartId, {
-      type: this.chartType,
+  createChart(data: []) {
+    if (this.widget != undefined) {
+      new Chart(this.chartId, {
+        type: this.widget.type,
 
-      data: {
-        labels: this.chartLabels,
-        datasets: this.chartDataSets
-      },
-      options: {
-        aspectRatio: 2,
-        maintainAspectRatio: false
-      }
-
-    });
+        data: {
+          datasets: [{
+            label: "Solar",
+            data: data.map((row: any) => <any>{
+              x: row._time,
+              y: row._value
+            })
+          }]
+        },
+        options: {
+          aspectRatio: 2,
+          maintainAspectRatio: false,
+        }
+      });
+    }
   }
 
 
