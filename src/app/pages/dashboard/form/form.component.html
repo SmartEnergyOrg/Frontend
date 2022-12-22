@@ -8,7 +8,7 @@
   <hr />
   <div class="row theme-color-7 p-4 border-radius">
     <div class="col-8">
-      <form #widget$EditForm="ngForm" name="form">
+      <form #widget$EditForm="ngForm" name="form" (ngSubmit)="onSubmit()">
         <div class="col-12">
           <label for="title">Titel widget</label><br />
           <input type="text" [(ngModel)]="widget.title" />
@@ -49,6 +49,15 @@
         <div class="col-12">
           <label for="colorofgraphic">Kleur grafiek</label><br />
           <input type="color" value="#008fd1" [(ngModel)]="widget.type" />
+        </div>
+        <div class="col-12">
+          <button
+            type="submit"
+            class="button theme-color-3"
+            [disabled]="!widget$EditForm.valid"
+          >
+            Opslaan
+          </button>
         </div>
       </form>
     </div>
