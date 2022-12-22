@@ -16,7 +16,7 @@ export class FormComponent implements OnInit {
   widget: Widget = {
     id: '',
     title: '',
-    defaultRange: '',
+    defaultRange: 60,
     color: '#008fd1',
     typeofgraphic: 'bar',
   };

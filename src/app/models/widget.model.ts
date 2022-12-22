@@ -23,7 +23,7 @@ import { ChartType } from 'chart.js';
 export interface Widget {
   id?: string | undefined;
   title: string | undefined;
-  defaultRange: string | undefined;
+  defaultRange: number | undefined;
   color: string | undefined;
   typeofgraphic: ChartType;
 }

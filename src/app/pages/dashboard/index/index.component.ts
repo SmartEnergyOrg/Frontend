@@ -23,7 +23,7 @@ export class IndexComponent implements OnInit {
         let widget: Widget = {
           id: '',
           title: '',
-          defaultRange: '',
+          defaultRange: 60,
           color: '',
           typeofgraphic: 'bar',
         };
