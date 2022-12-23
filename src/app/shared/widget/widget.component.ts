@@ -36,6 +36,7 @@ export class WidgetComponent implements OnInit {
         error: (err) => {
           // TODO implement error handling
         },
+        
         complete: () => {
           this.widget!.lastUpdated = new Date();
         }
