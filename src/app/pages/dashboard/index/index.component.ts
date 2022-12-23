@@ -41,13 +41,15 @@ export class IndexComponent implements OnInit {
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.widgets, event.previousIndex, event.currentIndex);
 
-    console.log(
-      'Widget moved from index ' +
-        event.previousIndex +
-        ' to index: ' +
-        event.currentIndex
-    );
-
-    console.log(this.widgets);
+    if (event.previousIndex != event.currentIndex) {
+      console.log(
+        'Index changed from ' +
+          event.previousIndex +
+          ' to index: ' +
+          event.currentIndex
+      );
+    } else {
+      console.log('Index has not been changed');
+    }
   }
 }

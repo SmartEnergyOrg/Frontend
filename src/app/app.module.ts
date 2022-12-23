@@ -9,7 +9,6 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { HttpClientModule } from '@angular/common/http';
-import { DragAndDropComponent } from './shared/widget/drag-and-drop/drag-and-drop.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SettingsComponent } from './pages/settings/settings.component';
 
@@ -18,7 +17,6 @@ import { SettingsComponent } from './pages/settings/settings.component';
     AppComponent,
     NavComponent,
     FooterComponent,
-    DragAndDropComponent,
     PageNotFoundComponent,
     PageNotFoundComponent,
     SettingsComponent,
