@@ -33,7 +33,7 @@ export class WidgetService {
     console.log(`${WidgetService.name} getDataOfWidget called`);
     console.log(widget);
 
-    return this.httpClient.get<any>(`${this.SERVER_API_URL}/api/widgets/poll/${widget.id}`); // ?timeframe=${ widget.range }
+    return this.httpClient.get<any>(`${this.SERVER_API_URL}/api/widgets/poll/${widget.id}?range=1h&steps=1m`);
   }
 
   addWidget(widget: any) {
