@@ -7,8 +7,9 @@ export interface Widget {
   title: string | undefined;
   range: number | undefined;
   frequence: number | undefined
-  chartType: ChartType | undefined;
+  // chartType: ChartType | undefined;
   isActive: boolean | undefined
   position: number | undefined
   graphs: Graph[] | undefined
+  lastUpdated: Date | string | undefined
 }

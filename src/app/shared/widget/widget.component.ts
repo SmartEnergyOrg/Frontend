@@ -4,6 +4,7 @@ import { Widget } from 'src/app/models/widget.model';
 import { WidgetService } from './widget.service';
 import { v4 as uuid } from 'uuid';
 import { formatDate } from '@angular/common';
+import { interval, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-widget',
@@ -16,18 +17,37 @@ export class WidgetComponent implements OnInit {
   @Input()
   widget: Widget | undefined;
 
+  data: any;
+
   constructor(private readonly widgetService: WidgetService) {}
 
   ngOnInit(): void {
     if (this.widget != undefined) {
       this.widgetService.getDataOfWidget(this.widget).subscribe({
         next: (res) => {
-          this.createChart(res);
+          this.data = res;
+          this.createChart(this.data);
         },
         error: (err) => {
           // TODO implement error handling
         },
+        complete: () => {
+          this.widget!.lastUpdated = new Date();
+        }
       });
+
+      interval(this.widget.frequence! * 100).subscribe({
+        next: () => {
+          if (this.widget != undefined) {
+            this.widgetService.getDataOfWidget(this.widget).subscribe({
+              next: (res) => {
+                this.data = res;
+                this.widget!.lastUpdated = new Date();
+              }
+            })
+          }
+        }
+      })
     } else {
       // TODO implement error handling
     }
@@ -54,7 +74,7 @@ export class WidgetComponent implements OnInit {
         },
         options: {
           aspectRatio: 2,
-          maintainAspectRatio: false
+          maintainAspectRatio: true
         }
       });
     }

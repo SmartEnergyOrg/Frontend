@@ -36,12 +36,13 @@ export class WidgetService {
     return this.httpClient.get<any>(`${this.SERVER_API_URL}/api/widgets/poll/${widget.id}`); // ?timeframe=${ widget.range }
   }
 
-  addWidget(widget: Widget): Observable<string> {
+  addWidget(widget: any) {
     console.log(`${WidgetService.name} addWidget called`);
     console.log(widget);
 
     const endpoint = `${environment.SERVER_API_URL}/api/widgets`;
 
+    return this.httpClient.post(endpoint, widget)
     return this.httpClient.post<number>(endpoint, widget).pipe(
       map((result) => {
         console.log(result);
@@ -70,7 +71,7 @@ export class WidgetService {
   }
 
   public handleError(error: HttpErrorResponse): Observable<any> {
-    // console.log(error);
+    console.log(error);
 
     const errorResponse = {
       type: 'error',

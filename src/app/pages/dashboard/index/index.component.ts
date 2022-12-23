@@ -26,11 +26,11 @@ export class IndexComponent implements OnInit {
             dashboardId: element.DashboardId,
             title: element.Title,
             range: element.Range,
-            chartType: element.ChartType,
             frequence: element.Frequence,
             isActive: element.IsActive,
             position: element.Position,
-            graphs: element.Graphs
+            graphs: element.Graphs,
+            lastUpdated: undefined
           };
           this.widgets.push(widget);
         });

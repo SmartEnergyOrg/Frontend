@@ -6,53 +6,22 @@
     </div>
     <div class="col-1">
       <label for="enableDeveloperOptions">Developer</label>
-      <input
-        type="checkbox"
-        name="enableDeveloperOptions"
-        (change)="enableDeveloper()"
-      />
+      <input type="checkbox" name="enableDeveloperOptions" (change)="enableDeveloper()" />
     </div>
   </div>
   <hr />
   <div class="row theme-color-7 p-4 border-radius">
     <div class="col-8">
       <form #widget$EditForm="ngForm" name="form" (ngSubmit)="onSubmit()">
-        <div class="col-12">
-          <label for="title">Title</label><br />
-          <input
-            type="text"
-            name="title"
-            #title="ngModel"
-            [(ngModel)]="widget.title"
-          />
+        <h3>General information</h3>
+        <hr>
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" name="title" #title="ngModel" class="form-control" [(ngModel)]="widget.title" />
         </div>
-        <hr />
-        <div class="col-12">
-          <p>Grafiek configuratie</p>
-          <label for="typeofgraphic">Type of chart</label><br />
-          <select
-            [(ngModel)]="widget.chartType"
-            name="typeofgraphic"
-            #typeofgraphic="ngModel"
-          >
-            <option value="bar">Bar Chart</option>
-            <option value="line">Line Chart</option>
-            <option value="doughnut">Doughtnut Chart</option>
-            <option value="pie">Pie Chart</option>
-          </select>
-        </div>
-        <!-- <div class="col-12">
-          <label for="datasource">Databron</label><br />
-          <input type="text" />
-        </div> -->
-        <hr />
-        <div class="col-12">
-          <label for="defaultRange">Range</label><br />
-          <select
-            [(ngModel)]="widget.range"
-            name="defaultRange"
-            #defaultRange="ngModel"
-          >
+        <div class="mb-3">
+          <label for="range" class="form-label">Range</label>
+          <select [(ngModel)]="widget.range" name="range" #range="ngModel" class="form-control">
             <option value="60">1 minute</option>
             <option value="300">5 minutes</option>
             <option value="900">15 minutes</option>
@@ -66,13 +35,55 @@
             <option value="2592000">30 days</option>
           </select>
         </div>
+        <div class="mb-3">
+          <label for="frequence" class="form-label">Update frequency</label>
+          <select [(ngModel)]="widget.frequence" name="frequence" #frequence="ngModel" class="form-control">
+            <option value="60">1 minute</option>
+            <option value="300">5 minutes</option>
+            <option value="900">15 minutes</option>
+            <option value="3600">1 hour</option>
+            <option value="10800">3 hours</option>
+            <option value="21600">6 hours</option>
+            <option value="43200">12 hours</option>
+            <option value="86400">1 day</option>
+          </select>
+        </div>
+        <h3>Graphs</h3>
         <hr />
+        <div *ngFor="let graph of widget.graphs">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" name="name" #Name="ngModel" class="form-control" [(ngModel)]="graph.Name" />
+          </div>
+          <div class="mb-3">
+            <label for="chartType" class="form-label">Type</label>
+            <select [(ngModel)]="graph.Type" name="chartType" #Type="ngModel" class="form-control">
+              <option value="bar">Bar Chart</option>
+              <option value="line">Line Chart</option>
+              <option value="doughnut">Doughtnut Chart</option>
+              <option value="pie">Pie Chart</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="measurement" class="form-label">Measurement</label>
+            <select [(ngModel)]="graph.Measurement" name="measurement" #Measurement="ngModel" class="form-control">
+              <option value="solar">Solar</option>
+              <option value="wind">Wind</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="color" class="form-label">Color</label>
+            <input type="color" class="form-control form-control-color" value="#563d7c" [(ngModel)]="graph.Color"
+              name="color" #Color="ngModel">
+          </div>
+          <hr>
+        </div>
         <div class="col-12">
-          <button
-            type="submit"
-            class="button theme-color-3"
-            [disabled]="!widget$EditForm.valid"
-          >
+          <button type="button" class="btn theme-color-3 float-end text-white" (click)="addGraphToForm()">Add
+            graph</button>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn theme-color-3 text-white" [disabled]="!widget$EditForm.valid">
             Save
           </button>
         </div>
@@ -83,8 +94,7 @@
         <img src="assets/images/stekker.png" alt="stekker" />
       </div>
       <div *ngIf="developerEnabled">
-        <pre
-          >{{ widget | json }}
+        <pre>{{ widget | json }}
         </pre>
       </div>
     </div>

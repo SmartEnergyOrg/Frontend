@@ -27,7 +27,7 @@ import { SettingsComponent } from './pages/settings/settings.component';
     FontAwesomeModule
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: "nl_NL" }
+    { provide: LOCALE_ID, useValue: "en_US" }
   ],
   bootstrap: [AppComponent]
 })
