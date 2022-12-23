@@ -1,63 +1,102 @@
 <div class="container">
   <div class="row pt-4">
-    <div class="col-12">
-      <h1 *ngIf="!componentExists">Widget aanmaak formulier</h1>
-      <h1 *ngIf="componentExists">Widget verander formulier</h1>
+    <div class="col-11">
+      <h1 *ngIf="!componentExists">Create widget</h1>
+      <h1 *ngIf="componentExists">Edit widget</h1>
+    </div>
+    <div class="col-1">
+      <label for="enableDeveloperOptions">Developer</label>
+      <input type="checkbox" name="enableDeveloperOptions" (change)="enableDeveloper()" />
     </div>
   </div>
   <hr />
   <div class="row theme-color-7 p-4 border-radius">
     <div class="col-8">
-      <form #widget$EditForm="ngForm" name="form">
-        <div class="col-12">
-          <label for="title">Titel widget</label><br />
-          <input type="text" [(ngModel)]="widget.Title" />
+      <form #widget$EditForm="ngForm" name="form" (ngSubmit)="onSubmit()">
+        <h3>General information</h3>
+        <hr>
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" name="title" #title="ngModel" class="form-control" [(ngModel)]="widget.title" />
         </div>
-        <hr />
-        <div class="col-12">
-          <p>Grafiek configuratie</p>
-          <label for="typeofgraphic">Type grafiek</label><br />
-          <select [(ngModel)]="widget.Type_Of_Graph">
-            <option value="barchart">Bar Chart</option>
-            <option value="line">Line Chart</option>
-            <option value="doughnut">Doughtnut Chart</option>
-            <option value="pie">Pie Chart</option>
+        <div class="mb-3">
+          <label for="range" class="form-label">Range</label>
+          <select [(ngModel)]="widget.range" name="range" #range="ngModel" class="form-control">
+            <option value="60">1 minute</option>
+            <option value="300">5 minutes</option>
+            <option value="900">15 minutes</option>
+            <option value="3600">1 hour</option>
+            <option value="10800">3 hours</option>
+            <option value="21600">6 hours</option>
+            <option value="43200">12 hours</option>
+            <option value="86400">1 day</option>
+            <option value="172800">2 days</option>
+            <option value="604800">7 days</option>
+            <option value="2592000">30 days</option>
           </select>
         </div>
-        <div class="col-12">
-          <label for="datasource">Databron</label><br />
-          <input type="text" />
-        </div>
-        <hr />
-        <div class="col-12">
-          <label for="DefaultRange">Default Range</label><br />
-          <select [(ngModel)]="widget.Type_Of_Graph">
-            <option value="1m">1 minuut</option>
-            <option value="5m">5 minuten</option>
-            <option value="15m">15 minuten</option>
-            <option value="1h">1 uur</option>
-            <option value="3h">3 uren</option>
-            <option value="6h">6 uren</option>
-            <option value="12h">12 uren</option>
-            <option value="24h">1 dag</option>
-            <option value="2d">2 dagen</option>
-            <option value="7d">7 dagen</option>
-            <option value="30d">30 dagen</option>
+        <div class="mb-3">
+          <label for="frequence" class="form-label">Update frequency</label>
+          <select [(ngModel)]="widget.frequence" name="frequence" #frequence="ngModel" class="form-control">
+            <option value="60">1 minute</option>
+            <option value="300">5 minutes</option>
+            <option value="900">15 minutes</option>
+            <option value="3600">1 hour</option>
+            <option value="10800">3 hours</option>
+            <option value="21600">6 hours</option>
+            <option value="43200">12 hours</option>
+            <option value="86400">1 day</option>
           </select>
         </div>
+        <h3>Graphs</h3>
         <hr />
+        <div *ngFor="let graph of widget.graphs">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" name="name" #Name="ngModel" class="form-control" [(ngModel)]="graph.Name" />
+          </div>
+          <div class="mb-3">
+            <label for="chartType" class="form-label">Type</label>
+            <select [(ngModel)]="graph.Type" name="chartType" #Type="ngModel" class="form-control">
+              <option value="bar">Bar Chart</option>
+              <option value="line">Line Chart</option>
+              <option value="doughnut">Doughtnut Chart</option>
+              <option value="pie">Pie Chart</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="measurement" class="form-label">Measurement</label>
+            <select [(ngModel)]="graph.Measurement" name="measurement" #Measurement="ngModel" class="form-control">
+              <option value="solar">Solar</option>
+              <option value="wind">Wind</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="color" class="form-label">Color</label>
+            <input type="color" class="form-control form-control-color" value="#563d7c" [(ngModel)]="graph.Color"
+              name="color" #Color="ngModel">
+          </div>
+          <hr>
+        </div>
         <div class="col-12">
-          <label for="colorofgraphic">Kleur grafiek</label><br />
-          <input
-            type="color"
-            value="#008fd1"
-            [(ngModel)]="widget.Type_Of_Graph"
-          />
+          <button type="button" class="btn theme-color-3 float-end text-white" (click)="addGraphToForm()">Add
+            graph</button>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn theme-color-3 text-white" [disabled]="!widget$EditForm.valid">
+            Save
+          </button>
         </div>
       </form>
     </div>
     <div class="col-4">
-      <img src="assets/images/stekker.png" alt="stekker" />
+      <div *ngIf="!developerEnabled">
+        <img src="assets/images/stekker.png" alt="stekker" />
+      </div>
+      <div *ngIf="developerEnabled">
+        <pre>{{ widget | json }}
+        </pre>
+      </div>
     </div>
   </div>
 </div>

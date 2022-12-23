@@ -28,6 +28,10 @@ import { SettingsComponent } from './pages/settings/settings.component';
     HttpClientModule,
     FontAwesomeModule,
     DragDropModule,
+    FontAwesomeModule
+  ],
+  providers: [
+    { provide: LOCALE_ID, useValue: "en_US" }
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'nl_NL' }],
   bootstrap: [AppComponent],

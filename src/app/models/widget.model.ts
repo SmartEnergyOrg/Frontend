@@ -1,21 +1,15 @@
 import { ChartType } from "chart.js"
+import { Graph } from "./graph.model";
 
-export class Widget {
-  id: number
-  title: string
-  defaultRange: string
-  color: string
-  type: ChartType = "bar"
-
-  constructor(
-    id: number,
-    title: string,
-    defaultRange: string,
-    color: string
-  ) {
-    this.id = id
-    this.title = title
-    this.defaultRange = defaultRange
-    this.color = color
-  }
+export interface Widget {
+  id?: number | undefined;
+  dashboardId: number | undefined
+  title: string | undefined;
+  range: number | undefined;
+  frequence: number | undefined
+  // chartType: ChartType | undefined;
+  isActive: boolean | undefined
+  position: number | undefined
+  graphs: Graph[] | undefined
+  lastUpdated: Date | string | undefined
 }
