@@ -79,4 +79,11 @@ export class WidgetService {
     };
     return throwError(errorResponse);
   }
+
+  // updateWidgetPosition(id: number, widget: Widget) {
+  //   return this.httpClient.put<Widget>(
+  //     `${this.apiUrl}/api/widgets/position/${id}`,
+  //     widget
+  //   );
+  // }
 }
