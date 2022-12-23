@@ -43,13 +43,13 @@ export class WidgetService {
     const endpoint = `${environment.SERVER_API_URL}/api/widgets`;
 
     return this.httpClient.post(endpoint, widget)
-    return this.httpClient.post<number>(endpoint, widget).pipe(
-      map((result) => {
-        console.log(result);
-        return result;
-      }),
-      catchError(this.handleError)
-    );
+    // return this.httpClient.post<number>(endpoint, widget).pipe(
+    //   map((result) => {
+    //     console.log(result);
+    //     return result;
+    //   }),
+    //   catchError(this.handleError)
+    // );
   }
 
   updateWidget(widget: Widget): Observable<string> {
