@@ -20,7 +20,7 @@ export class WidgetComponent implements OnInit {
   data: Point[] = [];
   chart: Chart | undefined;
 
-  constructor(private readonly widgetService: WidgetService) {}
+  constructor(private readonly widgetService: WidgetService) { }
 
   ngOnInit(): void {
     if (this.widget != undefined) {
@@ -46,9 +46,6 @@ export class WidgetComponent implements OnInit {
           if (this.widget != undefined) {
             this.widgetService.getDataOfWidget(this.widget).subscribe({
               next: (res) => {
-                // res = res.sort((aTime: any, bTime: any) => {
-                //   new Date(aTime._time) < new Date(bTime._time)
-                // })
                 res = res.map((row: any) => <any>{
                   x: formatDate(row._time, 'dd-MM hh:mm:ss', 'en_US'),
                   y: row._value
@@ -59,7 +56,6 @@ export class WidgetComponent implements OnInit {
 
                 this.widget!.lastUpdated = new Date();
                 this.createChart(this.data);
-                // this.chart?.update()
               }
             })
           }
@@ -88,7 +84,10 @@ export class WidgetComponent implements OnInit {
         },
         options: {
           aspectRatio: 2,
-          maintainAspectRatio: true
+          maintainAspectRatio: true,
+          animation: {
+            duration: 0
+          }
         }
       });
     }
