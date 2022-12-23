@@ -33,7 +33,6 @@ import { SettingsComponent } from './pages/settings/settings.component';
   providers: [
     { provide: LOCALE_ID, useValue: "en_US" }
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'nl_NL' }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
