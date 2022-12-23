@@ -9,6 +9,7 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { HttpClientModule } from '@angular/common/http';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SettingsComponent } from './pages/settings/settings.component';
 
 @NgModule({
@@ -17,18 +18,21 @@ import { SettingsComponent } from './pages/settings/settings.component';
     NavComponent,
     FooterComponent,
     PageNotFoundComponent,
-    SettingsComponent
+    PageNotFoundComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     DashboardModule,
     HttpClientModule,
+    FontAwesomeModule,
+    DragDropModule,
     FontAwesomeModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "en_US" }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
