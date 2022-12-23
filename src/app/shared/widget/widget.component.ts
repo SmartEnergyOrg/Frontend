@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Chart } from 'chart.js/auto';
+import { Chart, Point } from 'chart.js/auto';
 import { Widget } from 'src/app/models/widget.model';
 import { WidgetService } from './widget.service';
 import { v4 as uuid } from 'uuid';
@@ -17,7 +17,8 @@ export class WidgetComponent implements OnInit {
   @Input()
   widget: Widget | undefined;
 
-  data: any;
+  data: Point[] = [];
+  chart: Chart | undefined;
 
   constructor(private readonly widgetService: WidgetService) {}
 
@@ -25,7 +26,11 @@ export class WidgetComponent implements OnInit {
     if (this.widget != undefined) {
       this.widgetService.getDataOfWidget(this.widget).subscribe({
         next: (res) => {
-          this.data = res;
+          this.data = res.map((row: any) => <any>{
+            x: formatDate(row._time, 'dd-MM hh:mm:ss', 'en_US'),
+            y: row._value
+          });
+
           this.createChart(this.data);
         },
         error: (err) => {
@@ -41,8 +46,20 @@ export class WidgetComponent implements OnInit {
           if (this.widget != undefined) {
             this.widgetService.getDataOfWidget(this.widget).subscribe({
               next: (res) => {
+                // res = res.sort((aTime: any, bTime: any) => {
+                //   new Date(aTime._time) < new Date(bTime._time)
+                // })
+                res = res.map((row: any) => <any>{
+                  x: formatDate(row._time, 'dd-MM hh:mm:ss', 'en_US'),
+                  y: row._value
+                });
+
                 this.data = res;
+                this.chart?.destroy();
+
                 this.widget!.lastUpdated = new Date();
+                this.createChart(this.data);
+                // this.chart?.update()
               }
             })
           }
@@ -53,22 +70,19 @@ export class WidgetComponent implements OnInit {
     }
   }
 
-  createChart(data: []) {
+  createChart(data: Point[]) {
     const datasets: any = []
 
     this.widget?.graphs?.forEach(graph => {
       datasets.push({
         type: graph.Type,
         label: graph.Name,
-        data: data.map((row: any) => <any>{
-          x: formatDate(row._time, 'dd-MM hh:mm:ss', 'en_US'),
-          y: row._value
-        })
+        data: data
       })
     });
 
     if (this.widget != undefined) {
-      new Chart(this.chartId, {
+      this.chart = new Chart(this.chartId, {
         data: {
           datasets: datasets
         },
