@@ -13,7 +13,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ChartType } from 'chart.js';
-import { Subscription } from 'rxjs';
 import { interval, startWith, Subscription } from 'rxjs';
 import { Widget } from 'src/app/models/widget.model';
 import { WidgetService } from 'src/app/shared/widget/widget.service';
