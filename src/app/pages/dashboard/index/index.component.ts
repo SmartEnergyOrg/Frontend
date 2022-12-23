@@ -1,6 +1,17 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import {
+  CdkDragDrop,
+  CdkDragEnter,
+  CdkDragMove,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
 import { formatDate } from '@angular/common';
-import { Component, LOCALE_ID, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  LOCALE_ID,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ChartType } from 'chart.js';
 import { Subscription } from 'rxjs';
 import { Widget } from 'src/app/models/widget.model';
@@ -38,18 +49,61 @@ export class IndexComponent implements OnInit {
     });
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.widgets, event.previousIndex, event.currentIndex);
+  @ViewChild('dropListContainer') dropListContainer?: ElementRef;
 
-    if (event.previousIndex != event.currentIndex) {
-      console.log(
-        'Index changed from ' +
-          event.previousIndex +
-          ' to index: ' +
-          event.currentIndex
-      );
-    } else {
-      console.log('Index has not been changed');
+  dropListReceiverElement?: HTMLElement;
+  dragDropInfo?: {
+    dragIndex: number;
+    dropIndex: number;
+  };
+
+  dragEntered(event: CdkDragEnter<number>) {
+    const drag = event.item;
+    const dropList = event.container;
+    const dragIndex = drag.data;
+    const dropIndex = dropList.data;
+
+    this.dragDropInfo = { dragIndex, dropIndex };
+
+    const phContainer = dropList.element.nativeElement;
+    const phElement = phContainer.querySelector('.cdk-drag-placeholder');
+
+    if (phElement) {
+      phContainer.removeChild(phElement);
+      phContainer.parentElement?.insertBefore(phElement, phContainer);
+
+      moveItemInArray(this.widgets, dragIndex, dropIndex);
     }
+  }
+
+  dragMoved(event: CdkDragMove<number>) {
+    if (!this.dropListContainer || !this.dragDropInfo) return;
+
+    const placeholderElement =
+      this.dropListContainer.nativeElement.querySelector(
+        '.cdk-drag-placeholder'
+      );
+
+    const receiverElement =
+      this.dragDropInfo.dragIndex > this.dragDropInfo.dropIndex
+        ? placeholderElement?.nextElementSibling
+        : placeholderElement?.previousElementSibling;
+
+    if (!receiverElement) {
+      return;
+    }
+
+    receiverElement.style.display = 'none';
+    this.dropListReceiverElement = receiverElement;
+  }
+
+  dragDropped(event: CdkDragDrop<number>) {
+    if (!this.dropListReceiverElement) {
+      return;
+    }
+
+    this.dropListReceiverElement.style.removeProperty('display');
+    this.dropListReceiverElement = undefined;
+    this.dragDropInfo = undefined;
   }
 }
