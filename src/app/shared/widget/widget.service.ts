@@ -15,10 +15,12 @@ import { io } from "socket.io-client";
 export class WidgetService {
 
   private readonly SERVER_API_URL = environment.SERVER_API_URL;
-  private readonly socket = io("wss://localhost:9400");
+  private readonly socket = io("ws://localhost:9400");
 
 
-  constructor(private readonly httpClient: HttpClient) { }
+  constructor(private readonly httpClient: HttpClient) {
+    //this.connectToSocket();
+  }
 
   getAll() {
     console.log('Get all widgets');
@@ -91,26 +93,39 @@ export class WidgetService {
   //   );
   // }
 
-  //The connectToSocket handles the connection to the socket event.
-  //It receives a widget as parameter
-  //It will return a observable
-  //As parameter, will the method receive a object with the widget configuration
-  //The receiveSocketPayload method will handle the receive of the payload.
-  // TODO Widget object is subject to change.
-  connectToSocket(widget: Widget){
-    this.socket.emit('getGraph', (widget));
+  //{Handles connection to socket.
+  //Gives a console.log if connection has succeeded or failed}
+  connectToSocket(){
+    this.socket.on('connect', ()=>{
+      console.log(this.socket.connected);
+      if(this.socket.connected){
+        console.log("Socket is connected");
+      } else{
+        console.error("Socket connection has failed");
+      }
+    })
   }
 
-  //The receiveSocketPayload method handles the payload of the socket connection
+  //{The connectToSocket handles the connection to the socket event.
+  //It will return a observable
+  //As parameter, will the method receive a object with the widget configuration
+  //The receiveSocketPayload method will handle the receive of the payload.}
+  // TODO Widget object is subject to change.
+  subscribeGetGraphs(graphId: number){
+    this.socket.volatile.emit(`subscribe`, ({graphId: graphId}));
+  }
+
+  //{
+  // The receiveSocketPayload method handles the payload of the socket connection
   //When it receives new data from the server
   //This method will create widgetSubject, every time it is called upon.
   //It will then return observable of this behavioursubject.
   //Everytime a new event has been called it will update the behaviour subject
+  // }
   // TODO Any will need to be changed to appropiate object.
-  receiveSocketPayload(widget: Widget):Observable<any>{
+  getGraphs(GraphId: number):Observable<any>{
     const WidgetSubject = new BehaviorSubject<any>(undefined);
-    this.socket.on('getGraph', (payload)=>{
-      console.log(this.socket.connected);
+    this.socket.on(`pollWidget(${GraphId})`, (payload)=>{
       WidgetSubject.next(payload);
     })
     return WidgetSubject.asObservable();
