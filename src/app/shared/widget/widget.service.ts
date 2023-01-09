@@ -100,6 +100,8 @@ export class WidgetService {
       console.log(this.socket.connected);
       if(this.socket.connected){
         console.log("Socket is connected");
+        //Maybe automatic emit to subscribeGetGraphs
+
       } else{
         console.error("Socket connection has failed");
       }
