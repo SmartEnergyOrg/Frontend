@@ -1,27 +1,25 @@
-import { ChartType } from "chart.js"
+import { Data } from "./data.model"
+export class Graph {
+  id: number
+  type: string | undefined
+  query: string
+  interval: number
+  color: string
+  data: Data
 
-// export class Graph {
-//   Name: string
-//   Type: ChartType
-//   Measurement: string
-//   Color: string
-
-//   constructor(
-//     Name: string,
-//     Type: ChartType,
-//     Measurement: string,
-//     Color: string
-//   ) {
-//     this.Name = Name
-//     this.Type = Type
-//     this.Measurement = Measurement
-//     this.Color = Color
-//   }
-// }
-
-export interface Graph {
-  Name: string | undefined
-  Type: string | undefined
-  Measurement: string | undefined
-  Color: string | undefined
+  constructor(
+    id: number,
+    type: string | undefined,
+    query: string,
+    interval: number,
+    color: string,
+    data: Data
+  ) {
+    this.id = id
+    this.type = type
+    this.query = query
+    this.interval = interval
+    this.color = color
+    this.data = data
+  }
 }
