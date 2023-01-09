@@ -36,7 +36,6 @@ export class WidgetComponent implements OnInit {
         error: (err) => {
           // TODO implement error handling
         },
-        
         complete: () => {
           this.widget!.lastUpdated = new Date();
         }
@@ -88,6 +87,14 @@ export class WidgetComponent implements OnInit {
           maintainAspectRatio: true,
           animation: {
             duration: 0
+          },
+          scales: {
+            y: {
+              title: {
+                display: true,
+                text: 'Watt'
+              },
+            }
           }
         }
       });
