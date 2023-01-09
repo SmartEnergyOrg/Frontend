@@ -5,6 +5,8 @@ import { WidgetService } from './widget.service';
 import { v4 as uuid } from 'uuid';
 import { formatDate } from '@angular/common';
 import { interval, Observable } from 'rxjs';
+import { Graph } from 'src/app/models/graph.model';
+import { DataPoint } from 'src/app/models/data-point.model';
 
 @Component({
   selector: 'app-widget',
@@ -15,89 +17,54 @@ export class WidgetComponent implements OnInit {
   chartId: string = uuid();
 
   @Input()
-  widget: Widget | undefined;
+  widget!: Widget;
 
-  data: Point[] = [];
   chart: Chart | undefined;
 
-  constructor(private readonly widgetService: WidgetService) { }
+  constructor(
+    private readonly widgetService: WidgetService
+  ) { }
 
-  ngOnInit(): void {
-    if (this.widget != undefined) {
-      this.widgetService.getDataOfWidget(this.widget).subscribe({
-        next: (res) => {
-          this.data = res.map((row: any) => <any>{
-            x: formatDate(row._time, 'dd-MM hh:mm:ss', 'en_US'),
-            y: row._value
-          });
-
-          this.createChart(this.data);
-        },
-        error: (err) => {
-          // TODO implement error handling
-        },
-        complete: () => {
-          this.widget!.lastUpdated = new Date();
-        }
-      });
-
-      interval(this.widget.frequence! * 100).subscribe({
-        next: () => {
-          if (this.widget != undefined) {
-            this.widgetService.getDataOfWidget(this.widget).subscribe({
-              next: (res) => {
-                res = res.map((row: any) => <any>{
-                  x: formatDate(row._time, 'dd-MM hh:mm:ss', 'en_US'),
-                  y: row._value
-                });
-
-                this.data = res;
-                this.chart?.destroy();
-
-                this.widget!.lastUpdated = new Date();
-                this.createChart(this.data);
-              }
-            })
-          }
-        }
-      })
-    } else {
-      // TODO implement error handling
+  private assertInputsProvided(): void {
+    if (!this.widget) {
+      throw (new Error("The required input [widget] was not provided"));
     }
   }
 
-  createChart(data: Point[]) {
+  ngOnInit(): void {
+    this.assertInputsProvided();
+  }
+
+  ngAfterViewInit() {
+    this.createChart();
+  }
+
+  createChart() {
     const datasets: any = []
 
-    this.widget?.graphs?.forEach(graph => {
+    this.widget.graphs.forEach(graph => {
+      const [{ measurement }] = graph.data;
+
+      const data = graph.data.map(({time,value}) => ({x: time.toString(), y: value}))
+
       datasets.push({
-        type: graph.Type,
-        label: graph.Name,
-        data: data
+        type: graph.type,
+        label:  measurement,
+        data: data,
       })
     });
 
-    if (this.widget != undefined) {
-      this.chart = new Chart(this.chartId, {
-        data: {
-          datasets: datasets
-        },
-        options: {
-          aspectRatio: 2,
-          maintainAspectRatio: true,
-          animation: {
-            duration: 0
-          },
-          scales: {
-            y: {
-              title: {
-                display: true,
-                text: 'Watt'
-              },
-            }
-          }
+    this.chart = new Chart(this.chartId, {
+      data: {
+        datasets: datasets
+      },
+      options: {
+        aspectRatio: 2,
+        maintainAspectRatio: true,
+        animation: {
+          duration: 0
         }
-      });
-    }
+      }
+    });
   }
 }

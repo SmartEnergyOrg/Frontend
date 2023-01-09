@@ -1,4 +1,4 @@
-export class Data {
+export class DataPoint {
   measurement: string // name:unit
   value: number
   time: Date

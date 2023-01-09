@@ -1,19 +1,19 @@
-import { Data } from "./data.model"
+import { DataPoint } from "./data-point.model"
 export class Graph {
   id: number
-  type: string | undefined
+  type: string
   query: string
   interval: number
   color: string
-  data: Data
+  data: DataPoint[]
 
   constructor(
     id: number,
-    type: string | undefined,
+    type: string,
     query: string,
     interval: number,
     color: string,
-    data: Data
+    data: DataPoint[]
   ) {
     this.id = id
     this.type = type
