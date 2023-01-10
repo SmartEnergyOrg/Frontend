@@ -73,4 +73,29 @@ export class WidgetComponent implements OnInit {
       }
     });
   }
+
+  // Will check based on the graph array if this widget is a singlestat.
+  // If the widget contains one singlestat, it will return true. Otherwise false.
+  checkChartType(graphs: Graph[]): boolean{
+    try {
+      //A deep clone will be made, so that the parent object will not be affected
+      const ClonedList = JSON.parse(JSON.stringify(graphs)) as Graph[];
+      console.log(ClonedList);
+      const FilteredTypes = this.returnSingleStats(ClonedList);
+      console.log(FilteredTypes);
+      //If FilteredTypes list is bigger than 0(It contains at least on singlestat graph, it will assign true. Otherwise false);
+      return FilteredTypes.length > 0;
+    }catch (e) {
+      throw new Error("Graph is invalid");
+    }
+  }
+
+  //Returns a list with only graphs with the type SingleStat.
+  returnSingleStats(graphs: Graph[]): Graph[]{
+    try {
+      return graphs!.filter((graph)=> graph.type == 'SingleStat');
+    } catch (e){
+      throw new Error("Graphlist is invalid");
+    }
+  }
 }
