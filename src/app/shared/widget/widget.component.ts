@@ -5,6 +5,9 @@ import { WidgetService } from './widget.service';
 import { v4 as uuid } from 'uuid';
 import { formatDate } from '@angular/common';
 import { interval, Observable } from 'rxjs';
+import { IGraph } from 'src/app/interfaces/graph.interface';
+import { IWidget } from 'src/app/interfaces/widget.interface';
+import { IData } from 'src/app/interfaces/data.interface';
 
 @Component({
   selector: 'app-widget',
@@ -15,88 +18,96 @@ export class WidgetComponent implements OnInit {
   chartId: string = uuid();
 
   @Input()
-  widget: Widget | undefined;
+  widget!: IWidget;
+  graph!: IGraph;
+  data!: IData;
 
-  data: Point[] = [];
+  chartData: Point[] = [];
   chart: Chart | undefined;
 
-  constructor(private readonly widgetService: WidgetService) { }
+  constructor(private readonly widgetService: WidgetService) {}
 
   ngOnInit(): void {
     if (this.widget != undefined) {
       this.widgetService.getDataOfWidget(this.widget).subscribe({
         next: (res) => {
-          this.data = res.map((row: any) => <any>{
-            x: formatDate(row._time, 'dd-MM hh:mm:ss', 'en_US'),
-            y: row._value
-          });
+          this.data = res.map(
+            (row: any) =>
+              <any>{
+                x: formatDate(row._time, 'dd-MM hh:mm:ss', 'en_US'),
+                y: row._value,
+              }
+          );
 
-          this.createChart(this.data);
+          this.createChart(this.chartData);
         },
         error: (err) => {
           // TODO implement error handling
         },
         complete: () => {
-          this.widget!.lastUpdated = new Date();
-        }
+          this.data.time = new Date();
+        },
       });
 
-      interval(this.widget.frequence! * 100).subscribe({
+      interval(this.graph.interval! * 100).subscribe({
         next: () => {
           if (this.widget != undefined) {
             this.widgetService.getDataOfWidget(this.widget).subscribe({
               next: (res) => {
-                res = res.map((row: any) => <any>{
-                  x: formatDate(row._time, 'dd-MM hh:mm:ss', 'en_US'),
-                  y: row._value
-                });
+                res = res.map(
+                  (row: any) =>
+                    <any>{
+                      x: formatDate(row._time, 'dd-MM hh:mm:ss', 'en_US'),
+                      y: row._value,
+                    }
+                );
 
                 this.data = res;
                 this.chart?.destroy();
 
-                this.widget!.lastUpdated = new Date();
-                this.createChart(this.data);
-              }
-            })
+                this.data.time = new Date();
+                this.createChart(this.chartData);
+              },
+            });
           }
-        }
-      })
+        },
+      });
     } else {
       // TODO implement error handling
     }
   }
 
-  createChart(data: Point[]) {
-    const datasets: any = []
+  createChart(chartData: Point[]) {
+    const datasets: any = [];
 
-    this.widget?.graphs?.forEach(graph => {
+    this.widget?.graphs?.forEach((graph) => {
       datasets.push({
-        type: graph.Type,
-        label: graph.Name,
-        data: data
-      })
+        type: graph.type,
+        label: this.widget.title,
+        data: chartData,
+      });
     });
 
     if (this.widget != undefined) {
       this.chart = new Chart(this.chartId, {
         data: {
-          datasets: datasets
+          datasets: datasets,
         },
         options: {
           aspectRatio: 2,
           maintainAspectRatio: true,
           animation: {
-            duration: 0
+            duration: 0,
           },
           scales: {
             y: {
               title: {
                 display: true,
-                text: 'Watt'
+                text: 'Watt',
               },
-            }
-          }
-        }
+            },
+          },
+        },
       });
     }
   }

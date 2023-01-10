@@ -25,8 +25,7 @@ import { WidgetService } from 'src/app/shared/widget/widget.service';
 export class IndexComponent implements OnInit {
   widgetSubscription: Subscription | undefined;
   widgets: Widget[] = [];
-  timeInterval = interval(6000)
-
+  timeInterval = interval(6000);
 
   constructor(private readonly widgetService: WidgetService) {}
 
@@ -38,14 +37,16 @@ export class IndexComponent implements OnInit {
         res.forEach((element: any) => {
           let widget: Widget = {
             id: element.WidgetId,
-            dashboardId: element.DashboardId,
+            // dashboardId: element.DashboardId,
             title: element.Title,
-            range: element.Range,
-            frequence: element.Frequence,
-            isActive: element.IsActive,
-            position: element.Position,
+            order: element.Order,
+            icon: element.Icon,
+            // range: element.Range,
+            // frequence: element.Frequence,
+            // isActive: element.IsActive,
+            // position: element.Position,
             graphs: element.Graphs,
-            lastUpdated: undefined
+            // lastUpdated: undefined
           };
           this.widgets.push(widget);
         });
