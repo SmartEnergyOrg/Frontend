@@ -6,7 +6,6 @@ import { v4 as uuid } from 'uuid';
 import { formatDate } from '@angular/common';
 import { interval, Observable } from 'rxjs';
 import { Graph } from 'src/app/models/graph.model';
-import { DataPoint } from 'src/app/models/data-point.model';
 
 @Component({
   selector: 'app-widget',
@@ -21,9 +20,16 @@ export class WidgetComponent implements OnInit {
 
   chart: Chart | undefined;
 
+  // Checks if  widget is a singlestat
+  // isSingleStat is true when a singlestat graph is present
+  // If there is no single-stat graph, it will always return false as its default value.
+  isSingleStat: boolean
+
   constructor(
     private readonly widgetService: WidgetService
-  ) { }
+  ) {
+    this.isSingleStat = false;
+  }
 
   private assertInputsProvided(): void {
     if (!this.widget) {
