@@ -1,3 +1,4 @@
+import { BehaviorSubject } from "rxjs/internal/BehaviorSubject"
 import { DataPoint } from "./data-point.model"
 export class Graph {
   id: number
@@ -5,21 +6,19 @@ export class Graph {
   query: string
   interval: number
   color: string
-  data: DataPoint[]
+  data: BehaviorSubject<DataPoint[] | []> = new BehaviorSubject<DataPoint[] | []>([])
 
   constructor(
     id: number,
     type: string,
     query: string,
     interval: number,
-    color: string,
-    data: DataPoint[]
+    color: string
   ) {
     this.id = id
     this.type = type
     this.query = query
     this.interval = interval
     this.color = color
-    this.data = data
   }
 }

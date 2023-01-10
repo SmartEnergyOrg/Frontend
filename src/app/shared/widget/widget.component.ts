@@ -4,7 +4,7 @@ import { Widget } from 'src/app/models/widget.model';
 import { WidgetService } from './widget.service';
 import { v4 as uuid } from 'uuid';
 import { formatDate } from '@angular/common';
-import { interval, Observable } from 'rxjs';
+import { interval, Observable, skipWhile, Subscription, take } from 'rxjs';
 import { Graph } from 'src/app/models/graph.model';
 
 @Component({
@@ -13,6 +13,7 @@ import { Graph } from 'src/app/models/graph.model';
   styleUrls: ['./widget.component.css'],
 })
 export class WidgetComponent implements OnInit {
+  graphSubscription: Subscription | undefined;
   chartId: string = uuid();
 
   @Input()
@@ -49,15 +50,30 @@ export class WidgetComponent implements OnInit {
     const datasets: any = []
 
     this.widget.graphs.forEach(graph => {
-      const [{ measurement }] = graph.data;
 
-      const data = graph.data.map(({time,value}) => ({x: time.toString(), y: value}))
+      this.graphSubscription = graph.data.pipe(
+        skipWhile(value => !value)) // skip null values
+        .subscribe(value => {
+          if (value.length > 0) {
+            const [{ measurement }] = value!
 
-      datasets.push({
-        type: graph.type,
-        label:  measurement,
-        data: data,
-      })
+            const data = value!.map(({time,value}) => ({x: time.toString(), y: value}))
+
+            datasets.splice(0, datasets.length, {
+              type: graph.type,
+              label:  measurement,
+              data: data,
+            })
+
+            this.chart?.update();
+
+            // datasets.push({
+            //   type: graph.type,
+            //   label:  measurement,
+            //   data: data,
+            // })
+          }
+        });
     });
 
     this.chart = new Chart(this.chartId, {
@@ -72,6 +88,10 @@ export class WidgetComponent implements OnInit {
         }
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.graphSubscription?.unsubscribe();
   }
 
   // Will check based on the graph array if this widget is a singlestat.
