@@ -4,7 +4,7 @@ export class Widget {
   id: number
   title: string
   position: number
-  icon: string // URL to icon
+  icon: string // MDI icon
   graphs: Graph[]
 
   constructor(
