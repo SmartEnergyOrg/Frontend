@@ -11,6 +11,7 @@ import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.co
 import { HttpClientModule } from '@angular/common/http';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SettingsComponent } from './pages/settings/settings.component';
+import { ModelMapper } from './shared/mapping/model.mapper';
 
 @NgModule({
   declarations: [
@@ -28,10 +29,11 @@ import { SettingsComponent } from './pages/settings/settings.component';
     HttpClientModule,
     FontAwesomeModule,
     DragDropModule,
-    FontAwesomeModule
+    FontAwesomeModule,
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: "en_US" }
+    { provide: LOCALE_ID, useValue: "en_US" },
+    ModelMapper
   ],
   bootstrap: [AppComponent],
 })
