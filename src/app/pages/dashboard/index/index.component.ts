@@ -14,8 +14,6 @@ import {
 } from '@angular/core';
 import { ChartType } from 'chart.js';
 import { interval, startWith, Subscription } from 'rxjs';
-import { DataPoint } from 'src/app/models/data-point.model';
-import { Graph } from 'src/app/models/graph.model';
 import { Widget } from 'src/app/models/widget.model';
 import { WidgetService } from 'src/app/shared/widget/widget.service';
 
@@ -27,23 +25,35 @@ import { WidgetService } from 'src/app/shared/widget/widget.service';
 export class IndexComponent implements OnInit {
   widgetSubscription: Subscription | undefined;
   widgets: Widget[] = [];
+  timeInterval = interval(6000)
 
-  constructor(
-    private readonly widgetService: WidgetService
-  ) {}
+
+  constructor(private readonly widgetService: WidgetService) {}
 
   ngOnInit(): void {
-    // this.widgets.push(
-    //   new Widget(1, "ENERGY Widget", 0, "mdi:icon", [
-    //     new Graph(0, "line", "QUERY", 3600, "#fff", [
-    //       new DataPoint("Gas (kWh)", 200, new Date()),
-    //       new DataPoint("Gas (kWh)", 300, new Date()),
-    //       new DataPoint("Gas (kWh)", 350, new Date()),
-    //       new DataPoint("Gas (kWh)", 230, new Date()),
-    //       new DataPoint("Gas (kWh)", 210, new Date()),
-    //     ])
-    //   ])
-    // )
+    this.widgetSubscription = this.widgetService.getAll().subscribe({
+      next: (res) => {
+        res = res.result;
+
+        res.forEach((element: any) => {
+          let widget: Widget = {
+            id: element.WidgetId,
+            dashboardId: element.DashboardId,
+            title: element.Title,
+            range: element.Range,
+            frequence: element.Frequence,
+            isActive: element.IsActive,
+            position: element.Position,
+            graphs: element.Graphs,
+            lastUpdated: undefined
+          };
+          this.widgets.push(widget);
+        });
+      },
+      error: (err) => {
+        // TODO implement error handling
+      },
+    });
   }
 
   @ViewChild('dropListContainer') dropListContainer?: ElementRef;
@@ -54,54 +64,53 @@ export class IndexComponent implements OnInit {
     dropIndex: number;
   };
 
-  // DRAG AND DROP FUNCTIONS
-  // dragEntered(event: CdkDragEnter<number>) {
-  //   const drag = event.item;
-  //   const dropList = event.container;
-  //   const dragIndex = drag.data;
-  //   const dropIndex = dropList.data;
+  dragEntered(event: CdkDragEnter<number>) {
+    const drag = event.item;
+    const dropList = event.container;
+    const dragIndex = drag.data;
+    const dropIndex = dropList.data;
 
-  //   this.dragDropInfo = { dragIndex, dropIndex };
+    this.dragDropInfo = { dragIndex, dropIndex };
 
-  //   const phContainer = dropList.element.nativeElement;
-  //   const phElement = phContainer.querySelector('.cdk-drag-placeholder');
+    const phContainer = dropList.element.nativeElement;
+    const phElement = phContainer.querySelector('.cdk-drag-placeholder');
 
-  //   if (phElement) {
-  //     phContainer.removeChild(phElement);
-  //     phContainer.parentElement?.insertBefore(phElement, phContainer);
+    if (phElement) {
+      phContainer.removeChild(phElement);
+      phContainer.parentElement?.insertBefore(phElement, phContainer);
 
-  //     moveItemInArray(this.widgets, dragIndex, dropIndex);
-  //   }
-  // }
+      moveItemInArray(this.widgets, dragIndex, dropIndex);
+    }
+  }
 
-  // dragMoved(event: CdkDragMove<number>) {
-  //   if (!this.dropListContainer || !this.dragDropInfo) return;
+  dragMoved(event: CdkDragMove<number>) {
+    if (!this.dropListContainer || !this.dragDropInfo) return;
 
-  //   const placeholderElement =
-  //     this.dropListContainer.nativeElement.querySelector(
-  //       '.cdk-drag-placeholder'
-  //     );
+    const placeholderElement =
+      this.dropListContainer.nativeElement.querySelector(
+        '.cdk-drag-placeholder'
+      );
 
-  //   const receiverElement =
-  //     this.dragDropInfo.dragIndex > this.dragDropInfo.dropIndex
-  //       ? placeholderElement?.nextElementSibling
-  //       : placeholderElement?.previousElementSibling;
+    const receiverElement =
+      this.dragDropInfo.dragIndex > this.dragDropInfo.dropIndex
+        ? placeholderElement?.nextElementSibling
+        : placeholderElement?.previousElementSibling;
 
-  //   if (!receiverElement) {
-  //     return;
-  //   }
+    if (!receiverElement) {
+      return;
+    }
 
-  //   receiverElement.style.display = 'none';
-  //   this.dropListReceiverElement = receiverElement;
-  // }
+    receiverElement.style.display = 'none';
+    this.dropListReceiverElement = receiverElement;
+  }
 
-  // dragDropped(event: CdkDragDrop<number>) {
-  //   if (!this.dropListReceiverElement) {
-  //     return;
-  //   }
+  dragDropped(event: CdkDragDrop<number>) {
+    if (!this.dropListReceiverElement) {
+      return;
+    }
 
-  //   this.dropListReceiverElement.style.removeProperty('display');
-  //   this.dropListReceiverElement = undefined;
-  //   this.dragDropInfo = undefined;
-  // }
+    this.dropListReceiverElement.style.removeProperty('display');
+    this.dropListReceiverElement = undefined;
+    this.dragDropInfo = undefined;
+  }
 }
