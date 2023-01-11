@@ -10,6 +10,7 @@ import { WidgetService } from 'src/app/shared/widget/widget.service';
 import { DataPoint } from '../../../models/data-point.model';
 import { D } from '@angular/cdk/keycodes';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { ModelMapper } from 'src/app/shared/mapping/model.mapper';
 
 @Component({
   selector: 'app-form',
@@ -19,6 +20,8 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 export class FormComponent implements OnInit {
   componentExists = false;
   developerEnabled = false;
+
+  private widgetMapper: ModelMapper = new ModelMapper();
 
   widget = new Widget(0, '', 0, '', []);
 
@@ -53,12 +56,8 @@ export class FormComponent implements OnInit {
         }),
         tap(console.log)
       )
-      .subscribe((object) => {
-        console.log('vanuit de backend: ' + JSON.parse(JSON.stringify(object)));
-        this.widget.title = object.result.title;
-        this.widget.icon = object.result.icon;
-
-        this.widget.title = JSON.parse(JSON.stringify(object)).title;
+      .subscribe((response) => {
+        this.widget = this.widgetMapper.mapToWidget(response.result);
       });
   }
 
@@ -69,8 +68,15 @@ export class FormComponent implements OnInit {
     );
 
     if (this.componentExists) {
-      this.widgetService.update(this.widget).subscribe(() => {
-        this.router.navigateByUrl('/dashboard');
+      this.widgetService.update(this.widget).subscribe({
+        next: (res) => {
+          this.router.navigateByUrl('/dashboard');
+          console.log(res);
+        },
+        error: (err) => {
+          console.log(err);
+          this.lastError = `${err.error.message}: ${err.error.result}`;
+        },
       });
     } else {
       // Create new entry
