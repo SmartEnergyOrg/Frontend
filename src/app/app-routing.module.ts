@@ -4,13 +4,23 @@ import { AppComponent } from './app.component';
 import { DashboardRoutingModule } from './pages/dashboard/dashboard-routing.module';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { SettingsComponent } from './pages/settings/settings.component';
+import { DeleteFormComponent } from './pages/settings/delete-form/delete-form.component';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
     redirectTo: 'dashboard'
+  },
+  {
+    path: 'settings',
+    component: SettingsComponent,
+  },
+  {
+    path: 'settings/delete-form/:id',
+    component: DeleteFormComponent
   }
+
 ];
 
 @NgModule({
