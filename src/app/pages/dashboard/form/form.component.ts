@@ -26,6 +26,8 @@ export class FormComponent implements OnInit {
 
   subscription: Subscription | undefined;
 
+  lastError : string = "";
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -68,10 +70,12 @@ export class FormComponent implements OnInit {
       // Create new entry
       this.widgetService.create(this.widget).subscribe({
         next: (res) => {
+          this.router.navigateByUrl('/dashboard');
           console.log(res);
         },
         error: (err) => {
           console.log(err);
+          this.lastError = `${err.error.message}: ${err.error.result}`;
         },
       });
 

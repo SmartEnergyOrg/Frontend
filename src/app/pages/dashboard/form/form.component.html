@@ -51,7 +51,10 @@
           <hr>
         </div>
         <div class="col-12">
-          <button type="button" class="btn theme-color-3 float-end text-white" (click)="addQueryToForm()">Add
+          <p style="color:red">{{this.lastError}}</p>
+        </div>
+        <div class="col-12">
+          <button type="button" class="btn btn-secondary float-end" (click)="addQueryToForm()">Add
             Query</button>
         </div>
         <div class="col-12">
