@@ -40,7 +40,10 @@ export class DeleteFormComponent implements OnInit, OnDestroy {
   }
 
   deleteWidget() : void{
-    this.widgetService.delete(this.widget);
+    this.subscriptions.push(this.widgetService.delete(this.widget).subscribe(response =>{
+      console.log(response);
+      this.router.navigateByUrl("settings");
+    }));
   }
 
   returnToSettings() : void{
