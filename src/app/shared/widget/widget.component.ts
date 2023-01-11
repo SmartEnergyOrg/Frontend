@@ -54,10 +54,11 @@ export class WidgetComponent implements OnInit {
       this.graphSubscription = graph.data.pipe(
         skipWhile(value => !value)) // skip null values
         .subscribe(value => {
+
           if (value.length > 0) {
             const [{ measurement }] = value!
 
-            const data = value!.map(({time,value}) => ({x: time.toString(), y: value}))
+            const data = value!.map(({time,value}) => ({x: time, y: value}))
 
             datasets.splice(0, datasets.length, {
               type: graph.type,
@@ -81,11 +82,12 @@ export class WidgetComponent implements OnInit {
         datasets: datasets
       },
       options: {
-        aspectRatio: 2,
-        maintainAspectRatio: true,
+        aspectRatio: 2/2,
+        maintainAspectRatio: false,
         animation: {
           duration: 0
-        }
+        },
+        responsive: true,
       }
     });
   }
