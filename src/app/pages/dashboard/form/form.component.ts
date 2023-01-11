@@ -7,6 +7,10 @@ import { IWidget } from 'src/app/interfaces/widget.interface';
 import { Graph } from 'src/app/models/graph.model';
 import { Widget } from 'src/app/models/widget.model';
 import { WidgetService } from 'src/app/shared/widget/widget.service';
+import {DataPoint} from "../../../models/data-point.model";
+import {IData} from "../../../interfaces/data-point.interface";
+import {D} from "@angular/cdk/keycodes";
+import {BehaviorSubject} from "rxjs/internal/BehaviorSubject";
 
 @Component({
   selector: 'app-form',
@@ -19,7 +23,7 @@ export class FormComponent implements OnInit {
 
   widget: IWidget = {
     title: '',
-    order: 0,
+    position: 0,
     icon: '',
     graphs: [],
   };
@@ -48,7 +52,7 @@ export class FormComponent implements OnInit {
               `${FormComponent.name} ngOnInit id = ${!params.get('id')}`
             );
             this.componentExists = true;
-            return this.widgetService.getWidgetById(Number(params.get('id')));
+            return this.widgetService.getById(Number(params.get('id')));
           }
         }),
         tap(console.log)
@@ -63,7 +67,7 @@ export class FormComponent implements OnInit {
     );
 
     if (this.componentExists) {
-      this.widgetService.updateWidget(this.widget).subscribe(() => {
+      this.widgetService.update(this.widget).subscribe(() => {
         this.router.navigateByUrl('/dashboard');
       });
     } else {
@@ -72,7 +76,7 @@ export class FormComponent implements OnInit {
         Widget: {
           id: this.widget.id,
           title: this.widget.title,
-          order: this.widget.order,
+          order: this.widget.position,
           icon: this.widget.icon,
         },
         Graphs: this.widget.graphs,
@@ -80,7 +84,7 @@ export class FormComponent implements OnInit {
 
       console.log(newWidget);
 
-      this.widgetService.addWidget(newWidget).subscribe({
+      this.widgetService.create(newWidget).subscribe({
         next: (res) => {
           console.log(res);
         },
@@ -109,11 +113,7 @@ export class FormComponent implements OnInit {
       query: '',
       interval: 1,
       color: '',
-      data: {
-        measurement: '',
-        value: 0,
-        time: new Date(),
-      },
+      data: new BehaviorSubject<DataPoint[] | []>([])
     };
 
     this.widget.graphs?.push(graph);
