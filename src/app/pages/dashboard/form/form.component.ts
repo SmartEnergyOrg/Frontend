@@ -26,7 +26,7 @@ export class FormComponent implements OnInit {
 
   subscription: Subscription | undefined;
 
-  lastError : string = "";
+  lastError: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -45,7 +45,7 @@ export class FormComponent implements OnInit {
             return of(this.widget);
           } else {
             console.log(
-              `${FormComponent.name} ngOnInit id = ${!params.get('id')}`
+              `${FormComponent.name} ngOnInit id = ${params.get('id')}`
             );
             this.componentExists = true;
             return this.widgetService.getById(Number(params.get('id')));
@@ -53,7 +53,13 @@ export class FormComponent implements OnInit {
         }),
         tap(console.log)
       )
-      .subscribe((widget) => (this.widget = widget));
+      .subscribe((object) => {
+        console.log('vanuit de backend: ' + JSON.parse(JSON.stringify(object)));
+        this.widget.title = object.result.title;
+        this.widget.icon = object.result.icon;
+
+        this.widget.title = JSON.parse(JSON.stringify(object)).title;
+      });
   }
 
   onSubmit() {

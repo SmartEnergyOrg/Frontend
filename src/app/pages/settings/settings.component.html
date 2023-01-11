@@ -5,7 +5,9 @@
   <div class="row theme-color-7 p-4 border-radius">
     <div class="col-12">
       <h3>Widgets Configuratie</h3>
-      <a class="btn theme-color-3 text-white" routerLink="/dashboard/create">Create Widget</a>
+      <a class="btn theme-color-3 text-white" routerLink="/dashboard/create"
+        >Create Widget</a
+      >
       <table class="table">
         <thead>
           <tr>
@@ -18,13 +20,21 @@
         </thead>
         <tbody>
           <tr *ngFor="let widget of this.widgets">
-            <td>{{widget.id}}</td>
-            <td>{{widget.title}}</td>
-            <td>{{widget.position}}</td>
-            <td>{{widget.graphs.length}}</td>
+            <td>{{ widget.id }}</td>
+            <td>{{ widget.title }}</td>
+            <td>{{ widget.position }}</td>
+            <td>{{ widget.graphs.length }}</td>
             <td>
-              <a class="btn btn-sm btn-secondary">Edit</a>
-              <a class="btn btn-sm btn-danger" routerLink="/settings/delete-form/{{widget.id}}">Delete</a>
+              <a
+                class="btn btn-sm btn-secondary"
+                routerLink="/dashboard/{{ widget.id }}/edit"
+                >Edit</a
+              >
+              <a
+                class="btn btn-sm btn-danger"
+                routerLink="/settings/delete-form/{{ widget.id }}"
+                >Delete</a
+              >
             </td>
           </tr>
         </tbody>
