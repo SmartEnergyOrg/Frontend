@@ -1,7 +1,7 @@
 import { DataPoint } from 'src/app/models/data-point.model';
 import { GraphBackend } from 'src/app/models/graph.backend-model';
 import { Graph } from 'src/app/models/graph.model';
-import { WidgetBackend } from 'src/app/models/widget.backend-model';
+import { WidgetBackend, WidgetCreateBackendModel } from 'src/app/models/widget.backend-model';
 import { Widget } from 'src/app/models/widget.model';
 
 export class ModelMapper {
@@ -36,13 +36,7 @@ export class ModelMapper {
   }
 
   public mapWidgetToApi(widget: Widget) {
-    return new WidgetBackend(
-      widget.id!,
-      widget.title,
-      widget.position,
-      widget.icon,
-      this.mapGraphToApi(widget.graphs)
-    );
+    return new WidgetCreateBackendModel(new WidgetBackend(widget), this.mapGraphToApi(widget.graphs))
   }
 
   public mapGraphToApi(graphs: Graph[]) {
