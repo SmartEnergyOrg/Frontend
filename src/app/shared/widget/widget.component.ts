@@ -6,6 +6,7 @@ import { v4 as uuid } from 'uuid';
 import { formatDate } from '@angular/common';
 import { interval, Observable, skipWhile, Subscription, take } from 'rxjs';
 import { Graph } from 'src/app/models/graph.model';
+import { DataPoint } from 'src/app/models/data-point.model';
 
 @Component({
   selector: 'app-widget',
@@ -19,18 +20,18 @@ export class WidgetComponent implements OnInit {
   @Input()
   widget!: Widget;
 
+  lastData!: DataPoint;
+
   chart: Chart | undefined;
 
   // Checks if  widget is a singlestat
   // isSingleStat is true when a singlestat graph is present
   // If there is no single-stat graph, it will always return false as its default value.
-  isSingleStat: boolean
+  isSingleStat: boolean = false
 
   constructor(
     private readonly widgetService: WidgetService
-  ) {
-    this.isSingleStat = false;
-  }
+  ) { }
 
   private assertInputsProvided(): void {
     if (!this.widget) {
@@ -40,10 +41,14 @@ export class WidgetComponent implements OnInit {
 
   ngOnInit(): void {
     this.assertInputsProvided();
+
+    this.isSingleStat = this.checkSingleStat(this.widget.graphs);
   }
 
   ngAfterViewInit() {
-    this.createChart();
+    if (!this.isSingleStat) {
+      this.createChart();
+    }
   }
 
   createChart() {
@@ -94,26 +99,10 @@ export class WidgetComponent implements OnInit {
     this.graphSubscription?.unsubscribe();
   }
 
-  // Will check based on the graph array if this widget is a singlestat.
-  // If the widget contains one singlestat, it will return true. Otherwise false.
-  checkChartType(graphs: Graph[]): boolean{
-    try {
-      //A deep clone will be made, so that the parent object will not be affected
-      const ClonedList = JSON.parse(JSON.stringify(graphs)) as Graph[];
-      console.log(ClonedList);
-      const FilteredTypes = this.returnSingleStats(ClonedList);
-      console.log(FilteredTypes);
-      //If FilteredTypes list is bigger than 0(It contains at least on singlestat graph, it will assign true. Otherwise false);
-      return FilteredTypes.length > 0;
-    }catch (e) {
-      throw new Error("Graph is invalid");
-    }
-  }
-
   //Returns a list with only graphs with the type SingleStat.
-  returnSingleStats(graphs: Graph[]): Graph[]{
+  private checkSingleStat(graphs: Graph[]): boolean {
     try {
-      return graphs!.filter((graph)=> graph.type == 'SingleStat');
+      return graphs!.filter((graph)=> graph.type == 'SingleStat').length > 0;
     } catch (e){
       throw new Error("Graphlist is invalid");
     }
