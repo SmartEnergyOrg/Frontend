@@ -1,4 +1,5 @@
-import { Data } from '../models/data.model';
+import { BehaviorSubject } from 'rxjs';
+import { DataPoint } from '../models/data-point.model';
 
 export interface IGraph {
   id?: number;
@@ -6,5 +7,5 @@ export interface IGraph {
   query: string;
   interval: number;
   color: string;
-  data: Data;
+  data: BehaviorSubject<DataPoint[] | []>;
 }

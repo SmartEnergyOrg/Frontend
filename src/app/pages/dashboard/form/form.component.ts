@@ -17,12 +17,7 @@ export class FormComponent implements OnInit {
   componentExists = false;
   developerEnabled = false;
 
-  widget: IWidget = {
-    title: '',
-    order: 0,
-    icon: '',
-    graphs: [],
-  };
+  widget = new Widget(0, '', 0, '', []);
 
   graph!: IGraph;
 
@@ -48,7 +43,7 @@ export class FormComponent implements OnInit {
               `${FormComponent.name} ngOnInit id = ${!params.get('id')}`
             );
             this.componentExists = true;
-            return this.widgetService.getWidgetById(Number(params.get('id')));
+            return this.widgetService.getById(Number(params.get('id')));
           }
         }),
         tap(console.log)
@@ -63,24 +58,12 @@ export class FormComponent implements OnInit {
     );
 
     if (this.componentExists) {
-      this.widgetService.updateWidget(this.widget).subscribe(() => {
+      this.widgetService.update(this.widget).subscribe(() => {
         this.router.navigateByUrl('/dashboard');
       });
     } else {
       // Create new entry
-      let newWidget = {
-        Widget: {
-          id: this.widget.id,
-          title: this.widget.title,
-          order: this.widget.order,
-          icon: this.widget.icon,
-        },
-        Graphs: this.widget.graphs,
-      };
-
-      console.log(newWidget);
-
-      this.widgetService.addWidget(newWidget).subscribe({
+      this.widgetService.create(this.widget).subscribe({
         next: (res) => {
           console.log(res);
         },
@@ -104,17 +87,7 @@ export class FormComponent implements OnInit {
   }
 
   addQueryToForm() {
-    let graph: IGraph = {
-      type: '',
-      query: '',
-      interval: 1,
-      color: '',
-      data: {
-        measurement: '',
-        value: 0,
-        time: new Date(),
-      },
-    };
+    const graph = new Graph(0, '', '', 0, '');
 
     this.widget.graphs?.push(graph);
 

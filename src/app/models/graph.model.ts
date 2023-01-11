@@ -1,6 +1,7 @@
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { IGraph } from '../interfaces/graph.interface';
 import { DataPoint } from './data-point.model';
-export class Graph {
+export class Graph implements IGraph {
   id: number;
   type: string;
   query: string;

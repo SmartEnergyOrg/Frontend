@@ -1,4 +1,6 @@
-export class DataPoint {
+import { IDataPoint } from '../interfaces/data.interface';
+
+export class DataPoint implements IDataPoint {
   measurement: string; // name:unit
   value: number;
   time: Date;
