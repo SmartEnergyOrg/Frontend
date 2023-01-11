@@ -4,9 +4,36 @@
   </div>
   <div class="row theme-color-7 p-4 border-radius">
     <div class="col-12">
+      <h3>Widgets Configuratie</h3>
+      <a class="btn theme-color-3 text-white">Create Widget</a>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Position</th>
+            <th>Aantal Graphs</th>
+            <th>Opties</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let widget of this.widgets">
+            <td>{{widget.id}}</td>
+            <td>{{widget.title}}</td>
+            <td>{{widget.position}}</td>
+            <td>{{widget.graphs.length}}</td>
+            <td>
+              <a class="btn btn-sm btn-secondary">Edit</a>
+              <a class="btn btn-sm btn-danger" href="settings/delete-form/{{widget.id}}">Delete</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <hr />
+    </div>
+    <div class="col-12">
       <p>
-        Weer weergeven in navigatiebalk
-
+        <b>Weer weergeven in navigatiebalk </b>
         <i class="fa-solid fa-temperature-half"></i>
       </p>
       <label class="switch">
@@ -17,7 +44,7 @@
 
       <hr />
       <div>
-        <p>Daltarief aan/uit</p>
+        <b>Daltarief aan/uit</b>
         <label class="switch">
           <input type="checkbox" (change)="disableOffPeakRate()" />
           <span class="slider round"></span>
