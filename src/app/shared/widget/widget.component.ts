@@ -6,6 +6,7 @@ import { v4 as uuid } from 'uuid';
 import { formatDate } from '@angular/common';
 import { interval, Observable, skipWhile, Subscription, take } from 'rxjs';
 import { Graph } from 'src/app/models/graph.model';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-widget',
@@ -50,15 +51,21 @@ export class WidgetComponent implements OnInit {
     const datasets: any = []
 
     this.widget.graphs.forEach(graph => {
-
+      //Graph
+      console.log(graph.query);
+      console.log(graph.query.split('range('))
       this.graphSubscription = graph.data.pipe(
         skipWhile(value => !value)) // skip null values
         .subscribe(value => {
+
           if (value.length > 0) {
             const [{ measurement }] = value!
 
-            const data = value!.map(({time,value}) => ({x: time.toString(), y: value}))
+            //Luxon voorbeeld
+            const data = value!.map(({time,value}) => ({x:DateTime.fromISO(time.toString()).toFormat('DDD T:ss'), y: value}))
 
+            //Huidige format
+            //const data = value!.map(({time,value}) => ({x:this.formatDate(time), y: value}))
             datasets.splice(0, datasets.length, {
               type: graph.type,
               label:  measurement,
@@ -81,11 +88,12 @@ export class WidgetComponent implements OnInit {
         datasets: datasets
       },
       options: {
-        aspectRatio: 2,
-        maintainAspectRatio: true,
+        aspectRatio: 2/2,
+        maintainAspectRatio: false,
         animation: {
           duration: 0
-        }
+        },
+        responsive: true,
       }
     });
   }
