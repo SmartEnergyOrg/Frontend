@@ -1,4 +1,4 @@
-import { IDataPoint } from '../interfaces/data.interface';
+import { IDataPoint } from '../interfaces/data-point.interface';
 
 export class DataPoint implements IDataPoint {
   measurement: string; // name:unit

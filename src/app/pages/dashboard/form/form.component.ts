@@ -7,6 +7,9 @@ import { IWidget } from 'src/app/interfaces/widget.interface';
 import { Graph } from 'src/app/models/graph.model';
 import { Widget } from 'src/app/models/widget.model';
 import { WidgetService } from 'src/app/shared/widget/widget.service';
+import { DataPoint } from '../../../models/data-point.model';
+import { D } from '@angular/cdk/keycodes';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 @Component({
   selector: 'app-form',

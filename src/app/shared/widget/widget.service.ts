@@ -17,6 +17,7 @@ import { environment } from 'src/environments/environment';
 import { io } from 'socket.io-client';
 import { ModelMapper } from '../mapping/model.mapper';
 import { DataPoint } from 'src/app/models/data-point.model';
+import { IWidget } from 'src/app/interfaces/widget.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -55,7 +56,7 @@ export class WidgetService {
     );
   }
 
-  update(widget: Widget): Observable<string> {
+  update(widget: IWidget): Observable<string> {
     console.log(`${WidgetService.name} updateWidget called`);
     console.log(widget);
 
