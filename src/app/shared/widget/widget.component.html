@@ -3,5 +3,18 @@
     <img src="https://cdn-icons-png.flaticon.com/512/1245/1245596.png" style="width:30px;height:auto;" class="d-inline">
     <h3 class="d-inline ms-2" style="vertical-align: middle;">{{ widget.title }}</h3>
   </div>
-  <canvas id="{{ chartId }}"></canvas>
+
+  <!--Example singleStat widget -->
+  <div *ngIf="isSingleStat" class="row justify-content-center">
+    <div class="col-xl-3 col-lg-6 col-sm-12">
+      <p>Title</p>
+      <h1>(Value)</h1>
+    </div>
+  </div>
+
+  <!--If the widget is not a singlestat, a regular graph will show.-->
+  <div *ngIf="!isSingleStat">
+    <canvas id="{{ chartId }}"></canvas>
+  </div>
+
 </div>

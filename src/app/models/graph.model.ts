@@ -5,21 +5,19 @@ export class Graph {
   query: string;
   interval: number;
   color: string;
-  data: Data;
+  data: BehaviorSubject<DataPoint[] | []> = new BehaviorSubject<DataPoint[] | []>([])
 
   constructor(
     id: number,
-    type: string | undefined,
+    type: string,
     query: string,
     interval: number,
-    color: string,
-    data: Data
+    color: string
   ) {
     this.id = id;
     this.type = type;
     this.query = query;
     this.interval = interval;
     this.color = color;
-    this.data = data;
   }
 }
