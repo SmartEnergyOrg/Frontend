@@ -1,20 +1,7 @@
-import {
-  CdkDragDrop,
-  CdkDragEnter,
-  CdkDragMove,
-  moveItemInArray,
-} from '@angular/cdk/drag-drop';
-import { formatDate } from '@angular/common';
-import {
-  Component,
-  ElementRef,
-  LOCALE_ID,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { ChartType } from 'chart.js';
-import { interval, startWith, Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Widget } from 'src/app/models/widget.model';
+import { ModelMapper } from 'src/app/shared/mapping/model.mapper';
 import { WidgetService } from 'src/app/shared/widget/widget.service';
 
 @Component({
@@ -25,93 +12,81 @@ import { WidgetService } from 'src/app/shared/widget/widget.service';
 export class IndexComponent implements OnInit {
   widgetSubscription: Subscription | undefined;
   widgets: Widget[] = [];
-  timeInterval = interval(6000);
 
-  constructor(private readonly widgetService: WidgetService) {}
+  constructor(
+    private readonly widgetService: WidgetService,
+    private readonly modelMapper: ModelMapper
+  ) {}
 
   ngOnInit(): void {
-    this.widgetSubscription = this.widgetService.getAll().subscribe({
-      next: (res) => {
-        res = res.result;
-
-        res.forEach((element: any) => {
-          let widget: Widget = {
-            id: element.WidgetId,
-            // dashboardId: element.DashboardId,
-            title: element.Title,
-            order: element.Order,
-            icon: element.Icon,
-            // range: element.Range,
-            // frequence: element.Frequence,
-            // isActive: element.IsActive,
-            // position: element.Position,
-            graphs: element.Graphs,
-            // lastUpdated: undefined
-          };
+    this.widgetService.getAll().subscribe({
+      next: (response) => {
+        response.result.forEach((res: any) => {
+          const widget: Widget = this.modelMapper.mapToWidget(res);
+          this.widgetService.connect(widget);
           this.widgets.push(widget);
         });
-      },
-      error: (err) => {
-        // TODO implement error handling
       },
     });
   }
 
-  @ViewChild('dropListContainer') dropListContainer?: ElementRef;
+  // DRAG AND DROP FUNCTIONS
 
-  dropListReceiverElement?: HTMLElement;
-  dragDropInfo?: {
-    dragIndex: number;
-    dropIndex: number;
-  };
+  // @ViewChild('dropListContainer') dropListContainer?: ElementRef;
 
-  dragEntered(event: CdkDragEnter<number>) {
-    const drag = event.item;
-    const dropList = event.container;
-    const dragIndex = drag.data;
-    const dropIndex = dropList.data;
+  // dropListReceiverElement?: HTMLElement;
+  // dragDropInfo?: {
+  //   dragIndex: number;
+  //   dropIndex: number;
+  // };
 
-    this.dragDropInfo = { dragIndex, dropIndex };
+  // dragEntered(event: CdkDragEnter<number>) {
+  //   const drag = event.item;
+  //   const dropList = event.container;
+  //   const dragIndex = drag.data;
+  //   const dropIndex = dropList.data;
 
-    const phContainer = dropList.element.nativeElement;
-    const phElement = phContainer.querySelector('.cdk-drag-placeholder');
+  //   this.dragDropInfo = { dragIndex, dropIndex };
 
-    if (phElement) {
-      phContainer.removeChild(phElement);
-      phContainer.parentElement?.insertBefore(phElement, phContainer);
+  //   const phContainer = dropList.element.nativeElement;
+  //   const phElement = phContainer.querySelector('.cdk-drag-placeholder');
 
-      moveItemInArray(this.widgets, dragIndex, dropIndex);
-    }
-  }
+  //   if (phElement) {
+  //     phContainer.removeChild(phElement);
+  //     phContainer.parentElement?.insertBefore(phElement, phContainer);
 
-  dragMoved(event: CdkDragMove<number>) {
-    if (!this.dropListContainer || !this.dragDropInfo) return;
+  //     moveItemInArray(this.widgets, dragIndex, dropIndex);
+  //   }
+  // }
 
-    const placeholderElement =
-      this.dropListContainer.nativeElement.querySelector(
-        '.cdk-drag-placeholder'
-      );
+  // dragMoved(event: CdkDragMove<number>) {
+  //   if (!this.dropListContainer || !this.dragDropInfo) return;
 
-    const receiverElement =
-      this.dragDropInfo.dragIndex > this.dragDropInfo.dropIndex
-        ? placeholderElement?.nextElementSibling
-        : placeholderElement?.previousElementSibling;
+  //   const placeholderElement =
+  //     this.dropListContainer.nativeElement.querySelector(
+  //       '.cdk-drag-placeholder'
+  //     );
 
-    if (!receiverElement) {
-      return;
-    }
+  //   const receiverElement =
+  //     this.dragDropInfo.dragIndex > this.dragDropInfo.dropIndex
+  //       ? placeholderElement?.nextElementSibling
+  //       : placeholderElement?.previousElementSibling;
 
-    receiverElement.style.display = 'none';
-    this.dropListReceiverElement = receiverElement;
-  }
+  //   if (!receiverElement) {
+  //     return;
+  //   }
 
-  dragDropped(event: CdkDragDrop<number>) {
-    if (!this.dropListReceiverElement) {
-      return;
-    }
+  //   receiverElement.style.display = 'none';
+  //   this.dropListReceiverElement = receiverElement;
+  // }
 
-    this.dropListReceiverElement.style.removeProperty('display');
-    this.dropListReceiverElement = undefined;
-    this.dragDropInfo = undefined;
-  }
+  // dragDropped(event: CdkDragDrop<number>) {
+  //   if (!this.dropListReceiverElement) {
+  //     return;
+  //   }
+
+  //   this.dropListReceiverElement.style.removeProperty('display');
+  //   this.dropListReceiverElement = undefined;
+  //   this.dragDropInfo = undefined;
+  // }
 }

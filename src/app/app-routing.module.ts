@@ -10,12 +10,7 @@ const routes: Routes = [
     path: '',
     pathMatch: 'full',
     redirectTo: 'dashboard'
-  },
-  {
-    path: 'settings',
-    pathMatch: 'full',
-    component: SettingsComponent,
-  },
+  }
 ];
 
 @NgModule({

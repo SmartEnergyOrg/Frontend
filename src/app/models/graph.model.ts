@@ -1,25 +1,26 @@
-import { Data } from './data.model';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { DataPoint } from './data-point.model';
 export class Graph {
-  id?: number;
-  type: string | undefined;
+  id: number;
+  type: string;
   query: string;
   interval: number;
   color: string;
-  data: Data;
+  data: BehaviorSubject<DataPoint[] | []> = new BehaviorSubject<
+    DataPoint[] | []
+  >([]);
 
   constructor(
     id: number,
-    type: string | undefined,
+    type: string,
     query: string,
     interval: number,
-    color: string,
-    data: Data
+    color: string
   ) {
     this.id = id;
     this.type = type;
     this.query = query;
     this.interval = interval;
     this.color = color;
-    this.data = data;
   }
 }
