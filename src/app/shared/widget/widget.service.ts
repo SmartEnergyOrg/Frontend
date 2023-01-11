@@ -74,8 +74,10 @@ export class WidgetService {
       );
   }
 
-  delete(widget: Widget): void {
+  delete(widget: Widget): Observable<any> {
+    const endpoint = `${environment.SERVER_API_URL}/api/widgets/${widget.id}`;
     // TODO: delete widget
+    return this.httpClient.delete<any>(endpoint);
   }
 
   public handleError(error: HttpErrorResponse): Observable<any> {

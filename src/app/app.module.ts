@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { ModelMapper } from './shared/mapping/model.mapper';
+import { DeleteFormComponent } from './pages/settings/delete-form/delete-form.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ModelMapper } from './shared/mapping/model.mapper';
     PageNotFoundComponent,
     PageNotFoundComponent,
     SettingsComponent,
+    DeleteFormComponent,
   ],
   imports: [
     BrowserModule,
