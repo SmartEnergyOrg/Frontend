@@ -32,7 +32,7 @@
               [(ngModel)]="graph.query"></textarea>
           </div>
         </div>
-        <!-- <div *ngFor="let graph of widget.graphs">
+        <div *ngFor="let graph of widget.graphs">
           <div class="mb-3">
             <label for="chartType" class="form-label">Type</label>
             <select [(ngModel)]="graph.type" name="chartType" #Type="ngModel" class="form-control">
@@ -48,7 +48,7 @@
               name="color" #Color="ngModel">
           </div>
           <hr>
-        </div> -->
+        </div>
         <div class="col-12">
           <button type="button" class="btn theme-color-3 float-end text-white" (click)="addQueryToForm()">Add
             Query</button>

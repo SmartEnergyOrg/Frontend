@@ -107,7 +107,7 @@ export class FormComponent implements OnInit {
     let graph: IGraph = {
       type: '',
       query: '',
-      interval: 0,
+      interval: 1,
       color: '',
       data: {
         measurement: '',
@@ -116,7 +116,7 @@ export class FormComponent implements OnInit {
       },
     };
 
-    this.widget.graphs.push(graph);
+    this.widget.graphs?.push(graph);
 
     console.log('New Query has been added');
   }
