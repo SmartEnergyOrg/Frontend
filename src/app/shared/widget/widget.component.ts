@@ -7,7 +7,7 @@ import { formatDate } from '@angular/common';
 import { interval, Observable, skipWhile, Subscription, take } from 'rxjs';
 import { Graph } from 'src/app/models/graph.model';
 import { DataPoint } from 'src/app/models/data-point.model';
-import { DateTime } from 'luxon';
+import 'chartjs-adapter-moment';
 
 @Component({
   selector: 'app-widget',
@@ -55,7 +55,7 @@ export class WidgetComponent implements OnInit {
   createChart() {
     const datasets: any = [];
 
-    this.widget.graphs.forEach(graph => {
+    this.widget.graphs.forEach((graph, idx) => {
 
       this.graphSubscription = graph.data.pipe(
         skipWhile(value => !value)) // skip null values
@@ -65,41 +65,90 @@ export class WidgetComponent implements OnInit {
             const [{ measurement }] = value!;
 
             //Luxon voorbeeld
-            const data = value!.map(({time,value}) => ({x:DateTime.fromISO(time.toString()).toFormat('DDD T:ss'), y: value}))
+            // const data = value!.map(({time,value}) => ({x:DateTime.fromISO(time.toString()).toFormat('DDD T:ss'), y: value}))
             //Huidige format
-            //const data = value!.map(({time,value}) => ({x:this.formatDate(time), y: value}))
+            const data = value!.map(({ time, value }) => ({ x: time, y: value }))
 
-            datasets.splice(0, datasets.length, {
-              type: graph.type,
-              label: measurement,
-              data: data,
-              borderColor: graph.color,
-              backgroundColor: graph.color,
-            });
+            // if (datasets.length <= 0) {
+            //   datasets.splice(0, datasets.length, {
+            //     type: graph.type,
+            //     label: measurement,
+            //     data: data,
+            //     borderColor: graph.color,
+            //     backgroundColor: graph.color,
+            //   });
+            // } else {
+            //   datasets.forEach((dataset:any) => {
+            //     dataset.forEach((set: any) => {
+            //       console.log(set.data)
+            //       // set.data.push()
+            //     });
+            //   });
+            // }
+            if (datasets.length != this.widget.graphs.length) {
+              datasets.push({
+                type: graph.type,
+                label: measurement,
+                data: data,
+                borderColor: graph.color,
+                backgroundColor: graph.color,
+              })
+            } else {
+              // datasets[idx].data.shift();
+                              console.log("UPDATED")
+                console.log("OLD")
+                console.log(datasets[idx].data)
+                console.log("NEW")
+                console.log(data)
+                console.log("----")
+              let newData = data.filter(newObject => !datasets[idx].data.find((oldObject: any) => oldObject.y === newObject.y));
+              console.log(newData)
+              newData.forEach(data => {
+                datasets[idx].data.push(data)
+              });
+              // if (datasets[idx].data.length == data.length) {
+              //   console.log("UPDATED")
+              //   console.log("OLD")
+              //   console.log(datasets[idx].data)
+              //   console.log("NEW")
+              //   console.log(data)
+              //   console.log("----")
 
-            // datasets.push({
-            //   type: graph.type,
-            //   label:  measurement,
-            //   data: data,
-            // })
+              //   datasets[idx].data[data.length-1] = data[data.length-1];
+              // } else if(datasets[idx].data.length < data.length) {
+              //   let difference = data.filter(x => !datasets[idx].data.includes(x));
+              //   console.log("OLD")
+              //   console.log(datasets[idx].data)
+              //   console.log("NEW")
+              //   console.log(data)
+              //   console.log("DIFF")
+              //   console.log(difference)
+              //   // datasets[idx].data.push()
+              // }
+            }
 
             this.chart?.update();
-
           }
         });
     });
 
+    console.log(datasets)
     this.chart = new Chart(this.chartId, {
       data: {
         datasets: datasets,
       },
       options: {
-        aspectRatio: 2/2,
+        aspectRatio: 2 / 2,
         maintainAspectRatio: false,
-        animation: {
-          duration: 0
-        },
         responsive: true,
+        // animation: {
+        //   duration: 0
+        // },
+        scales: {
+          x: {
+            type: 'timeseries',
+          }
+        }
       }
     });
   }
@@ -111,8 +160,8 @@ export class WidgetComponent implements OnInit {
   //Returns a list with only graphs with the type SingleStat.
   private checkSingleStat(graphs: Graph[]): boolean {
     try {
-      return graphs!.filter((graph)=> graph.type == 'SingleStat').length > 0;
-    } catch (e){
+      return graphs!.filter((graph) => graph.type == 'SingleStat').length > 0;
+    } catch (e) {
       throw new Error("Graphlist is invalid");
     }
   }

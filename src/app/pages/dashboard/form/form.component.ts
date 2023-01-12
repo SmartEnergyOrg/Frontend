@@ -23,9 +23,7 @@ export class FormComponent implements OnInit {
 
   private widgetMapper: ModelMapper = new ModelMapper();
 
-  widget = new Widget(0, '', 0, 'fa-solid fa-bolt-lightning', [
-    new Graph(0, "bar", "", 5, "#c81030")
-  ]);
+  widget = new Widget(0, '', 0, 'fa-solid fa-bolt-lightning', []);
 
   graph!: IGraph;
 
@@ -99,6 +97,7 @@ export class FormComponent implements OnInit {
 
   //Show json in browser
   enableDeveloper() {
+    console.log(this.widget)
     this.developerEnabled = !this.developerEnabled;
     if (this.developerEnabled) {
       console.log(`${FormComponent.name} developer enabled`);
