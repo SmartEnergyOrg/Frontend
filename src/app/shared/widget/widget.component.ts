@@ -70,13 +70,13 @@ export class WidgetComponent implements OnInit {
             const data = value!.map(({ time, value }) => ({ x: time, y: value }))
 
             // if (datasets.length <= 0) {
-            //   datasets.splice(0, datasets.length, {
-            //     type: graph.type,
-            //     label: measurement,
-            //     data: data,
-            //     borderColor: graph.color,
-            //     backgroundColor: graph.color,
-            //   });
+              // datasets.splice(0, datasets.length, {
+              //   type: graph.type,
+              //   label: measurement,
+              //   data: data,
+              //   borderColor: graph.color,
+              //   backgroundColor: graph.color,
+              // });
             // } else {
             //   datasets.forEach((dataset:any) => {
             //     dataset.forEach((set: any) => {
@@ -94,12 +94,13 @@ export class WidgetComponent implements OnInit {
                 backgroundColor: graph.color,
               })
             } else {
-              let newData = data.filter(newObject => !datasets[idx].data.find((oldObject: any) => oldObject.y === newObject.y));
+              datasets[idx].data = data;
+              // let newData = data.filter(newObject => !datasets[idx].data.find((oldObject: any) => oldObject.y === newObject.y));
 
-              newData.forEach(data => {
-                datasets[idx].data.push(data)
-                datasets[idx].data.shift();
-              });
+              // newData.forEach(data => {
+              //   datasets[idx].data.shift();
+              //   datasets[idx].data.push(data)
+              // });
             }
 
             this.chart?.update();
@@ -116,9 +117,9 @@ export class WidgetComponent implements OnInit {
         aspectRatio: 2 / 2,
         maintainAspectRatio: false,
         responsive: true,
-        // animation: {
-        //   duration: 0
-        // },
+        animation: {
+          duration: 0
+        },
         scales: {
           x: {
             type: 'timeseries',
