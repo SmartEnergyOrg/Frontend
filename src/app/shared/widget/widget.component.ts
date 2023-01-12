@@ -49,9 +49,7 @@ export class WidgetComponent implements OnInit {
     const datasets: any = [];
 
     this.widget.graphs.forEach(graph => {
-      //Graph
-      console.log(graph.query);
-      console.log(graph.query.split('range('))
+
       this.graphSubscription = graph.data.pipe(
         skipWhile(value => !value)) // skip null values
         .subscribe(value => {
@@ -61,22 +59,23 @@ export class WidgetComponent implements OnInit {
 
             //Luxon voorbeeld
             const data = value!.map(({time,value}) => ({x:DateTime.fromISO(time.toString()).toFormat('DDD T:ss'), y: value}))
-
             //Huidige format
             //const data = value!.map(({time,value}) => ({x:this.formatDate(time), y: value}))
+
             datasets.splice(0, datasets.length, {
               type: graph.type,
               label: measurement,
               data: data,
             });
 
-            this.chart?.update();
-
             // datasets.push({
             //   type: graph.type,
             //   label:  measurement,
             //   data: data,
             // })
+
+            this.chart?.update();
+
           }
         });
     });
