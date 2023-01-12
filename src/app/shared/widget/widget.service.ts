@@ -4,21 +4,27 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, Observable, of, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  map,
+  Observable,
+  of,
+  throwError,
+} from 'rxjs';
 import { Widget } from 'src/app/models/widget.model';
 import { environment } from 'src/environments/environment';
-import { io } from "socket.io-client";
+import { io } from 'socket.io-client';
 import { ModelMapper } from '../mapping/model.mapper';
 import { DataPoint } from 'src/app/models/data-point.model';
+import { IWidget } from 'src/app/interfaces/widget.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WidgetService {
-
   private readonly SERVER_API_URL = environment.SERVER_API_URL;
-  private readonly SOCKET = io("ws://localhost:9400");
-
+  private readonly SOCKET = io('ws://localhost:9400');
 
   constructor(
     private readonly httpClient: HttpClient,
@@ -35,9 +41,7 @@ export class WidgetService {
   getById(id: number) {
     console.log(`${WidgetService.name} getWidgetById(${id}) called`);
 
-    return this.httpClient.get<any>(
-      `${this.SERVER_API_URL}/api/widgets/${id}`
-    );
+    return this.httpClient.get<any>(`${this.SERVER_API_URL}/api/widgets/${id}`);
   }
 
   create(widget: any) {
@@ -46,10 +50,13 @@ export class WidgetService {
 
     const endpoint = `${environment.SERVER_API_URL}/api/widgets`;
 
-    return this.httpClient.post(endpoint, widget)
+    return this.httpClient.post(
+      endpoint,
+      this.modelMapper.mapWidgetToApi(widget)
+    );
   }
 
-  update(widget: Widget): Observable<string> {
+  update(widget: IWidget): Observable<string> {
     console.log(`${WidgetService.name} updateWidget called`);
     console.log(widget);
 
@@ -67,8 +74,10 @@ export class WidgetService {
       );
   }
 
-  delete(widget: Widget): void {
+  delete(widget: Widget): Observable<any> {
+    const endpoint = `${environment.SERVER_API_URL}/api/widgets/${widget.id}`;
     // TODO: delete widget
+    return this.httpClient.delete<any>(endpoint);
   }
 
   public handleError(error: HttpErrorResponse): Observable<any> {
@@ -95,11 +104,11 @@ export class WidgetService {
   private subscribe(widget: Widget) {
     console.log(`Subscribed to widget with ID ${widget.id}`);
 
-    (widget.graphs).forEach(graph => {
+    widget.graphs.forEach((graph) => {
       console.log(`-- Subscribed to graph with ID ${graph.id}`);
 
-      this.SOCKET.emit(`subscribe`, ({ graphId: graph.id }));
-    })
+      this.SOCKET.emit(`subscribe`, { graphId: graph.id });
+    });
   }
 
   // The getGraph method handles the payload of the socket connection
@@ -109,16 +118,18 @@ export class WidgetService {
   // Everytime a new event has been called it will update the behaviour subject
 
   private getData(widget: Widget) {
-    (widget.graphs).forEach(graph => {
+    widget.graphs.forEach((graph) => {
       console.log(`-- Get data from graph with ID ${graph.id}`);
 
-      const eventName = `pollWidget(${graph.id})`
+      const eventName = `pollWidget(${graph.id})`;
       this.SOCKET.on(eventName, (payload) => {
-        console.log(`-- Received data from socket server from graph with ID ${graph.id}`);
+        console.log(
+          `-- Received data from socket server from graph with ID ${graph.id}`
+        );
 
         const data: DataPoint[] = this.modelMapper.mapToData(payload);
-        graph.data.next(data)
-      })
+        graph.data.next(data);
+      });
     });
   }
 

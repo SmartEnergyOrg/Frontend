@@ -12,6 +12,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { ModelMapper } from './shared/mapping/model.mapper';
+import { DeleteFormComponent } from './pages/settings/delete-form/delete-form.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import { ModelMapper } from './shared/mapping/model.mapper';
     PageNotFoundComponent,
     PageNotFoundComponent,
     SettingsComponent,
+    DeleteFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,6 +33,7 @@ import { ModelMapper } from './shared/mapping/model.mapper';
     FontAwesomeModule,
     DragDropModule,
     FontAwesomeModule,
+    MatIconModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "en_US" },

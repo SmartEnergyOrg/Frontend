@@ -20,67 +20,42 @@
           <input type="text" name="title" #title="ngModel" class="form-control" [(ngModel)]="widget.title" />
         </div>
         <div class="mb-3">
-          <label for="range" class="form-label">Range</label>
-          <select [(ngModel)]="widget.range" name="range" #range="ngModel" class="form-control">
-            <option value="60">1 minute</option>
-            <option value="300">5 minutes</option>
-            <option value="900">15 minutes</option>
-            <option value="3600">1 hour</option>
-            <option value="10800">3 hours</option>
-            <option value="21600">6 hours</option>
-            <option value="43200">12 hours</option>
-            <option value="86400">1 day</option>
-            <option value="172800">2 days</option>
-            <option value="604800">7 days</option>
-            <option value="2592000">30 days</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="frequence" class="form-label">Update frequency</label>
-          <select [(ngModel)]="widget.frequence" name="frequence" #frequence="ngModel" class="form-control">
-            <option value="60">1 minute</option>
-            <option value="300">5 minutes</option>
-            <option value="900">15 minutes</option>
-            <option value="3600">1 hour</option>
-            <option value="10800">3 hours</option>
-            <option value="21600">6 hours</option>
-            <option value="43200">12 hours</option>
-            <option value="86400">1 day</option>
-          </select>
+          <label for="icon" class="form-label">Icon (FontAwesome Class)</label>
+          <input type="text" name="icon" #icon="ngModel" class="form-control" [(ngModel)]="widget.icon" />
         </div>
         <h3>Graphs</h3>
         <hr />
         <div *ngFor="let graph of widget.graphs">
           <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" name="name" #Name="ngModel" class="form-control" [(ngModel)]="graph.Name" />
+            <label for="queries" class="form-label">Query Builder</label>
+            <textarea type="text" name="query" #query="ngModel" class="form-control"
+              [(ngModel)]="graph.query"></textarea>
           </div>
+        </div>
+        <div *ngFor="let graph of widget.graphs">
           <div class="mb-3">
             <label for="chartType" class="form-label">Type</label>
-            <select [(ngModel)]="graph.Type" name="chartType" #Type="ngModel" class="form-control">
+            <select [(ngModel)]="graph.type" name="chartType" #Type="ngModel" class="form-control">
               <option value="bar">Bar Chart</option>
               <option value="line">Line Chart</option>
               <option value="doughnut">Doughtnut Chart</option>
               <option value="pie">Pie Chart</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="measurement" class="form-label">Measurement</label>
-            <select [(ngModel)]="graph.Measurement" name="measurement" #Measurement="ngModel" class="form-control">
-              <option value="solar">Solar</option>
-              <option value="wind">Wind</option>
+              <option value="SingleStat">Single Stat</option>
             </select>
           </div>
           <div class="mb-3">
             <label for="color" class="form-label">Color</label>
-            <input type="color" class="form-control form-control-color" value="#563d7c" [(ngModel)]="graph.Color"
+            <input type="color" class="form-control form-control-color" value="#563d7c" [(ngModel)]="graph.color"
               name="color" #Color="ngModel">
           </div>
           <hr>
         </div>
         <div class="col-12">
-          <button type="button" class="btn theme-color-3 float-end text-white" (click)="addGraphToForm()">Add
-            graph</button>
+          <p style="color:red">{{this.lastError}}</p>
+        </div>
+        <div class="col-12">
+          <button type="button" class="btn btn-secondary float-end" (click)="addQueryToForm()">Add
+            Query</button>
         </div>
         <div class="col-12">
           <button type="submit" class="btn theme-color-3 text-white" [disabled]="!widget$EditForm.valid">

@@ -1,15 +1,13 @@
-export class DataPoint {
-  measurement: string // name:unit
-  value: number
-  time: Date
+import { IDataPoint } from '../interfaces/data-point.interface';
 
-  constructor(
-    measurement: string,
-    value: number,
-    time: Date
-  ) {
-    this.measurement = measurement
-    this.value = value
-    this.time = time
+export class DataPoint implements IDataPoint {
+  measurement: string; // name:unit
+  value: number;
+  time: Date;
+
+  constructor(measurement: string, value: number, time: Date) {
+    this.measurement = measurement;
+    this.value = value;
+    this.time = time;
   }
 }

@@ -1,11 +1,12 @@
-import { Graph } from "./graph.model";
+import { IWidget } from '../interfaces/widget.interface';
+import { Graph } from './graph.model';
 
-export class Widget {
-  id: number
-  title: string
-  position: number
-  icon: string // MDI icon
-  graphs: Graph[]
+export class Widget implements IWidget {
+  id?: number;
+  title: string;
+  position: number;
+  icon: string; // URL to icon
+  graphs: Graph[];
 
   constructor(
     id: number,
@@ -14,10 +15,10 @@ export class Widget {
     icon: string,
     graphs: Graph[]
   ) {
-    this.id = id
-    this.title = title
-    this.position = position
-    this.icon = icon
-    this.graphs = graphs
+    this.id = id;
+    this.title = title;
+    this.position = position;
+    this.icon = icon;
+    this.graphs = graphs;
   }
 }

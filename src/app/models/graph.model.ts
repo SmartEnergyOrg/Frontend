@@ -1,13 +1,15 @@
-import { BehaviorSubject } from "rxjs/internal/BehaviorSubject"
 import { skipWhile } from "rxjs/internal/operators/skipWhile"
-import { DataPoint } from "./data-point.model"
-export class Graph {
-  id: number
-  type: string
-  query: string
-  interval: number
-  color: string
-  data: BehaviorSubject<DataPoint[] | []> = new BehaviorSubject<DataPoint[] | []>([])
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { IGraph } from '../interfaces/graph.interface';
+import { DataPoint } from './data-point.model';
+
+export class Graph implements IGraph {
+  id: number;
+  type: string;
+  query: string;
+  interval: number;
+  color: string;
+  data: BehaviorSubject<DataPoint[] | []> = new BehaviorSubject<DataPoint[] | []>([]);
   last: BehaviorSubject<DataPoint | null> = new BehaviorSubject<DataPoint | null>(null)
 
   constructor(

@@ -1,0 +1,69 @@
+<div class="container">
+  <div class="row pt-4">
+    <div class="col-11">
+      <h1>Delete Widget</h1>
+    </div>
+    <div class="col-1">
+      <label for="enableDeveloperOptions">Developer</label>
+      <input type="checkbox" name="enableDeveloperOptions"/>
+    </div>
+  </div>
+  <hr />
+  <div class="row theme-color-7 p-4 border-radius">
+    <div class="col-8">
+      <h2>Weet je zeker dat je de Widget wilt verwijderen?</h2>
+        <h3>Widget Info</h3>
+        <hr>
+        <div class="mb-3">
+          <b>Title</b>
+          <p>{{widget.title}}</p>
+        </div>
+        <div class="mb-3">
+          <b>Position</b>
+          <p>{{widget.position}}</p>
+        </div>
+        <div class="mb-3">
+          <b>Icon</b>
+          <p>{{widget.icon}}</p>
+        </div>
+        <h3>Graphs</h3>
+        <hr />
+        <div *ngFor="let graph of widget.graphs">
+          <div class="mb-3">
+            <b>Id</b>
+            <p>{{graph.id}}</p>
+          </div>
+          <div class="mb-3">
+            <b>Type</b>
+            <p>{{graph.type}}</p>
+          </div>
+          <div class="mb-3">
+            <b>Query</b>
+            <p>{{graph.query}}</p>
+          </div>
+          <div class="mb-3">
+            <b>Interval</b>
+            <p>{{graph.interval}}</p>
+          </div>
+          <div class="mb-3">
+            <b>Color</b>
+            <p>{{graph.color}}</p>
+          </div>
+          <hr/>
+        </div>
+        <div class="col-12">
+          <button type="button" class="btn theme-color-3 float-end text-white" (click)="returnToSettings()">
+            Return
+          </button>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-danger text-white" (click)="deleteWidget()">
+            Delete
+          </button>
+        </div>
+    </div>
+    <div class="col-4">
+        <img src="assets/images/stekker.png" alt="stekker" />
+    </div>
+  </div>
+</div>

@@ -7,6 +7,7 @@ import { formatDate } from '@angular/common';
 import { interval, Observable, skipWhile, Subscription, take } from 'rxjs';
 import { Graph } from 'src/app/models/graph.model';
 import { DataPoint } from 'src/app/models/data-point.model';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-widget',
@@ -32,10 +33,10 @@ export class WidgetComponent implements OnInit {
   constructor(
     private readonly widgetService: WidgetService
   ) { }
-
+  
   private assertInputsProvided(): void {
     if (!this.widget) {
-      throw (new Error("The required input [widget] was not provided"));
+      throw new Error('The required input [widget] was not provided');
     }
   }
 
@@ -52,45 +53,51 @@ export class WidgetComponent implements OnInit {
   }
 
   createChart() {
-    const datasets: any = []
+    const datasets: any = [];
 
     this.widget.graphs.forEach(graph => {
 
       this.graphSubscription = graph.data.pipe(
         skipWhile(value => !value)) // skip null values
         .subscribe(value => {
-          if (value.length > 0) {
-            const [{ measurement }] = value!
 
-            const data = value!.map(({time,value}) => ({x: time.toString(), y: value}))
+          if (value.length > 0) {
+            const [{ measurement }] = value!;
+
+            //Luxon voorbeeld
+            const data = value!.map(({time,value}) => ({x:DateTime.fromISO(time.toString()).toFormat('DDD T:ss'), y: value}))
+            //Huidige format
+            //const data = value!.map(({time,value}) => ({x:this.formatDate(time), y: value}))
 
             datasets.splice(0, datasets.length, {
               type: graph.type,
-              label:  measurement,
+              label: measurement,
               data: data,
-            })
-
-            this.chart?.update();
+            });
 
             // datasets.push({
             //   type: graph.type,
             //   label:  measurement,
             //   data: data,
             // })
+
+            this.chart?.update();
+
           }
         });
     });
 
     this.chart = new Chart(this.chartId, {
       data: {
-        datasets: datasets
+        datasets: datasets,
       },
       options: {
-        aspectRatio: 2,
-        maintainAspectRatio: true,
+        aspectRatio: 2/2,
+        maintainAspectRatio: false,
         animation: {
           duration: 0
-        }
+        },
+        responsive: true,
       }
     });
   }

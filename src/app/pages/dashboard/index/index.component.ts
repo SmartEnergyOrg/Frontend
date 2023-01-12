@@ -21,15 +21,14 @@ export class IndexComponent implements OnInit {
   ngOnInit(): void {
     this.widgetService.getAll().subscribe({
       next: (response) => {
-        (response.result).forEach((res: any) => {
+        response.result.forEach((res: any) => {
           const widget: Widget = this.modelMapper.mapToWidget(res);
           this.widgetService.connect(widget);
-          this.widgets.push(widget)
+          this.widgets.push(widget);
         });
-      }
-    })
+      },
+    });
   }
-
 
   // DRAG AND DROP FUNCTIONS
 
