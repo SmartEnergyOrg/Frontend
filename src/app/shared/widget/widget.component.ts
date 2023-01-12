@@ -33,7 +33,7 @@ export class WidgetComponent implements OnInit {
   constructor(
     private readonly widgetService: WidgetService
   ) { }
-  
+
   private assertInputsProvided(): void {
     if (!this.widget) {
       throw new Error('The required input [widget] was not provided');
@@ -73,6 +73,8 @@ export class WidgetComponent implements OnInit {
               type: graph.type,
               label: measurement,
               data: data,
+              borderColor: graph.color,
+              backgroundColor: graph.color,
             });
 
             // datasets.push({

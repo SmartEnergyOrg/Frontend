@@ -23,7 +23,9 @@ export class FormComponent implements OnInit {
 
   private widgetMapper: ModelMapper = new ModelMapper();
 
-  widget = new Widget(0, '', 0, '', []);
+  widget = new Widget(0, '', 0, 'fa-solid fa-bolt-lightning', [
+    new Graph(0, "bar", "", 5, "#c81030")
+  ]);
 
   graph!: IGraph;
 
@@ -106,9 +108,7 @@ export class FormComponent implements OnInit {
   }
 
   addQueryToForm() {
-    const graph = new Graph(0, '', '', 0, '');
-
-    this.widget.graphs?.push(graph);
+    this.widget.graphs?.push(new Graph(0, "bar", "", 5, "#c81030"));
 
     console.log('New Query has been added');
   }

@@ -4,10 +4,10 @@
       <h1 *ngIf="!componentExists">Create widget</h1>
       <h1 *ngIf="componentExists">Edit widget</h1>
     </div>
-    <div class="col-1">
+    <!-- <div class="col-1">
       <label for="enableDeveloperOptions">Developer</label>
       <input type="checkbox" name="enableDeveloperOptions" (change)="enableDeveloper()" />
-    </div>
+    </div> -->
   </div>
   <hr />
   <div class="row theme-color-7 p-4 border-radius">
@@ -31,8 +31,13 @@
             <textarea type="text" name="query" #query="ngModel" class="form-control"
               [(ngModel)]="graph.query"></textarea>
           </div>
-        </div>
-        <div *ngFor="let graph of widget.graphs">
+
+          <div class="mb-3">
+            <label for="interval" class="form-label">Interval (in seconds)</label>
+            <input type="number" min=5 class="form-control form-control" value="" [(ngModel)]="graph.interval"
+              name="interval" #interval="ngModel">
+          </div>
+
           <div class="mb-3">
             <label for="chartType" class="form-label">Type</label>
             <select [(ngModel)]="graph.type" name="chartType" #Type="ngModel" class="form-control">
