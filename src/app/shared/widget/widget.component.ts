@@ -62,7 +62,7 @@ export class WidgetComponent implements OnInit {
         .subscribe(value => {
 
           if (value.length > 0) {
-            const [{ measurement }] = value!;
+            const [{ measurement, unit }] = value!;
 
             const data = value!.map(({ time, value }) => ({ x: time, y: value }))
 
@@ -73,6 +73,7 @@ export class WidgetComponent implements OnInit {
                 data: data,
                 borderColor: graph.color,
                 backgroundColor: graph.color,
+                unit: unit
               })
             } else {
               datasets[idx].data = data;
@@ -94,7 +95,16 @@ export class WidgetComponent implements OnInit {
       data: {
         datasets: datasets,
       },
+
       options: {
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: (item) =>
+                `${item.dataset.label}: ${item.formattedValue} ${datasets[0].unit}`,
+            },
+          },
+        },
         aspectRatio: 2 / 2,
         maintainAspectRatio: false,
         responsive: true,
@@ -104,7 +114,13 @@ export class WidgetComponent implements OnInit {
         scales: {
           x: {
             type: 'timeseries',
-          }
+          },
+          // y: {
+          //   title: {
+          //     display: true,
+          //     text: 'Your Title'
+          //   }
+          // }
         }
       }
     });

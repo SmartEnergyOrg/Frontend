@@ -31,7 +31,7 @@ export class ModelMapper {
   public mapToData(response: any[]): DataPoint[] {
     return response.map(
       (result) =>
-        new DataPoint(result._measurement, result._value, result._time)
+        new DataPoint(result._measurement, result._field, result._value, result._time)
     );
   }
 
