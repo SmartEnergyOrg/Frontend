@@ -64,27 +64,8 @@ export class WidgetComponent implements OnInit {
           if (value.length > 0) {
             const [{ measurement }] = value!;
 
-            //Luxon voorbeeld
-            // const data = value!.map(({time,value}) => ({x:DateTime.fromISO(time.toString()).toFormat('DDD T:ss'), y: value}))
-            //Huidige format
             const data = value!.map(({ time, value }) => ({ x: time, y: value }))
 
-            // if (datasets.length <= 0) {
-              // datasets.splice(0, datasets.length, {
-              //   type: graph.type,
-              //   label: measurement,
-              //   data: data,
-              //   borderColor: graph.color,
-              //   backgroundColor: graph.color,
-              // });
-            // } else {
-            //   datasets.forEach((dataset:any) => {
-            //     dataset.forEach((set: any) => {
-            //       console.log(set.data)
-            //       // set.data.push()
-            //     });
-            //   });
-            // }
             if (datasets.length != this.widget.graphs.length) {
               datasets.push({
                 type: graph.type,
