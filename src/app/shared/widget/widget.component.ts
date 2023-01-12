@@ -94,37 +94,12 @@ export class WidgetComponent implements OnInit {
                 backgroundColor: graph.color,
               })
             } else {
-              // datasets[idx].data.shift();
-                              console.log("UPDATED")
-                console.log("OLD")
-                console.log(datasets[idx].data)
-                console.log("NEW")
-                console.log(data)
-                console.log("----")
               let newData = data.filter(newObject => !datasets[idx].data.find((oldObject: any) => oldObject.y === newObject.y));
-              console.log(newData)
+
               newData.forEach(data => {
                 datasets[idx].data.push(data)
+                datasets[idx].data.shift();
               });
-              // if (datasets[idx].data.length == data.length) {
-              //   console.log("UPDATED")
-              //   console.log("OLD")
-              //   console.log(datasets[idx].data)
-              //   console.log("NEW")
-              //   console.log(data)
-              //   console.log("----")
-
-              //   datasets[idx].data[data.length-1] = data[data.length-1];
-              // } else if(datasets[idx].data.length < data.length) {
-              //   let difference = data.filter(x => !datasets[idx].data.includes(x));
-              //   console.log("OLD")
-              //   console.log(datasets[idx].data)
-              //   console.log("NEW")
-              //   console.log(data)
-              //   console.log("DIFF")
-              //   console.log(difference)
-              //   // datasets[idx].data.push()
-              // }
             }
 
             this.chart?.update();
