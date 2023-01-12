@@ -64,7 +64,9 @@ export class WidgetService {
     const endpoint = `${environment.SERVER_API_URL}/api/widgets/${widget.id}`;
 
     return this.httpClient
-      .put<number>(endpoint, widget, { ...httpOptions })
+      .put<any>(endpoint, this.modelMapper.mapWidgetToApi(widget), {
+        ...httpOptions,
+      })
       .pipe(
         map((result) => {
           console.log(result);
