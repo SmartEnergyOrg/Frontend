@@ -13,6 +13,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { ModelMapper } from './shared/mapping/model.mapper';
 import { DeleteFormComponent } from './pages/settings/delete-form/delete-form.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { DeleteFormComponent } from './pages/settings/delete-form/delete-form.co
     FontAwesomeModule,
     DragDropModule,
     FontAwesomeModule,
+    MatIconModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "en_US" },
