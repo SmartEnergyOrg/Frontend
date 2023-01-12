@@ -1,14 +1,18 @@
-<div class="card p-2 mt-md-3 border-0 rounded">
+<div class="card p-2 mt-md-3 border-0 rounded h-100">
   <div class="mt-2 ms-1">
     <i class="{{ widget.icon }} fa-2xl"></i>
     <h3 class="d-inline ms-2" style="vertical-align: middle;">{{ widget.title }}</h3>
   </div>
 
-  <!--Example singleStat widget -->
-  <div *ngIf="isSingleStat" class="row justify-content-center">
-    <div class="col-xl-3 col-lg-6 col-sm-12">
-      <p>Title</p>
-      <h1>(Value)</h1>
+  <!--If the widget is a singlestat, a widget with the last datapoint will show.-->
+  <div *ngIf="isSingleStat" class="row h-100 justify-content-center p-3">
+    <div *ngFor="let graph of widget.graphs" class="col-sm-6 text-center">
+      <div class="d-flex align-items-center justify-content-center h-100">
+        <div>
+          <h5>{{ graph.last.getValue()?.value }}</h5>
+          <p class="text-secondary fw-bold">{{ graph.last.getValue()?.measurement }}</p>
+        </div>
+      </div>
     </div>
   </div>
 
