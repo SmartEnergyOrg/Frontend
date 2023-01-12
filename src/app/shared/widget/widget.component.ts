@@ -25,17 +25,15 @@ export class WidgetComponent implements OnInit {
   // Checks if  widget is a singlestat
   // isSingleStat is true when a singlestat graph is present
   // If there is no single-stat graph, it will always return false as its default value.
-  isSingleStat: boolean
+  isSingleStat: boolean;
 
-  constructor(
-    private readonly widgetService: WidgetService
-  ) {
+  constructor(private readonly widgetService: WidgetService) {
     this.isSingleStat = false;
   }
 
   private assertInputsProvided(): void {
     if (!this.widget) {
-      throw (new Error("The required input [widget] was not provided"));
+      throw new Error('The required input [widget] was not provided');
     }
   }
 
@@ -48,7 +46,7 @@ export class WidgetComponent implements OnInit {
   }
 
   createChart() {
-    const datasets: any = []
+    const datasets: any = [];
 
     this.widget.graphs.forEach(graph => {
       //Graph
@@ -59,7 +57,7 @@ export class WidgetComponent implements OnInit {
         .subscribe(value => {
 
           if (value.length > 0) {
-            const [{ measurement }] = value!
+            const [{ measurement }] = value!;
 
             //Luxon voorbeeld
             const data = value!.map(({time,value}) => ({x:DateTime.fromISO(time.toString()).toFormat('DDD T:ss'), y: value}))
@@ -68,9 +66,9 @@ export class WidgetComponent implements OnInit {
             //const data = value!.map(({time,value}) => ({x:this.formatDate(time), y: value}))
             datasets.splice(0, datasets.length, {
               type: graph.type,
-              label:  measurement,
+              label: measurement,
               data: data,
-            })
+            });
 
             this.chart?.update();
 
@@ -85,7 +83,7 @@ export class WidgetComponent implements OnInit {
 
     this.chart = new Chart(this.chartId, {
       data: {
-        datasets: datasets
+        datasets: datasets,
       },
       options: {
         aspectRatio: 2/2,
@@ -104,7 +102,7 @@ export class WidgetComponent implements OnInit {
 
   // Will check based on the graph array if this widget is a singlestat.
   // If the widget contains one singlestat, it will return true. Otherwise false.
-  checkChartType(graphs: Graph[]): boolean{
+  checkChartType(graphs: Graph[]): boolean {
     try {
       //A deep clone will be made, so that the parent object will not be affected
       const ClonedList = JSON.parse(JSON.stringify(graphs)) as Graph[];
@@ -113,17 +111,17 @@ export class WidgetComponent implements OnInit {
       console.log(FilteredTypes);
       //If FilteredTypes list is bigger than 0(It contains at least on singlestat graph, it will assign true. Otherwise false);
       return FilteredTypes.length > 0;
-    }catch (e) {
-      throw new Error("Graph is invalid");
+    } catch (e) {
+      throw new Error('Graph is invalid');
     }
   }
 
   //Returns a list with only graphs with the type SingleStat.
-  returnSingleStats(graphs: Graph[]): Graph[]{
+  returnSingleStats(graphs: Graph[]): Graph[] {
     try {
-      return graphs!.filter((graph)=> graph.type == 'SingleStat');
-    } catch (e){
-      throw new Error("Graphlist is invalid");
+      return graphs!.filter((graph) => graph.type == 'SingleStat');
+    } catch (e) {
+      throw new Error('Graphlist is invalid');
     }
   }
 }
