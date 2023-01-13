@@ -5,6 +5,7 @@ import { DashboardRoutingModule } from './pages/dashboard/dashboard-routing.modu
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { DeleteFormComponent } from './pages/settings/delete-form/delete-form.component';
+import { WeatherSettingsComponent } from './pages/settings/weather-settings/weather-settings.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: 'settings/delete-form/:id',
     component: DeleteFormComponent
+  },
+  {
+    path: 'settings/weather-settings',
+    component: WeatherSettingsComponent
   }
 
 ];

@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, interval, Observable, of } from "rxjs";
+import {BehaviorSubject, interval, Observable, of, switchMap} from "rxjs";
 import { WeatherConfig, WeatherModel } from 'src/app/models/weather.model';
 import { environment } from "src/environments/environment";
 @Injectable({providedIn: 'root'})
@@ -8,7 +8,7 @@ export class WeatherService{
 
     //holds weather configuration of the dashboard.
     weatherConfig: any
-    intervalTime: number = 7200;
+    intervalTime: number = 1000 * 5;
 
     //WeatherApi stuff
     private readonly apiUrl: string = 'http://api.openweathermap.org';
@@ -32,13 +32,26 @@ export class WeatherService{
         this.currentWeather = new BehaviorSubject<WeatherModel | undefined>(this.weatherModel);
         this.currentWeatherConfig = new BehaviorSubject<WeatherConfig | undefined>(this.weatherConfigModel);
 
-        //Perform actions of behaviorsubject.
+        this.getConfig().subscribe((config)=>{
+          console.log("Config Opgehaald.");
+          this.currentWeatherConfig.next(config);
+          this.currentWeatherConfig.subscribe((config)=>{
+            console.log("Config gewijzigd.");
+            if(config){
+              this.connectOpenWeather(config?.lat!, config?.lon!).subscribe((weather)=>{
+                this.currentWeather.next(weather);
+              })
+            } else{
+              console.log("Weer ophalen is mislukt.");
+            }
+          })
+        })
     }
 
     //Used to get the weather configurations
     //Will return a empty array if the city is not found.
-    connectWeatherPlace(city: string):Observable<WeatherConfig[]>{
-        return this.httpClient.get<WeatherConfig[]>(`${this.apiUrl}/geo/1.0/direct?q=${city}&limit=1&appid=${this.apiKey}&lang=nl`);
+    connectWeatherPlace(city: string):Observable<WeatherConfig[] | any>{
+        return this.httpClient.get<WeatherConfig[]>(`${this.apiUrl}/geo/1.0/direct?q=${city}&limit=20&appid=${this.apiKey}&lang=nl`);
     }
 
     //Used to connect to openweatherApi and retrieve weatherdata.
@@ -48,7 +61,6 @@ export class WeatherService{
 
     private repeatWeather():void{
         //Will repeat the methods below based on the specified intervalTime
-        
         interval(this.intervalTime)
         .subscribe(()=>{
             //use lon and lat as parameters.
@@ -62,8 +74,8 @@ export class WeatherService{
     }
     //Retrieves current weather
     getWeather():BehaviorSubject<WeatherModel| undefined>{
-        this.repeatWeather();
-        return this.currentWeather;
+      this.repeatWeather();
+      return this.currentWeather;
     }
 
     assignToConfig(WeatherConfig: WeatherConfig){
@@ -81,13 +93,14 @@ export class WeatherService{
         return this.httpClient.post<any>(this.SERVER_API_URL + '/api/weathers', weatherConfig);
     }
 
-    getConfig():Observable<any>{
+    getConfig():Observable<WeatherConfig>{
         //Retrieve one weatherConfig.
-        return this.httpClient.get<any>(this.SERVER_API_URL + '/api/weathers');
+        //return this.httpClient.get<any>(this.SERVER_API_URL + '/api/weathers');
+      return of(this.weatherConfigModel);
     }
 
     update(weatherConfig: WeatherConfig){
-        //Send new config to database 
+        //Send new config to database
         //Update local behavior subject.
         return this.httpClient.put<any>(this.SERVER_API_URL + '/api/weathers', weatherConfig);
     }
