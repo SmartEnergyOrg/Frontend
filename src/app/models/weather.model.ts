@@ -27,6 +27,8 @@ export  interface WeatherInfo{
     temp:number
 }
 
+
 export interface Wind{
     speed: number
+    deg: number
 }

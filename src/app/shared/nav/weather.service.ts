@@ -27,7 +27,7 @@ export class WeatherService{
     weatherConfigModel : WeatherConfig;
     constructor(private httpClient: HttpClient){
         //url to retrieve lat and lon
-        this.weatherModel = {weather: [{main: "Clouds", description: "overcast clouds", icon: "04n"}], wind: {speed: 12}, main: {temp: 6.78}};
+        this.weatherModel = {weather: [{main: "Clouds", description: "overcast clouds", icon: "04n"}], wind: {speed: 12, deg: 120}, main: {temp: 6.78}};
         this.weatherConfigModel = {name: "Rotterdam", country: "Netherlands", lat: 51.9244424, lon: 4.47775};
         this.currentWeather = new BehaviorSubject<WeatherModel | undefined>(this.weatherModel);
         this.currentWeatherConfig = new BehaviorSubject<WeatherConfig | undefined>(this.weatherConfigModel);
