@@ -6,9 +6,8 @@ import { environment } from "src/environments/environment";
 @Injectable({providedIn: 'root'})
 export class WeatherService{
 
-    //holds weather configuration of the dashboard.
-    weatherConfig: any
-    intervalTime: number = 1000 * 5;
+    //Interval is on 1 hour.
+    intervalTime: number = 1000 * 3600;
 
     //WeatherApi stuff
     private readonly apiUrl: string = 'http://api.openweathermap.org';
@@ -16,8 +15,6 @@ export class WeatherService{
 
     //Backend Api
     private readonly SERVER_API_URL: string = environment.SERVER_API_URL;
-
-    teller = 1;
     //Weather subjects
     currentWeatherConfig: BehaviorSubject<WeatherConfig | undefined>;
     currentWeather: BehaviorSubject<WeatherModel| undefined>;
@@ -25,13 +22,18 @@ export class WeatherService{
     //WeatherModel
     weatherModel:WeatherModel;
     weatherConfigModel : WeatherConfig;
+
     constructor(private httpClient: HttpClient){
-        //url to retrieve lat and lon
+        //TODO Remove placeholder value when function is done
         this.weatherModel = {weather: [{main: "Clouds", description: "overcast clouds", icon: "04n"}], wind: {speed: 12, deg: 120}, main: {temp: 6.78}};
+
+        //TODO Remove placeholder value when function is done. and replace models with undefined.
         this.weatherConfigModel = {name: "Rotterdam", country: "Netherlands", lat: 51.9244424, lon: 4.47775};
+
         this.currentWeather = new BehaviorSubject<WeatherModel | undefined>(this.weatherModel);
         this.currentWeatherConfig = new BehaviorSubject<WeatherConfig | undefined>(this.weatherConfigModel);
 
+        //At startup it will retrieve the configuration from the database.
         this.getConfig().subscribe((config)=>{
           console.log("Config Opgehaald.");
           this.currentWeatherConfig.next(config);
@@ -66,7 +68,6 @@ export class WeatherService{
             //use lon and lat as parameters.
             this.connectOpenWeather(this.currentWeatherConfig.value?.lat!, this.currentWeatherConfig.value?.lon!)
             .subscribe((weatherModel)=>{
-                console.log(this.teller++);
                 //When the getCurrentWeather has retrieved the weathermodel, it will now assign the new value to the currentWeather.
                 this.currentWeather.next(weatherModel);
             })
