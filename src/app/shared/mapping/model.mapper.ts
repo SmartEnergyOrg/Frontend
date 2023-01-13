@@ -1,3 +1,4 @@
+import { IWidget } from 'src/app/interfaces/widget.interface';
 import { DataPoint } from 'src/app/models/data-point.model';
 import { GraphBackend } from 'src/app/models/graph.backend-model';
 import { Graph } from 'src/app/models/graph.model';
@@ -35,7 +36,7 @@ export class ModelMapper {
     );
   }
 
-  public mapWidgetToApi(widget: Widget) {
+  public mapWidgetToApi(widget: IWidget) {
     return new WidgetCreateBackendModel(new WidgetBackend(widget), this.mapGraphToApi(widget.graphs))
   }
 

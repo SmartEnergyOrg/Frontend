@@ -15,7 +15,7 @@ import 'chartjs-adapter-moment';
   styleUrls: ['./widget.component.css'],
 })
 export class WidgetComponent implements OnInit {
-  graphSubscription: Subscription | undefined;
+  private subscriptions : Subscription[] = [];
   chartId: string = uuid();
 
   @Input()
@@ -56,8 +56,8 @@ export class WidgetComponent implements OnInit {
     const datasets: any = [];
 
     this.widget.graphs.forEach((graph, idx) => {
-
-      this.graphSubscription = graph.data.pipe(
+      //Subscribe to graph.data
+      this.subscriptions.push(graph.data.pipe(
         skipWhile(value => !value)) // skip null values
         .subscribe(value => {
 
@@ -87,7 +87,7 @@ export class WidgetComponent implements OnInit {
 
             this.chart?.update();
           }
-        });
+        }));
     });
 
     console.log(datasets)
@@ -127,7 +127,7 @@ export class WidgetComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.graphSubscription?.unsubscribe();
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
   //Returns a list with only graphs with the type SingleStat.

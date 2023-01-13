@@ -21,4 +21,10 @@
     <canvas id="{{ chartId }}"></canvas>
   </div>
 
+  <!-- Errors get handled here -->
+  <div class="alert alert-danger" *ngFor="let error of widget.errors">
+    <b>{{error.subject}}</b>
+    <p>{{error.message}}</p>
+  </div>
+
 </div>
