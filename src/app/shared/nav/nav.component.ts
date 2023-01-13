@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { WeatherModel } from 'src/app/models/weather.model';
 import { WeatherService } from './weather.service';
 
 @Component({
@@ -10,11 +11,9 @@ import { WeatherService } from './weather.service';
 })
 export class NavComponent implements OnInit {
   faGear = faGear;
-  ObservedWeather$: Observable<any>;
+  ObservedWeather$: BehaviorSubject<WeatherModel | undefined> = new BehaviorSubject<WeatherModel|undefined>(undefined);
 
-  constructor(private weatherService: WeatherService) {
-    this.ObservedWeather$ = new Observable<any>();
-  }
+  constructor(private weatherService: WeatherService) { }
 
   ngOnInit(): void {
     this.ObservedWeather$ = this.weatherService.getWeather();

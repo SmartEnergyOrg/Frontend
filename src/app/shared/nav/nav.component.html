@@ -16,9 +16,13 @@
       </a>
     </div>
     <div class="d-flex">
-      <a href="" class="text-reset">
-        <pre>{{(ObservedWeather$ | async)}}</pre>
-      </a>
+      
+      <p class="text-reset">
+        <img id="wicon" src="http://openweathermap.org/img/wn/{{ObservedWeather$.value?.weather?.[0]?.icon}}.png" alt="WeatherIcon">
+        {{ ObservedWeather$.value?.main?.temp || 0 }} °C<br/>
+        Wind: {{ObservedWeather$.value?.wind?.speed}} m/s
+      </p>
+    
     </div>
   </div>
 </nav>
