@@ -10,7 +10,7 @@ export class WidgetBackend {
   Icon: string;
 
   constructor(
-    widget: Widget
+    widget: IWidget
   ) {
     this.WidgetId = widget.id;
     this.Title = widget.title;

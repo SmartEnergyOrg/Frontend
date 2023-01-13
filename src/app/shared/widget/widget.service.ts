@@ -12,7 +12,7 @@ import {
   of,
   throwError,
 } from 'rxjs';
-import { Widget } from 'src/app/models/widget.model';
+import { Widget, WidgetError } from 'src/app/models/widget.model';
 import { environment } from 'src/environments/environment';
 import { io } from 'socket.io-client';
 import { ModelMapper } from '../mapping/model.mapper';
@@ -132,6 +132,16 @@ export class WidgetService {
         const data: DataPoint[] = this.modelMapper.mapToData(payload);
         graph.data.next(data);
       });
+
+      //Error handling
+      const errorEventName = "error";
+      this.SOCKET.on(errorEventName, (payload)=>{
+        if(payload.clientData.graphId != undefined && payload.clientData.graphId == graph.id){
+          // Received error is of the given graph
+          widget.errors.push(new WidgetError(`Error just occured for graphId: ${graph.id}, is your query valid?`, payload.message));
+        }
+
+      })
     });
   }
 

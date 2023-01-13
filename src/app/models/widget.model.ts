@@ -7,6 +7,7 @@ export class Widget implements IWidget {
   position: number;
   icon: string; // URL to icon
   graphs: Graph[];
+  errors: WidgetError[] = [];
 
   constructor(
     id: number,
@@ -20,5 +21,15 @@ export class Widget implements IWidget {
     this.position = position;
     this.icon = icon;
     this.graphs = graphs;
+  }
+}
+
+export class WidgetError{
+  subject: string;
+  message: string;
+
+  constructor(subject: string, message: string){
+    this.subject = subject;
+    this.message = message;
   }
 }
