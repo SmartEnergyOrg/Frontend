@@ -74,12 +74,15 @@ export class WeatherSettingsComponent implements OnInit, OnDestroy {
 
   onSubmit(){
     console.log("Push naar db");
-    // this.weatherService.create(this.weatherSettings).subscribe((v)=>{
-    //   console.log(this.weatherSettings);
-    //   this.weatherService.assignToConfig(this.weatherSettings);
-    // })
-    console.log(this.weatherSettings);
-    this.weatherService.assignToConfig(this.weatherSettings);
-    this.router.navigate(['..']);
+    this.weatherService.update(this.weatherSettings).subscribe((v)=>{
+       console.log(this.weatherSettings);
+       if(v){
+         this.weatherService.assignToConfig(this.weatherSettings);
+         this.router.navigate(['..']);
+       } else{
+         this.error = "Een is niet opgeslagen. Probeer het later nog eens.";
+       }
+
+    })
   }
 }

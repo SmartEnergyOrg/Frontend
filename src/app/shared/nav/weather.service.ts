@@ -20,19 +20,9 @@ export class WeatherService{
     currentWeatherConfig: BehaviorSubject<WeatherConfig | undefined>;
     currentWeather: BehaviorSubject<WeatherModel| undefined>;
 
-    //WeatherModel
-    weatherModel:WeatherModel;
-    weatherConfigModel : WeatherConfig;
-
     constructor(private httpClient: HttpClient){
-        //TODO Remove placeholder value when function is done
-        this.weatherModel = {weather: [{main: "Clouds", description: "overcast clouds", icon: "04n"}], wind: {speed: 12, deg: 120}, main: {temp: 6.78}};
-
-        //TODO Remove placeholder value when function is done. and replace models with undefined.
-        this.weatherConfigModel = {name: "Rotterdam", country: "Netherlands", lat: 51.9244424, lon: 4.47775};
-
-        this.currentWeather = new BehaviorSubject<WeatherModel | undefined>(this.weatherModel);
-        this.currentWeatherConfig = new BehaviorSubject<WeatherConfig | undefined>(this.weatherConfigModel);
+        this.currentWeather = new BehaviorSubject<WeatherModel | undefined>(undefined);
+        this.currentWeatherConfig = new BehaviorSubject<WeatherConfig | undefined>(undefined);
 
         //At startup it will retrieve the configuration from the database.
         this.getConfig().subscribe((config)=>{
@@ -95,22 +85,34 @@ export class WeatherService{
         return this.httpClient.post<any>(this.SERVER_API_URL + '/api/weathers', weatherConfig)
           .pipe(
             map((value)=>{
-              if(value.status != 401){
+              //Result is either false or an weatherConfig
+              if(value.result){
                 const newConfig = value.result as WeatherConfig;
                 this.assignToConfig(newConfig)
                 return true;
               } else{
-                console.error(value.result);
-                return false;
+                //It will give back an message.
+                //message is only present if result is false
+                console.error(value.message);
+                return value.message;
               }
             })
           )
     }
 
-    getConfig():Observable<WeatherConfig>{
+    getConfig():Observable<WeatherConfig | undefined>{
         //Retrieve one weatherConfig.
-        //return this.httpClient.get<any>(this.SERVER_API_URL + '/api/weathers');
-      return of(this.weatherConfigModel);
+        return this.httpClient.get<any>(this.SERVER_API_URL + '/api/weathers').pipe(
+          map((value)=>{
+            if(value.result){
+              const config = value.result as WeatherConfig;
+              return config;
+            } else{
+              return undefined;
+            }
+          })
+        );
+      //return of(this.weatherConfigModel);
     }
 
     update(weatherConfig: WeatherConfig){
@@ -121,7 +123,7 @@ export class WeatherService{
             if(value.status != 401){
               const newConfig = value.result as WeatherConfig;
               this.assignToConfig(newConfig)
-              return true;
+              return newConfig;
             } else{
               console.error(value.result);
               return false;

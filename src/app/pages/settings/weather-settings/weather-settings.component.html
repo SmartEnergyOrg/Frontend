@@ -13,7 +13,7 @@
             <div class="mb-3">
               <label  class="form-label col-3" for="search">Zoekterm</label>
               <input  class="col-6 form-control" type="text" [(ngModel)]="searchTerm" name="search_field" placeholder="Voer een woonplaats in" id="search">
-              <button class="btn theme-color-1 text-white col-3" (click)="searchPlace()">Zoek</button>
+              <button class="btn theme-color-4 text-white col-3 mt-1" (click)="searchPlace()">Zoek</button>
             </div>
 
             <div class="mb-3">
@@ -48,7 +48,7 @@
                 <div class="card-body">
                   Land: {{i.country}}
                 </div>
-                <button class="btn btn-primary" (click)="choseCity(i)">Kies</button>
+                <button class="btn theme-color-2" (click)="choseCity(i)">Kies</button>
               </div>
               <!---End-->
             </div>
