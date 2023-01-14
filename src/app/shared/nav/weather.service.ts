@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import {BehaviorSubject, interval, Observable, of, switchMap} from "rxjs";
 import { WeatherConfig, WeatherModel } from 'src/app/models/weather.model';
 import { environment } from "src/environments/environment";
+import {map} from "rxjs/operators";
 @Injectable({providedIn: 'root'})
 export class WeatherService{
 
@@ -91,7 +92,19 @@ export class WeatherService{
 
     create(weatherConfig: WeatherConfig){
         //If not it will give a error.
-        return this.httpClient.post<any>(this.SERVER_API_URL + '/api/weathers', weatherConfig);
+        return this.httpClient.post<any>(this.SERVER_API_URL + '/api/weathers', weatherConfig)
+          .pipe(
+            map((value)=>{
+              if(value.status != 401){
+                const newConfig = value.result as WeatherConfig;
+                this.assignToConfig(newConfig)
+                return true;
+              } else{
+                console.error(value.result);
+                return false;
+              }
+            })
+          )
     }
 
     getConfig():Observable<WeatherConfig>{
@@ -103,7 +116,18 @@ export class WeatherService{
     update(weatherConfig: WeatherConfig){
         //Send new config to database
         //Update local behavior subject.
-        return this.httpClient.put<any>(this.SERVER_API_URL + '/api/weathers', weatherConfig);
+        return this.httpClient.put<any>(this.SERVER_API_URL + '/api/weathers', weatherConfig).pipe(
+          map((value)=>{
+            if(value.status != 401){
+              const newConfig = value.result as WeatherConfig;
+              this.assignToConfig(newConfig)
+              return true;
+            } else{
+              console.error(value.result);
+              return false;
+            }
+          })
+        );
     }
 
 }
