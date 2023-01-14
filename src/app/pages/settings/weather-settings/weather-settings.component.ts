@@ -1,7 +1,7 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { WeatherConfig } from 'src/app/models/weather.model';
 import { WeatherService } from 'src/app/shared/nav/weather.service';
-import {fromEvent, Observable, of, OperatorFunction} from 'rxjs';
+import {fromEvent, Observable, of, OperatorFunction, Subscription} from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, tap, switchMap } from 'rxjs/operators';
 import {Router} from "@angular/router";
 
@@ -10,7 +10,9 @@ import {Router} from "@angular/router";
   templateUrl: './weather-settings.component.html',
   styleUrls: ['./weather-settings.component.css']
 })
-export class WeatherSettingsComponent implements OnInit {
+export class WeatherSettingsComponent implements OnInit, OnDestroy {
+
+  WeatherConfigSubscription: Subscription = new Subscription();
 
   error: string = "";
 
@@ -32,13 +34,17 @@ export class WeatherSettingsComponent implements OnInit {
     }
   }
 
+  ngOnDestroy(): void {
+       this.WeatherConfigSubscription.unsubscribe();
+    }
+
   choseCity(city: WeatherConfig){
     this.weatherSettings = city;
     this.cityList = [];
   }
 
   ngOnInit(): void {
-    this.weatherService.getConfig().subscribe((v)=>{
+    this.WeatherConfigSubscription = this.weatherService.getConfig().subscribe((v)=>{
       if (v){
         this.weatherSettings = v;
         this.foundCity = true;
@@ -61,6 +67,7 @@ export class WeatherSettingsComponent implements OnInit {
         this.cityList = place;
       }else{
         this.error = "Geen stad gevonden. Voer een bestaande woonplaats in";
+        this.cityList = [];
       }
     })
   }
