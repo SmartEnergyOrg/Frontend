@@ -126,7 +126,7 @@ export class WidgetComponent implements OnInit {
                 millisecond: 'mm:ss:fff',
                 second: 'HH:mm:ss',
                 minute: 'HH:mm',
-                hour: 'HH:mm',
+                hour: 'HH:mm  DD MMM',
                 day: 'DD MMM YYYY',
                 week: 'DD MMM YYYY',
                 month: 'MMM YYYY',
