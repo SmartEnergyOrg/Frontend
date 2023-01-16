@@ -15,5 +15,15 @@
         <fa-icon [icon]="faGear"></fa-icon>
       </a>
     </div>
+    <div class="d-flex">
+      <div *ngIf="ObservedWeather$ | async">
+        <p class="text-reset">
+          <img id="wicon" src="http://openweathermap.org/img/wn/{{ObservedWeather$.value?.weather?.[0]?.icon}}.png" alt="WeatherIcon">
+          {{ ObservedWeather$.value?.main?.temp || 0 }} °C<br/>
+          Wind: {{ObservedWeather$.value?.wind?.speed}} m/s
+        </p>
+      </div>
+      <p *ngIf="!(ObservedWeather$ | async)">Loading...</p>
+    </div>
   </div>
 </nav>
