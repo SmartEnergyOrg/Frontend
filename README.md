@@ -1,15 +1,13 @@
-# Deploy
-docker-compose up -d
+# Installatiehandleiding webapplicatie
 
-# Rebuild
-docker-compose build
+### Ontwikkelaars
 
-# Rebuild & Deploy
-docker-compose up --build -d
+## Inhoudsopgave
 
-# Options
--d = Detached mode: Run containers in the background.
---build = Build images before starting containers.
+## Documentbeschrijving
 
-# Bulk commits
-bulk commits zijn ten strengste verboden
+## Achtergrond
+
+## Installatie
+
+## Korte opstart
