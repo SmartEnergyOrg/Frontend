@@ -8,7 +8,7 @@ import {map} from "rxjs/operators";
 export class WeatherService{
 
     //Interval is on 1 hour.
-    intervalTime: number = 1000 * 3600;
+    intervalTime: number = 1000 * 5;
 
     //WeatherApi stuff
     private readonly apiUrl: string = 'http://api.openweathermap.org';
@@ -36,6 +36,7 @@ export class WeatherService{
               })
             } else{
               console.log("Weer ophalen is mislukt.");
+              this.currentWeather.next(undefined);
             }
           })
         })
