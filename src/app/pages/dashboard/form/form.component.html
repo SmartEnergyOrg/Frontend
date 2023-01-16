@@ -25,11 +25,11 @@
         </div>
         <h3>Graphs</h3>
         <hr />
-        <div *ngFor="let graph of widget.graphs">
+        <div *ngFor="let graph of widget.graphs; let i = index">
           <div class="mb-3">
             <label for="queries" class="form-label">Query Builder</label>
-            <textarea type="text" name="query" #query="ngModel" class="form-control"
-              [(ngModel)]="graph.query"></textarea>
+            <textarea type="text" name="widget.graphs[{{i}}].query" #query="ngModel" class="form-control"
+              [(ngModel)]="widget.graphs[i].query"></textarea>
           </div>
 
           <div class="mb-3">
