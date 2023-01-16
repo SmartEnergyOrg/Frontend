@@ -15,7 +15,7 @@ import 'chartjs-adapter-moment';
   styleUrls: ['./widget.component.css'],
 })
 export class WidgetComponent implements OnInit {
-  private subscriptions : Subscription[] = [];
+  private subscriptions: Subscription[] = [];
   chartId: string = uuid();
 
   @Input()
@@ -28,11 +28,9 @@ export class WidgetComponent implements OnInit {
   // Checks if  widget is a singlestat
   // isSingleStat is true when a singlestat graph is present
   // If there is no single-stat graph, it will always return false as its default value.
-  isSingleStat: boolean = false
+  isSingleStat: boolean = false;
 
-  constructor(
-    private readonly widgetService: WidgetService
-  ) { }
+  constructor(private readonly widgetService: WidgetService) {}
 
   private assertInputsProvided(): void {
     if (!this.widget) {
@@ -57,46 +55,55 @@ export class WidgetComponent implements OnInit {
 
     this.widget.graphs.forEach((graph, idx) => {
       //Subscribe to graph.data
-      this.subscriptions.push(graph.data.pipe(
-        skipWhile(value => !value)) // skip null values
-        .subscribe(value => {
+      this.subscriptions.push(
+        graph.data
+          .pipe(skipWhile((value) => !value)) // skip null values
+          .subscribe((value) => {
+            if (value.length > 0) {
+              const [{ measurement, unit }] = value!;
 
-          if (value.length > 0) {
-            const [{ measurement, unit }] = value!;
+              const data = value!.map(({ time, value }) => ({
+                /*x: new Intl.DateTimeFormat('en-Uk', {
+                  dateStyle: 'medium',
+                  timeStyle: 'medium',
+                }).format(time)*/
+                x: time,
+                y: value,
+              }));
 
-            const data = value!.map(({ time, value }) => ({ x: time, y: value }))
+              if (datasets.length != this.widget.graphs.length) {
+                datasets.push({
+                  type: graph.type,
+                  label: measurement,
+                  data: data,
+                  borderColor: graph.color,
+                  backgroundColor: graph.color,
+                  unit: unit,
+                });
+              } else {
+                datasets[idx].data = data;
+                // let newData = data.filter(newObject => !datasets[idx].data.find((oldObject: any) => oldObject.y === newObject.y));
 
-            if (datasets.length != this.widget.graphs.length) {
-              datasets.push({
-                type: graph.type,
-                label: measurement,
-                data: data,
-                borderColor: graph.color,
-                backgroundColor: graph.color,
-                unit: unit
-              })
-            } else {
-              datasets[idx].data = data;
-              // let newData = data.filter(newObject => !datasets[idx].data.find((oldObject: any) => oldObject.y === newObject.y));
+                // newData.forEach(data => {
+                //   datasets[idx].data.shift();
+                //   datasets[idx].data.push(data)
+                // });
+              }
 
-              // newData.forEach(data => {
-              //   datasets[idx].data.shift();
-              //   datasets[idx].data.push(data)
-              // });
+              this.chart?.update();
             }
-
-            this.chart?.update();
-          }
-        }));
+          })
+      );
     });
 
-    console.log(datasets)
+    console.log(datasets);
     this.chart = new Chart(this.chartId, {
       data: {
         datasets: datasets,
       },
 
       options: {
+        locale: 'nl-NL',
         plugins: {
           tooltip: {
             callbacks: {
@@ -109,11 +116,24 @@ export class WidgetComponent implements OnInit {
         maintainAspectRatio: false,
         responsive: true,
         animation: {
-          duration: 0
+          duration: 0,
         },
         scales: {
           x: {
             type: 'timeseries',
+            time: {
+              displayFormats: {
+                millisecond: 'mm:ss:fff',
+                second: 'HH:mm:ss',
+                minute: 'HH:mm',
+                hour: 'HH:mm  DD MMM',
+                day: 'DD MMM YYYY',
+                week: 'DD MMM YYYY',
+                month: 'MMM YYYY',
+                quarter: 'MMM YYYY',
+                year: 'YYYY',
+              },
+            },
           },
           // y: {
           //   title: {
@@ -121,13 +141,13 @@ export class WidgetComponent implements OnInit {
           //     text: 'Your Title'
           //   }
           // }
-        }
-      }
+        },
+      },
     });
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(s => s.unsubscribe());
+    this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
   //Returns a list with only graphs with the type SingleStat.
@@ -135,7 +155,7 @@ export class WidgetComponent implements OnInit {
     try {
       return graphs!.filter((graph) => graph.type == 'SingleStat').length > 0;
     } catch (e) {
-      throw new Error("Graphlist is invalid");
+      throw new Error('Graphlist is invalid');
     }
   }
 }
