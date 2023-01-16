@@ -130,18 +130,26 @@ export class WidgetService {
         );
 
         const data: DataPoint[] = this.modelMapper.mapToData(payload);
+        console.log(data);
         graph.data.next(data);
       });
 
       //Error handling
-      const errorEventName = "error";
-      this.SOCKET.on(errorEventName, (payload)=>{
-        if(payload.clientData.graphId != undefined && payload.clientData.graphId == graph.id){
+      const errorEventName = 'error';
+      this.SOCKET.on(errorEventName, (payload) => {
+        if (
+          payload.clientData.graphId != undefined &&
+          payload.clientData.graphId == graph.id
+        ) {
           // Received error is of the given graph
-          widget.errors.push(new WidgetError(`Error just occured for graphId: ${graph.id}, is your query valid?`, payload.message));
+          widget.errors.push(
+            new WidgetError(
+              `Error just occured for graphId: ${graph.id}, is your query valid?`,
+              payload.message
+            )
+          );
         }
-
-      })
+      });
     });
   }
 
