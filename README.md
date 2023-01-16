@@ -94,7 +94,7 @@ De instellingspagina zal via deze url dit scherm te zien krijgen.
 
 2. Voer de naam van de stad in het _zoekterm_ veld.
 
-3. Druk op de Zoek knop om alle stadresultaten te zien.
+3. Druk op de **Zoek** knop om alle stadresultaten te zien.
 ![Opties](https://user-images.githubusercontent.com/38434237/212758699-1015476c-cf68-4a06-9719-408a00aeb684.png)
 
 4. Kies de juiste stad in het rechterlijst.
