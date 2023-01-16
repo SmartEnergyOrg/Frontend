@@ -15,7 +15,7 @@ import 'chartjs-adapter-moment';
   styleUrls: ['./widget.component.css'],
 })
 export class WidgetComponent implements OnInit {
-  private subscriptions : Subscription[] = [];
+  private subscriptions: Subscription[] = [];
   chartId: string = uuid();
 
   @Input()
@@ -28,11 +28,9 @@ export class WidgetComponent implements OnInit {
   // Checks if  widget is a singlestat
   // isSingleStat is true when a singlestat graph is present
   // If there is no single-stat graph, it will always return false as its default value.
-  isSingleStat: boolean = false
+  isSingleStat: boolean = false;
 
-  constructor(
-    private readonly widgetService: WidgetService
-  ) { }
+  constructor(private readonly widgetService: WidgetService) {}
 
   private assertInputsProvided(): void {
     if (!this.widget) {
@@ -54,80 +52,98 @@ export class WidgetComponent implements OnInit {
 
   createChart() {
     const datasets: any = [];
+    const chartContainer = document.getElementById('chart-container');
 
     this.widget.graphs.forEach((graph, idx) => {
       //Subscribe to graph.data
-      this.subscriptions.push(graph.data.pipe(
-        skipWhile(value => !value)) // skip null values
-        .subscribe(value => {
+      this.subscriptions.push(
+        graph.data
+          .pipe(skipWhile((value) => !value)) // skip null values
+          .subscribe((value) => {
+            if (value.length > 0) {
+              const [{ measurement, unit }] = value!;
 
-          if (value.length > 0) {
-            const [{ measurement, unit }] = value!;
+              const data = value!.map(({ time, value }) => ({
+                x: time,
+                y: value,
+              }));
 
-            const data = value!.map(({ time, value }) => ({ x: time, y: value }))
+              if (datasets.length != this.widget.graphs.length) {
+                datasets.push({
+                  type: graph.type,
+                  label: measurement,
+                  data: data,
+                  borderColor: graph.color,
+                  backgroundColor: graph.color,
+                  unit: unit,
+                });
+              } else {
+                datasets[idx].data = data;
+              }
 
-            if (datasets.length != this.widget.graphs.length) {
-              datasets.push({
-                type: graph.type,
-                label: measurement,
-                data: data,
-                borderColor: graph.color,
-                backgroundColor: graph.color,
-                unit: unit
-              })
-            } else {
-              datasets[idx].data = data;
-              // let newData = data.filter(newObject => !datasets[idx].data.find((oldObject: any) => oldObject.y === newObject.y));
+              datasets.forEach(function callback(dataset: any, index: number) {
+                dataset.yAxisID = index == 0 ? 'y' : 'y' + index;
+              });
 
-              // newData.forEach(data => {
-              //   datasets[idx].data.shift();
-              //   datasets[idx].data.push(data)
-              // });
+              if (datasets.length === this.widget.graphs.length) {
+                if (this.chart) this.chart.destroy();
+                this.chart = new Chart(this.chartId, {
+                  data: {
+                    datasets: datasets,
+                  },
+
+                  options: {
+                    plugins: {
+                      tooltip: {
+                        callbacks: {
+                          label: (item) =>
+                            `${item.dataset.label}: ${item.formattedValue} ${datasets[0].unit}`,
+                        },
+                      },
+                    },
+                    aspectRatio: 2 / 2,
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    animation: {
+                      duration: 0,
+                    },
+                    scales: {
+                      x: {
+                        type: 'timeseries',
+                      },
+                      y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        ticks: {
+                          color: datasets[0].borderColor,
+                        },
+                      },
+                      y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        ticks: {
+                          color: datasets[1].borderColor,
+                        },
+                        grid: {
+                          drawOnChartArea: false,
+                        },
+                      },
+                    },
+                  },
+                });
+              } else {
+                chartContainer!.innerHTML = 'No Data Available';
+              }
             }
-
-            this.chart?.update();
-          }
-        }));
-    });
-
-    console.log(datasets)
-    this.chart = new Chart(this.chartId, {
-      data: {
-        datasets: datasets,
-      },
-
-      options: {
-        plugins: {
-          tooltip: {
-            callbacks: {
-              label: (item) =>
-                `${item.dataset.label}: ${item.formattedValue} ${datasets[0].unit}`,
-            },
-          },
-        },
-        aspectRatio: 2 / 2,
-        maintainAspectRatio: false,
-        responsive: true,
-        animation: {
-          duration: 0
-        },
-        scales: {
-          x: {
-            type: 'timeseries',
-          },
-          // y: {
-          //   title: {
-          //     display: true,
-          //     text: 'Your Title'
-          //   }
-          // }
-        }
-      }
+          })
+      );
     });
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(s => s.unsubscribe());
+    this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
   //Returns a list with only graphs with the type SingleStat.
@@ -135,7 +151,7 @@ export class WidgetComponent implements OnInit {
     try {
       return graphs!.filter((graph) => graph.type == 'SingleStat').length > 0;
     } catch (e) {
-      throw new Error("Graphlist is invalid");
+      throw new Error('Graphlist is invalid');
     }
   }
 }

@@ -42,7 +42,7 @@ export class WeatherService{
     }
 
     //Used to get the weather configurations
-    //Will return a empty array if the city is not found.
+    //Will return an empty array if the city is not found.
     connectWeatherPlace(city: string):Observable<WeatherConfig[] | any>{
         return this.httpClient.get<WeatherConfig[]>(`${this.apiUrl}/geo/1.0/direct?q=${city}&limit=20&appid=${this.apiKey}&lang=nl`);
     }

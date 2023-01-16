@@ -18,6 +18,7 @@ import { io } from 'socket.io-client';
 import { ModelMapper } from '../mapping/model.mapper';
 import { DataPoint } from 'src/app/models/data-point.model';
 import { IWidget } from 'src/app/interfaces/widget.interface';
+import { elements } from 'chart.js';
 
 @Injectable({
   providedIn: 'root',
@@ -134,14 +135,21 @@ export class WidgetService {
       });
 
       //Error handling
-      const errorEventName = "error";
-      this.SOCKET.on(errorEventName, (payload)=>{
-        if(payload.clientData.graphId != undefined && payload.clientData.graphId == graph.id){
+      const errorEventName = 'error';
+      this.SOCKET.on(errorEventName, (payload) => {
+        if (
+          payload.clientData.graphId != undefined &&
+          payload.clientData.graphId == graph.id
+        ) {
           // Received error is of the given graph
-          widget.errors.push(new WidgetError(`Error just occured for graphId: ${graph.id}, is your query valid?`, payload.message));
+          widget.errors.push(
+            new WidgetError(
+              `Error just occured for graphId: ${graph.id}, is your query valid?`,
+              payload.message
+            )
+          );
         }
-
-      })
+      });
     });
   }
 
