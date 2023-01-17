@@ -1,5 +1,5 @@
 ![120393305](https://user-images.githubusercontent.com/38434237/212727884-4746ef79-9726-4618-8a16-37bde6750281.png)
-# Credits
+# Smart Energie credits
 In dit document zal een korte achtergrond van het project uitgelegd worden. Ook zal namens het projetgroep een dankwoord geuit worden aan alle betrokken partijen.
 
 ## Achtergrond
@@ -8,3 +8,19 @@ Het gevolg hiervan is dat een gebruiker energie ontvangt van meerdere bronnen. D
 
 ## Dankwoord
 Namens het projectgroep, willen we onze contactpersoon Arno Broeders bedanken voor onze samenwerking tijdens het project. Ook willen onze begeleiders Remo van der Heijden en Jan Montizaan bedanken bij het ondersteunen van het ontwikkelingsproces.
+
+## Betrokken partijen
+Hierin worden betrokken partijen op een rij gezet en geven alle personen aan die bij het project betrokken waren.
+
+### Ontwikkelaars
+Studenten
+|Xin|Silvester|Marcello|Jens|Mick|Joost|
+|----|----|----|----|----|----|
+
+### Projectbegeleiders
+|Remo van der Heijden|Jan Montizaan|
+|----|----|
+
+### Contactpersoon
+|Arno Broeders|
+|----|
