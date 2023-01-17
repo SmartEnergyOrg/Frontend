@@ -43,7 +43,7 @@ export class WidgetComponent implements OnInit {
     private readonly widgetService: WidgetService,
     private elementRef: ElementRef
   ) {}
-
+  
   private assertInputsProvided(): void {
     if (!this.widget) {
       throw new Error('The required input [widget] was not provided');

@@ -15,8 +15,8 @@ import { ModelMapper } from './shared/mapping/model.mapper';
 import { DeleteFormComponent } from './pages/settings/delete-form/delete-form.component';
 import { MatIconModule } from '@angular/material/icon';
 import { WeatherSettingsComponent } from './pages/settings/weather-settings/weather-settings.component';
-import {FormsModule} from "@angular/forms";
-import {MatInputModule} from "@angular/material/input";
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -41,10 +41,7 @@ import {MatInputModule} from "@angular/material/input";
     FormsModule,
     MatInputModule,
   ],
-  providers: [
-    { provide: LOCALE_ID, useValue: "en_US" },
-    ModelMapper
-  ],
+  providers: [{ provide: LOCALE_ID, useValue: 'nl_NL' }, ModelMapper],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

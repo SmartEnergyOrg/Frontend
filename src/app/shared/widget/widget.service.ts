@@ -131,6 +131,7 @@ export class WidgetService {
         );
 
         const data: DataPoint[] = this.modelMapper.mapToData(payload);
+        console.log(data);
         graph.data.next(data);
       });
 

@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import {BehaviorSubject, interval, Observable, of, switchMap} from "rxjs";
 import { WeatherConfig, WeatherModel } from 'src/app/models/weather.model';
 import { environment } from "src/environments/environment";
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 @Injectable({providedIn: 'root'})
 export class WeatherService{
 
@@ -27,6 +27,7 @@ export class WeatherService{
         //At startup it will retrieve the configuration from the database.
         this.getConfig().subscribe((config)=>{
           console.log("Config Opgehaald.");
+          console.log(config);
           this.currentWeatherConfig.next(config);
           this.currentWeatherConfig.subscribe((config)=>{
             console.log("Config gewijzigd.");
@@ -36,6 +37,7 @@ export class WeatherService{
               })
             } else{
               console.log("Weer ophalen is mislukt.");
+              this.currentWeather.next(undefined);
             }
           })
         })
@@ -110,6 +112,9 @@ export class WeatherService{
             } else{
               return undefined;
             }
+          }),
+          catchError(error =>{
+            return of(undefined);
           })
         );
       //return of(this.weatherConfigModel);
