@@ -4,7 +4,7 @@ import { IGraph } from '../interfaces/graph.interface';
 import { DataPoint } from './data-point.model';
 
 export class Graph implements IGraph {
-  id: number;
+  id: number | null;
   type: string;
   query: string;
   interval: number;
@@ -16,7 +16,7 @@ export class Graph implements IGraph {
     new BehaviorSubject<DataPoint | null>(null);
 
   constructor(
-    id: number,
+    id: number | null,
     type: string,
     query: string,
     interval: number,

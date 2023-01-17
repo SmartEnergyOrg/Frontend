@@ -25,22 +25,22 @@
         </div>
         <h3>Graphs</h3>
         <hr />
-        <div *ngFor="let graph of widget.graphs">
+        <div *ngFor="let graph of widget.graphs; let i = index">
           <div class="mb-3">
             <label for="queries" class="form-label">Query Builder</label>
-            <textarea type="text" name="query" #query="ngModel" class="form-control"
-              [(ngModel)]="graph.query"></textarea>
+            <textarea type="text" name="widget.graphs[{{i}}].query" #query="ngModel" class="form-control"
+              [(ngModel)]="widget.graphs[i].query"></textarea>
           </div>
 
           <div class="mb-3">
             <label for="interval" class="form-label">Interval (in seconds)</label>
-            <input type="number" min=5 class="form-control form-control" value="" [(ngModel)]="graph.interval"
-              name="interval" #interval="ngModel">
+            <input type="number" min=5 class="form-control form-control" [(ngModel)]="widget.graphs[i].interval"
+              name="widgt.graphs[{{i}}]" #interval="ngModel">
           </div>
 
           <div class="mb-3">
             <label for="chartType" class="form-label">Type</label>
-            <select [(ngModel)]="graph.type" name="chartType" #Type="ngModel" class="form-control">
+            <select [(ngModel)]="widget.graphs[i].type" name="widget.graphs[{{i}}].type" #Type="ngModel" class="form-control">
               <option value="bar">Bar Chart</option>
               <option value="line">Line Chart</option>
               <option value="doughnut">Doughtnut Chart</option>
@@ -50,8 +50,8 @@
           </div>
           <div class="mb-3">
             <label for="color" class="form-label">Color</label>
-            <input type="color" class="form-control form-control-color" value="#563d7c" [(ngModel)]="graph.color"
-              name="color" #Color="ngModel">
+            <input type="color" class="form-control form-control-color" value="#563d7c" [(ngModel)]="widget.graphs[i].color"
+              name="widget.graphs[{{i}}].color" #Color="ngModel">
           </div>
           <hr>
         </div>

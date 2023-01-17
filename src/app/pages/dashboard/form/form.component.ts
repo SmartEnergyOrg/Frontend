@@ -107,7 +107,7 @@ export class FormComponent implements OnInit {
   }
 
   addQueryToForm() {
-    this.widget.graphs?.push(new Graph(0, "bar", "", 5, "#c81030"));
+    this.widget.graphs?.push(new Graph(null, "bar", "", 5, "#c81030"));
 
     console.log('New Query has been added');
   }
