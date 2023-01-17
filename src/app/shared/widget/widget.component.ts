@@ -64,6 +64,11 @@ export class WidgetComponent implements OnInit {
               const [{ measurement, unit }] = value!;
 
               const data = value!.map(({ time, value }) => ({
+                /*x: new Intl.DateTimeFormat('en-Uk', {
+                  dateStyle: 'medium',
+                  timeStyle: 'medium',
+                }).format(time)*/
+                
                 x: time,
                 y: value,
               }));
@@ -93,6 +98,7 @@ export class WidgetComponent implements OnInit {
                   },
 
                   options: {
+                  locale: 'nl-NL',
                     plugins: {
                       tooltip: {
                         callbacks: {
@@ -110,6 +116,18 @@ export class WidgetComponent implements OnInit {
                     scales: {
                       x: {
                         type: 'timeseries',
+                         time: {
+                         displayFormats: {
+                           millisecond: 'mm:ss:fff',
+                           second: 'HH:mm:ss',
+                           minute: 'HH:mm',
+                           hour: 'HH:mm  DD MMM',
+                           day: 'DD MMM YYYY',
+                           week: 'DD MMM YYYY',
+                           month: 'MMM YYYY',
+                           quarter: 'MMM YYYY',
+                           year: 'YYYY',
+              },
                       },
                       y: {
                         type: 'linear',
@@ -139,6 +157,7 @@ export class WidgetComponent implements OnInit {
             }
           })
       );
+
     });
   }
 
