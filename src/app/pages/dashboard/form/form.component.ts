@@ -70,7 +70,7 @@ export class FormComponent implements OnInit {
     if (this.componentExists) {
       this.widgetService.update(this.widget).subscribe({
         next: (res) => {
-          this.router.navigateByUrl('/dashboard');
+          this.router.navigate(['/']);
           console.log(res);
         },
         error: (err) => {
@@ -82,7 +82,7 @@ export class FormComponent implements OnInit {
       // Create new entry
       this.widgetService.create(this.widget).subscribe({
         next: (res) => {
-          this.router.navigateByUrl('/dashboard');
+          this.router.navigate(['/']);
           console.log(res);
         },
         error: (err) => {
@@ -90,8 +90,6 @@ export class FormComponent implements OnInit {
           this.lastError = `${err.error.message}: ${err.error.result}`;
         },
       });
-
-      // this.router.navigate(['../dashboard']);
     }
   }
 
