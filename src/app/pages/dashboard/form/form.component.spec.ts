@@ -5,8 +5,9 @@ import { of } from 'rxjs';
 import { WidgetService } from 'src/app/shared/widget/widget.service';
 
 import { FormComponent } from './form.component';
+import {Widget} from "../../../models/widget.model";
 
-describe('FormComponent', () => {
+describe('Widget creatie', () => {
   let component: FormComponent;
   let fixture: ComponentFixture<FormComponent>;
 
@@ -28,7 +29,7 @@ describe('FormComponent', () => {
           paramMap: of(
             convertToParamMap(
               {
-                UserId: "12349876"
+                id: undefined
               }))
         }},
         {provide: Router, useValue: dummyRouter},
@@ -42,24 +43,80 @@ describe('FormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('Component should exist', () => {
     expect(component).toBeTruthy();
   });
 
 
-  it('Widget should be created', ()=>{
+  it("Component should give update form when navigating Id", ()=>{
+    expect(component.componentExists).toBeFalse();
+  })
 
+  it('Widget should be created', ()=>{
+    //Arrange
+    dummyWidgetService.create.and.returnValue(of("Dummy data"));
+    const newWidget = new Widget(2, "Gewijzigde widget", 1, "Icon", []);
+    component.widget = newWidget;
+
+    //Act
+    component.onSubmit();
+    //Assert
+    expect(dummyRouter.navigateByUrl).toHaveBeenCalled();
+    expect(component.componentExists).toBeFalse();
+  })
+
+});
+
+describe('Widget wijziging', () => {
+  let component: FormComponent;
+  let fixture: ComponentFixture<FormComponent>;
+
+  let dummyRouter: jasmine.SpyObj<Router>;
+  let dummyWidgetService: jasmine.SpyObj<WidgetService>;
+
+  beforeEach(async () => {
+
+    //Mock methods
+    //dummyActivatedRouter = jasmine.createSpyObj('ActivatedRoute', []);
+    dummyRouter = jasmine.createSpyObj('Router', ['navigateByUrl']);
+    dummyWidgetService = jasmine.createSpyObj('WidgetService', ['getById', 'update', 'create']);
+
+    await TestBed.configureTestingModule({
+      declarations: [ FormComponent ],
+      imports: [ ReactiveFormsModule, FormsModule],
+      providers:[
+        {provide: ActivatedRoute, useValue: {
+            paramMap: of(
+              convertToParamMap(
+                {
+                  id: "12349876"
+                }))
+          }},
+        {provide: Router, useValue: dummyRouter},
+        {provide: WidgetService, useValue: dummyWidgetService},
+      ]
+    })
+      .compileComponents();
+
+    fixture = TestBed.createComponent(FormComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+  it("Component should give update form when navigating Id", ()=>{
+    expect(component.componentExists).toBeTrue();
   })
 
   it('Widget should be updated', ()=>{
-    
-  })
+//Arrange
+    dummyWidgetService.update.and.returnValue(of("Dummy data"));
+    const newWidget = new Widget(2, "Gewijzigde widget", 1, "Icon", []);
+    component.widget = newWidget;
+    component.componentExists = true;
 
-  it('Wrong widget creation, should give an error message', ()=>{
-
+    //Act
+    component.onSubmit();
+    //Assert
+    expect(component.componentExists).toBeTrue();
+    expect(dummyRouter.navigateByUrl).toHaveBeenCalled();
   })
-
-  it('Wrong widget update, should give an error message', ()=>{
-    
-  })
-});
+})
