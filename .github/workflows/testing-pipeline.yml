@@ -1,0 +1,19 @@
+name: Testing
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [dev, main]
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+      - uses: browser-actions/setup-chrome@v0.0.0
+        with:
+          node-version: '18.x'
+      - run: npm ci
+      - run: CHROMIUM_BIN=$(which chrome) npm run test_ci
