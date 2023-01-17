@@ -116,6 +116,19 @@ export class WidgetComponent implements OnInit {
                 const scales: any = {
                   x: {
                     type: 'timeseries',
+                    time: {
+                      displayFormats: {
+                        milliseconds: 'mm:ss:fff',
+                        second: 'HH:mm:ss',
+                        minute: 'HH:mm',
+                        hour: 'HH:mm  DD MMM',
+                        day: 'DD MMM YYYY',
+                        week: 'DD MMM YYYY',
+                        month: 'MMM YYYY',
+                        quarter: 'MMM YYYY',
+                        year: 'YYYY',
+                      },
+                    },
                   },
                   y: {
                     type: 'linear',
@@ -152,6 +165,7 @@ export class WidgetComponent implements OnInit {
                   },
 
                   options: {
+                    locale: 'nl-NL',
                     plugins: {
                       tooltip: {
                         callbacks: {
