@@ -45,4 +45,21 @@ describe('FormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+
+  it('Widget should be created', ()=>{
+
+  })
+
+  it('Widget should be updated', ()=>{
+    
+  })
+
+  it('Wrong widget creation, should give an error message', ()=>{
+
+  })
+
+  it('Wrong widget update, should give an error message', ()=>{
+    
+  })
 });
