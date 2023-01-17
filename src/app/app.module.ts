@@ -5,7 +5,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './shared/nav/nav.component';
-import { FooterComponent } from './shared/footer/footer.component';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -22,7 +21,6 @@ import { MatInputModule } from '@angular/material/input';
   declarations: [
     AppComponent,
     NavComponent,
-    FooterComponent,
     PageNotFoundComponent,
     PageNotFoundComponent,
     SettingsComponent,
