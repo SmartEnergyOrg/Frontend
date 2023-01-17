@@ -2,6 +2,11 @@
 # Smart Energie credits
 In dit document zal een korte achtergrond van het project uitgelegd worden. Ook zal namens het projetgroep een dankwoord geuit worden aan alle betrokken partijen.
 
+## Link naar de handleiding
+Via de link hieronder zal er verwezen worden naar de installatie-handleiding van de Webapplicatie:
+
+[Handleiding webapplicatie](https://github.com/SmartEnergyOrg/Frontend/blob/main/MANUAL.md)
+
 ## Achtergrond
 Een belangrijke reden voor de ontwikkeling van dit systeem, is dat er een energietransitie van fossiele brandstof naar duurzame energie plaatsvind. Eén voorbeeld van duurzame energie is via zonne-energie via zonnepanelen.
 Het gevolg hiervan is dat een gebruiker energie ontvangt van meerdere bronnen. Dit systeem is bedoeld om deze energietransitie te ondersteunen.
