@@ -80,28 +80,7 @@ export class WeatherService{
         this.currentWeather.next(weather);
     }
 
-    //These three methods below will be used to configurate the weather of the app. The place of the weather will be determined by lat, lon
-
-    create(weatherConfig: WeatherConfig){
-        //If not it will give a error.
-        return this.httpClient.post<any>(this.SERVER_API_URL + '/api/weathers', weatherConfig)
-          .pipe(
-            map((value)=>{
-              //Result is either false or an weatherConfig
-              if(value.result){
-                const newConfig = value.result as WeatherConfig;
-                this.assignToConfig(newConfig)
-                return true;
-              } else{
-                //It will give back an message.
-                //message is only present if result is false
-                console.error(value.message);
-                return value.message;
-              }
-            })
-          )
-    }
-
+    //These two methods below will be used to configurate the weather of the app. The place of the weather will be determined by lat, lon
     getConfig():Observable<WeatherConfig | undefined>{
         //Retrieve one weatherConfig.
         return this.httpClient.get<any>(this.SERVER_API_URL + '/api/weathers').pipe(
