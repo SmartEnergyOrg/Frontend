@@ -7,7 +7,7 @@ import { WidgetService } from 'src/app/shared/widget/widget.service';
 import { FormComponent } from './form.component';
 import {Widget} from "../../../models/widget.model";
 
-describe('Widget creatie', () => {
+describe('form-component - Widget creation', () => {
   let component: FormComponent;
   let fixture: ComponentFixture<FormComponent>;
 
@@ -52,7 +52,7 @@ describe('Widget creatie', () => {
     expect(component.componentExists).toBeFalse();
   })
 
-  it('Widget should be created', ()=>{
+  it('The app should follow the widget creation process.', ()=>{
     //Arrange
     dummyWidgetService.create.and.returnValue(of("Dummy data"));
     const newWidget = new Widget(2, "Gewijzigde widget", 1, "Icon", []);
@@ -67,7 +67,7 @@ describe('Widget creatie', () => {
 
 });
 
-describe('Widget wijziging', () => {
+describe('form-component - Widget creation', () => {
   let component: FormComponent;
   let fixture: ComponentFixture<FormComponent>;
 
@@ -106,7 +106,7 @@ describe('Widget wijziging', () => {
     expect(component.componentExists).toBeTrue();
   })
 
-  it('Widget should be updated', ()=>{
+  it('The app should follow the update process', ()=>{
 //Arrange
     dummyWidgetService.update.and.returnValue(of("Dummy data"));
     const newWidget = new Widget(2, "Gewijzigde widget", 1, "Icon", []);

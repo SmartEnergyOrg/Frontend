@@ -31,7 +31,11 @@ describe('SettingsComponent', () => {
     //Voor tijdens de ngOnInit.
     let element1 = new Widget(1, 'Grafiek', 1, 'Ixon', []);
     let element2 = new Widget(2, 'Grafiek', 1, 'Ixon', []);
-    list = [element1, element2];
+    let list2 = [element1, element2];
+    list = [
+      {WidgetId: 1, Icon: "Icon", Title: "DummyTitel", Position: 1, Graphs: []},
+      {WidgetId: 2, Icon: "Icon2", Title: "DummyTitel2", Position: 2, Graphs: []}
+    ];
     dummyWidgetService.getAll.and.returnValue(of({result: list}));
     fixture.detectChanges();
   });
@@ -41,14 +45,6 @@ describe('SettingsComponent', () => {
   });
 
   it('Component should have a list of widgets', ()=>{
-    let list2: any[] = [
-      {WidgetId: 1, Icon: "Icon", Title: "DummyTitel", Position: 1, Graph: []},
-      {WidgetId: 2, Icon: "Icon2", Title: "DummyTitel2", Position: 2, Graph: []}
-    ];
-    dummyWidgetService.getAll.and.returnValue(of({result: list2}));
-    dummyMapper.mapToWidget.and.returnValue({errors: [], graphs: [], icon: "", position: 0, title: ""});
-
-    component.ngOnInit();
     expect(component.widgets.length).toEqual(2);
   });
 });
