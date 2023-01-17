@@ -2,6 +2,7 @@ export class WeatherModel{
     weather!: Weather[]
     main!: WeatherInfo
     wind!:Wind
+    name!: string
     constructor(){
     
     }
