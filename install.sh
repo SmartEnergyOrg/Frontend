@@ -15,3 +15,10 @@ fi
 systemctl enable --now docker
 docker-compose build
 docker-compose up -d
+
+status=$?
+
+if test $status -eq 0
+then
+  echo "the website is running on http://$(ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'):4200"
+fi
