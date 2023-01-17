@@ -35,7 +35,7 @@ export class FormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private widgetService: WidgetService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.subscription = this.route.paramMap
@@ -104,6 +104,10 @@ export class FormComponent implements OnInit {
     } else {
       console.log(`${FormComponent.name} developer disabled`);
     }
+  }
+
+  deleteQueryFromForm() {
+    this.widget.graphs?.pop();
   }
 
   addQueryToForm() {
