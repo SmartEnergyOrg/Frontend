@@ -1,8 +1,7 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { WeatherConfig } from 'src/app/models/weather.model';
 import { WeatherService } from 'src/app/shared/nav/weather.service';
-import {fromEvent, Observable, of, OperatorFunction, Subscription} from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, map, tap, switchMap } from 'rxjs/operators';
+import { Subscription} from 'rxjs';
 import {Router} from "@angular/router";
 
 @Component({
@@ -12,7 +11,7 @@ import {Router} from "@angular/router";
 })
 export class WeatherSettingsComponent implements OnInit, OnDestroy {
 
-  WeatherConfigSubscription: Subscription = new Subscription();
+  WeatherConfigSubscription: Subscription | undefined;
 
   error: string = "";
 
@@ -35,7 +34,7 @@ export class WeatherSettingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-       this.WeatherConfigSubscription.unsubscribe();
+       this.WeatherConfigSubscription?.unsubscribe();
     }
 
   choseCity(city: WeatherConfig){

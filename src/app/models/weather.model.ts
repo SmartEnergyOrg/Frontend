@@ -1,35 +1,33 @@
-export class WeatherModel{
+export class WeatherModel {
     weather!: Weather[]
     main!: WeatherInfo
     wind!:Wind
     name!: string
-    constructor(){
-    
-    }
 }
 
-export interface WeatherConfig{
+export interface WeatherConfig {
     name:string
     country:string
     lat:number
     lon:number
 }
-export interface WeatherResult{
+
+export interface WeatherResult {
     weather: Weather[]
     main: WeatherInfo
 }
-export interface Weather{
+
+export interface Weather {
     main: string
     description: string,
     icon: string
 }
 
-export  interface WeatherInfo{
+export  interface WeatherInfo {
     temp:number
 }
 
-
-export interface Wind{
+export interface Wind {
     speed: number
     deg: number
 }
