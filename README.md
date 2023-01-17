@@ -1,26 +1,35 @@
 ![120393305](https://user-images.githubusercontent.com/38434237/212727884-4746ef79-9726-4618-8a16-37bde6750281.png)
-# Installatiehandleiding webapplicatie
+# Installatiehandleiding webapplicatie Smart Energy
 
-### Ontwikkelaars
+## Ontwikkelaars
 Studenten
 |Xin|Silvester|Marcello|Jens|Mick|Joost|
 |----|----|----|----|----|----|
 
-Projectbegeleiders
+#### Projectbegeleiders
 |Remo van der Heijden|Jan Montizaan|
 |----|----|
+
+### Versie
+|Versie|Datum|
+|----|----|
+|1.0|16 januari 2023|
+
+## Inhoudsopgave
+
+<ol>
+  <li><a href="#Introduction">Introductie</a></li>
+  <li><a href="#Installation">Installatie</a></li>
+  <li><a href="#OpenApp">Openen van de API</a></li>
+  <li><a href="#VerdereStappen">Verdere stappen</a></li>
+</ol>
 
 ## Introductie
 <div id="#Introduction">
   <p>In opdracht van het Lectoraat Smart Energie, hebben studenten van de opleiding Informatica een energiemanagementsysteem ontwikkeld waarin gebruikers via een dashboard inzicht krijgen over hun energieverbruik. </p>
 </div>
 
-## Versie
-|Versie|Datum|
-|----|----|
-|1.0|16 januari 2023|
-
-## Achtergrond
+### Achtergrond
 Een belangrijke reden voor de ontwikkeling van dit systeem, is dat er een energietransitie van fossiele brandstof naar duurzame energie plaatsvind. Eén voorbeeld van duurzame energie is via zonne-energie via zonnepanelen.
 Het gevolg hiervan is dat een gebruiker energie ontvangt van meerdere bronnen. Dit systeem is bedoeld om deze energietransitie te ondersteunen.
 
@@ -45,23 +54,14 @@ Voor het installeren van de webapplicatie moet allereerst de code gedownload wor
 
 3. Open **cmd** of een **terminal** binnen het apparaat.
 
-4. Binnen de terminal, navigeer naar de Inner Frontend folder van de applicatie door de onderstaande commando in te voeren:
+4. Binnen de terminal, navigeer naar de Inner Frontend-main folder.
 
-Direct vanuit de root folder
-```
-cd ./Frontend/Frontend
-```
-
-of als **cmd** of een **terminal** geopend is vanuit de uiterste Frontend folder
-```
-cd ./Frontend
-```
-
-5. Voer het installatiescript van de webapplicatie uit door de onderstaande commando in te voeren in de terminal of cmd.
+5. Voer het installatiescript van de webapplicatie uit door de onderstaande commando in te voeren in de terminal of soortgelijke editor.
 
 ```
 ./install.sh
 ```
+
 Deze installatie script zorgt ervoor dat de webapplicatie geïnstalleerd wordt met de bijbehorende afhankelijkheden.
 **Let op!** Als de API nog niet geïnstalleerd is, dan zal het script een foutmelding geven om dat wel te doen.
 
@@ -87,7 +87,7 @@ De instellingspagina zal via deze url dit scherm te zien krijgen.
 
 ![Schermafbeelding 2023-01-16 210048](https://user-images.githubusercontent.com/38434237/212757903-d9c79f55-303b-471c-bb9a-ad7783cffb85.png)
 
-### Weer instellen
+#### Het weer instellen
 
 1. Vanuit de settingspagina, druk op de **Weather-settings** om het weer van de woonplaats in te voeren.
 ![SettingWeather](https://user-images.githubusercontent.com/38434237/212761205-ad902e8b-ae9a-433c-bd17-075ac07deb3c.png)
@@ -104,7 +104,7 @@ De instellingspagina zal via deze url dit scherm te zien krijgen.
 6. Het weer van de plaats is te zien op de navigatiebalk rechtsboven.
 ![Het weer](https://user-images.githubusercontent.com/38434237/212762395-d1a50c5a-430a-4ab9-9836-2fa8e347f348.png)
 
-### Widget toevoegen
+#### Widget toevoegen
 
 1. Vanuit de settingspagina, druk op **Create** Widget om het widget toevoegscherm te krijgen.
 ![SettingWidget](https://user-images.githubusercontent.com/38434237/212761154-4a468d8b-3754-4f67-9576-3f187e304c07.png)
