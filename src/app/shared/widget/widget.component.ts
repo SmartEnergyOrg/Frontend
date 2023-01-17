@@ -43,7 +43,7 @@ export class WidgetComponent implements OnInit {
     private readonly widgetService: WidgetService,
     private elementRef: ElementRef
   ) {}
-  
+
   private assertInputsProvided(): void {
     if (!this.widget) {
       throw new Error('The required input [widget] was not provided');
@@ -134,17 +134,27 @@ export class WidgetComponent implements OnInit {
                     type: 'linear',
                     display: true,
                     position: 'left',
+                    title: {
+                      display: true,
+                      text: datasets[0].unit,
+                    },
                     ticks: {
                       color: datasets[0].borderColor,
                     },
                   },
                 };
 
+                console.log('unit', datasets[0].unit);
+
                 for (let i = 1; i < numDatasets; i++) {
                   scales[`y${i}`] = {
                     type: 'linear',
                     display: true,
                     position: 'right',
+                    title: {
+                      display: true,
+                      text: datasets[i].unit,
+                    },
                     ticks: {
                       color: datasets[i].borderColor,
                     },
@@ -169,8 +179,11 @@ export class WidgetComponent implements OnInit {
                     plugins: {
                       tooltip: {
                         callbacks: {
-                          label: (item) =>
-                            `${item.dataset.label}: ${item.formattedValue} ${datasets[0].unit}`,
+                          label: (item) => {
+                            return `${item.dataset.label}: ${
+                              item.formattedValue
+                            } ${datasets[item.datasetIndex].unit}`;
+                          },
                         },
                       },
                     },
