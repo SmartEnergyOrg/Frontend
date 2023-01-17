@@ -94,7 +94,7 @@ De instellingspagina zal via deze url dit scherm te zien krijgen.
 5. Druk op de **bevestig** knop om de weer instelling op te slaan.
 
 6. Het weer van de plaats is te zien op de navigatiebalk rechtsboven.
-![Het weer](https://user-images.githubusercontent.com/38434237/212762395-d1a50c5a-430a-4ab9-9836-2fa8e347f348.png)
+![Dashboard](https://user-images.githubusercontent.com/38434237/213002857-597c6bbf-b13e-48ef-8d87-1d0dc36e76b2.png)
 
 #### Widget toevoegen
 
@@ -102,10 +102,10 @@ De instellingspagina zal via deze url dit scherm te zien krijgen.
 ![SettingWidget](https://user-images.githubusercontent.com/38434237/212761154-4a468d8b-3754-4f67-9576-3f187e304c07.png)
 
 2. Voer alle velden in.
-![fORM 1](https://user-images.githubusercontent.com/38434237/212761023-3150b17e-fe2b-48ea-896c-c74730d05c78.png)
+![Creatie 11](https://user-images.githubusercontent.com/38434237/213003748-0f8f656c-6c61-4b80-8da6-6a4cd699ed3f.png)
 
 3. Druk op de **Add Query** knop om een query toe te voegen en alle andere velden.
-![Form2](https://user-images.githubusercontent.com/38434237/212761036-a66f9998-57ee-41f0-b374-38da33574ef6.png)
+![Form widget create](https://user-images.githubusercontent.com/38434237/213003895-c4df1e35-4cb8-4720-b168-a4276a2ebd96.png)
 
 4. Druk op de **Save** knop om de widget op te slaan.
 
