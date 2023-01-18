@@ -70,6 +70,10 @@ describe('WidgetComponent', () => {
   });
 
   it('The widget will be loaded correctly, without any problems.', () => {
+    const datapoint: DataPoint[] = [
+      {measurement: "kwh", time: new Date(), value: 12, unit: "meet"}
+    ];
+
     const widget: Widget = {
       errors: [],
       icon: "Icon",
@@ -88,16 +92,17 @@ describe('WidgetComponent', () => {
           }),
           color: "#000000",
           query: "Quert",
-          data: new BehaviorSubject<DataPoint[] | []>([]),
+          data: new BehaviorSubject<DataPoint[] | []>(datapoint),
           type: "line"
         }
       ]
     };
-    component.chart?.destroy();
     component.widget = widget;
 
-    component.ngAfterViewInit();
+    component.ngAfterViewInit()
 
-    expect(component.chart).toBeTruthy()
+    console.log(component);
+
+    expect(component.chart).toBeTruthy();
   });
 });

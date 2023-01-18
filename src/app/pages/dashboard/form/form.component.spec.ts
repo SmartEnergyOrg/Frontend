@@ -18,7 +18,7 @@ describe('form-component - Widget creation', () => {
 
     //Mock methods
     //dummyActivatedRouter = jasmine.createSpyObj('ActivatedRoute', []);
-    dummyRouter = jasmine.createSpyObj('Router', ['navigateByUrl']);
+    dummyRouter = jasmine.createSpyObj('Router', ['navigate']);
     dummyWidgetService = jasmine.createSpyObj('WidgetService', ['getById', 'update', 'create']);
 
     await TestBed.configureTestingModule({
@@ -61,7 +61,7 @@ describe('form-component - Widget creation', () => {
     //Act
     component.onSubmit();
     //Assert
-    expect(dummyRouter.navigateByUrl).toHaveBeenCalled();
+    expect(dummyRouter.navigate).toHaveBeenCalled();
     expect(component.componentExists).toBeFalse();
   })
 
@@ -78,7 +78,7 @@ describe('form-component - Widget creation', () => {
 
     //Mock methods
     //dummyActivatedRouter = jasmine.createSpyObj('ActivatedRoute', []);
-    dummyRouter = jasmine.createSpyObj('Router', ['navigateByUrl']);
+    dummyRouter = jasmine.createSpyObj('Router', ['navigate']);
     dummyWidgetService = jasmine.createSpyObj('WidgetService', ['getById', 'update', 'create']);
 
     await TestBed.configureTestingModule({
@@ -117,6 +117,6 @@ describe('form-component - Widget creation', () => {
     component.onSubmit();
     //Assert
     expect(component.componentExists).toBeTrue();
-    expect(dummyRouter.navigateByUrl).toHaveBeenCalled();
+    expect(dummyRouter.navigate).toHaveBeenCalled();
   })
 })
