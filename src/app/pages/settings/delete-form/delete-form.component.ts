@@ -29,6 +29,7 @@ export class DeleteFormComponent implements OnInit, OnDestroy {
 
   loadInWidget(id: number) : void {
     this.subscriptions.push(this.widgetService.getById(id).subscribe(response =>{
+      console.log(response);
       this.widget = this.widgetMapper.mapToWidget(response.result);
     }));
   }
