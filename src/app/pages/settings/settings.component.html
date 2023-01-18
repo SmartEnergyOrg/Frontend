@@ -14,7 +14,6 @@
           <tr>
             <th>Id</th>
             <th>Title</th>
-            <th>Position</th>
             <th>Aantal Graphs</th>
             <th>Opties</th>
           </tr>
@@ -23,7 +22,6 @@
           <tr *ngFor="let widget of this.widgets">
             <td>{{ widget.id }}</td>
             <td>{{ widget.title }}</td>
-            <td>{{ widget.position }}</td>
             <td>{{ widget.graphs.length }}</td>
             <td>
               <div class="btn-group" role="group" aria-label="Basic example">
@@ -36,35 +34,5 @@
       </table>
       <hr />
     </div>
-    <!-- <div class="col-12">
-      <p>
-        <b>Weer weergeven in navigatiebalk </b>
-        <i class="fa-solid fa-temperature-half"></i>
-      </p>
-      <label class="switch">
-        <input type="checkbox" (change)="showWeatherInNavbar()" />
-        <span class="slider round"></span>
-      </label>
-      <p *ngIf="showText">Actie: weer uitschakelen in navbar</p>
-
-      <hr />
-      <div>
-        <b>Daltarief aan/uit</b>
-        <label class="switch">
-          <input type="checkbox" (change)="disableOffPeakRate()" />
-          <span class="slider round"></span>
-        </label>
-      </div>
-
-      <div class="form-group">
-        <label for="peakrate">Piektarief</label>
-        <input type="number" name="peakrate" class="form-control" />
-      </div>
-
-      <div class="form-group" *ngIf="showOffPeakRate">
-        <label for="offpeakrate">Daltarief</label>
-        <input type="number" name="offpeakrate" class="form-control" />
-      </div>
-    </div> -->
   </div>
 </div>
