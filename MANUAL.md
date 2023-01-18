@@ -37,7 +37,6 @@ In het geval dat dat niet het geval is, klik op de link hieronder om de API te i
 
 ## Installatie
 
-### Reguliere installatie
 Voor het installeren van de webapplicatie moet allereerst de code gedownload worden van github.
 
 1. Klik op de groene knop **Code** en druk op **Download ZIP** om alle code in een ZIP-map te downloaden.
@@ -67,17 +66,6 @@ http://localhost:4200
 Door naar de bovenstaande url te navigeren, zal de browser een leeg dashboard laten zien.
 De applicatie is succesvol geïnstalleerd.
 ![Dashboard](https://user-images.githubusercontent.com/38434237/212761676-222472e7-3286-42f5-a175-200a6d75eb96.png)
-
-### Handmatig opstarten
-In het geval dat men de applicatie niet via de installatiescript wilt installeren, volg de onderstaande instructies op.
-
-1. Volg zoals bij de **Reguliere installatie** stap 1 tot 4.
-
-2. Voer de commando ```npm install``` uit om alle code die de webapplicatie nodig heeft te installeren.
-
-3. Om de applicatie aan te zetten, voer de commando ```ng serve``` uit.
-
-De webapplicatie draait nu op ```http://localhost:4200```
 
 ## Korte opstart
 De applicatie bied de mogelijkheid om een widget toe te voegen en het weer van een plaats te weergeven.
