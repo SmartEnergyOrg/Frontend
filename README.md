@@ -8,11 +8,11 @@ Via de link hieronder zal er verwezen worden naar de installatie-handleiding van
 [Handleiding webapplicatie](https://github.com/SmartEnergyOrg/Frontend/blob/main/MANUAL.md)
 
 ## Achtergrond
-Een belangrijke reden voor de ontwikkeling van dit systeem, is dat er een energietransitie van fossiele brandstof naar duurzame energie plaatsvind. Eén voorbeeld van duurzame energie is via zonne-energie via zonnepanelen.
-Het gevolg hiervan is dat een gebruiker energie ontvangt van meerdere bronnen. Dit systeem is bedoeld om deze energietransitie te ondersteunen.
+Een belangrijke reden voor de ontwikkeling van dit systeem, is dat er een energietransitie van fossiele brandstof naar duurzame energie plaatsvind. Een voorbeeld van duurzame energie is via zonne-energie via zonnepanelen.
+Het gevolg hiervan is dat een gebruiker energie ontvangt van meerdere bronnen, dit systeem is bedoeld om deze energietransitie te ondersteunen.
 
 ## Dankwoord
-Namens het projectgroep, willen we onze contactpersoon Arno Broeders bedanken voor onze samenwerking tijdens het project. Ook willen onze begeleiders Remo van der Heijden en Jan Montizaan bedanken bij het ondersteunen van het ontwikkelingsproces.
+Namens de projectgroep willen we onze proudct owner Arno Broeders bedanken voor de fijne samenwerking tijdens het project. Ook willen onze begeleiders Remo van der Heijden en Jan Montizaan bedanken bij het ondersteunen van het ontwikkelingsproces.
 
 ## Betrokken partijen
 Hierin worden betrokken partijen op een rij gezet en geven alle personen aan die bij het project betrokken waren.
@@ -46,7 +46,7 @@ WSL -l
 ```
 
 3. Indien Windows niet automatisch ee nstandaard distro (Ubuntu) heeft geinstalleerd kan je deze handmatig [installeren vanuit de Microsoft Store.](https://apps.microsoft.com/store/detail/ubuntu/9PDXGNCFSCZV?hl=en-us&gl=US)
-4. Instaleer [Windows Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701) en zet Ubuntu als standaard.
+4. Installeer [Windows Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701) en zet Ubuntu als standaard.
 5. Installeer [Docker](https://www.docker.com/)
 6. Herstart apparaat
 7. Open Docker-Desktop, open settings en ga naar: `Resources > WSL Integration` Druk op `Enable integration with my default WSL distro` en druk op opslaan.
@@ -55,7 +55,7 @@ WSL -l
 Indien op Linux, Mac of Windows 10/11 Pro
 If you are on Linux, Mac or Windows 10/11 Pro:
 
-1. Installleer [Docker](https://www.docker.com/)
+1. Installeer [Docker](https://www.docker.com/)
 2. Controleer of het command `docker` werkt.
 
 ## Deployment
@@ -67,23 +67,6 @@ If you are on Linux, Mac or Windows 10/11 Pro:
 5. Voer 'docker-compose up -d' uit om de containers op de achtergrond uit te voeren.
 6. Voer 'docker-compose down' uit om de containers te stoppen en te verwijderen.
 
-## Code conventions
-
-- Er worden geen strikte conventieregels toegepast in frontend-projecten. De meeste componenten en boilerplate worden automatisch gegenereerd.
-- Er mogen geen ongebruikte variabelen zijn.
-- Gebruik altijd puntkomma's (;) aan het einde van een statement.
-- Gebruik dubbele aanhalingstekens.
-- Er mogen geen ongebruikte functies zijn.
-- Wanneer je een ESLint Ignore-verklaring gebruikt, voeg dan een uitleg toe.
-
-### What happens when code is committed that does not follow the code conventions?
-
-When code is committed that contains linting errors it will fail whilst running in the pipeline.
-Your pull request will fail and can therefor not be pr'd back to dev or main.
-
-Wanneer code wordt gecommit die fouten bevat, zal het mislukken door de testen in de CI/CD ontwikkelstraat.
-Je pull request zal mislukken en kan daarom niet worden gemerged met de betreffende branch.
-
 ## Afspraken Git en Github
 
 - Push niet direct naar Dev of Main.
@@ -91,4 +74,4 @@ Je pull request zal mislukken en kan daarom niet worden gemerged met de betreffe
 - Elk pull request heeft minstens één code review nodig.
 - Gebruik alleen `feature` en `bug-fix` branches.
 - Doe je code-reviews serieus.
-- Zorg ervoor dat je geen grote commits maakt, maar code opdeelt in meerdere commits.
+- Geen bulk commits
