@@ -130,24 +130,6 @@ export class WeatherService {
     );
     //return of(this.weatherConfigModel);
   }
-    //These two methods below will be used to configurate the weather of the app. The place of the weather will be determined by lat, lon
-    getConfig():Observable<WeatherConfig | undefined>{
-        //Retrieve one weatherConfig.
-        return this.httpClient.get<any>(this.SERVER_API_URL + '/api/weathers').pipe(
-          map((value)=>{
-            if(value.result){
-              const config = value.result as WeatherConfig;
-              return config;
-            } else{
-              return undefined;
-            }
-          }),
-          catchError(error =>{
-            return of(undefined);
-          })
-        );
-      //return of(this.weatherConfigModel);
-    }
 
   update(weatherConfig: WeatherConfig) {
     //Send new config to database

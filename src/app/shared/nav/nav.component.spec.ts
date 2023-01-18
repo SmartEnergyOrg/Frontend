@@ -4,26 +4,32 @@ import { NavComponent } from './nav.component';
 import { WeatherService } from './weather.service';
 import {BehaviorSubject, of} from "rxjs";
 import { WeatherModel } from 'src/app/models/weather.model';
+import {OpenUvService} from "./uv.service";
+import {OpenUvData} from "../../models/uv-data.model";
 
 describe('NavComponent', () => {
   let component: NavComponent;
   let fixture: ComponentFixture<NavComponent>;
 
   let dummyWeatherService: jasmine.SpyObj<WeatherService>;
+  let dummyUvService: jasmine.SpyObj<OpenUvService>;
 
   beforeEach(async () => {
-    dummyWeatherService = jasmine.createSpyObj('WeatherService', ['getWeather']);
+    dummyWeatherService = jasmine.createSpyObj('WeatherService', ['getWeather', 'getConfig']);
+    dummyUvService = jasmine.createSpyObj('OpenUvService', ['getData']);
 
     await TestBed.configureTestingModule({
       declarations: [ NavComponent ],
       providers:[
-        {provide: WeatherService, useValue: dummyWeatherService}
+        {provide: WeatherService, useValue: dummyWeatherService },
+        {provide: OpenUvService, useValue: dummyUvService }
       ]
     })
     .compileComponents();
 
     fixture = TestBed.createComponent(NavComponent);
     component = fixture.componentInstance;
+    dummyWeatherService.getConfig.and.returnValue(of());
     fixture.detectChanges();
   });
 
@@ -50,7 +56,10 @@ describe('NavComponent', () => {
       name: 'Auckland'
     };
     const behavior = new BehaviorSubject<WeatherModel | undefined>(weather);
+    const uvResult:OpenUvData = {result: {ozone: 0, safe_exposure_time: 0, uv: 0, uv_max: 0, uv_time: ""}};
+
     dummyWeatherService.getWeather.and.returnValue(behavior)
+    dummyUvService.getData.and.returnValue(Promise.resolve(uvResult));
 
     //Act
     component.ngOnInit();
