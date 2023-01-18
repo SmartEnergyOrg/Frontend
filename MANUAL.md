@@ -1,5 +1,5 @@
 ![120393305](https://user-images.githubusercontent.com/38434237/212727884-4746ef79-9726-4618-8a16-37bde6750281.png)
-# Installatiehandleiding webapplicatie Smart Energy
+# Smart Energy Webapplicatie
 
 ## Ontwikkelaars
 Studenten
@@ -14,6 +14,7 @@ Studenten
 |Versie|Datum|
 |----|----|
 |1.0|16 januari 2023|
+|2.0|18 januari 2023|
 
 ## Inhoudsopgave
 
@@ -29,14 +30,14 @@ Studenten
   <p>In opdracht van het Lectoraat Smart Energy, hebben studenten van de opleiding Informatica een energiemanagementsysteem ontwikkeld waarin gebruikers via een dashboard inzicht krijgen over hun energieverbruik. </p>
 </div>
 
-Voordat de webapplicatie geïnstalleerd wordt, is belangrijk dat de bijbehorende API ook geïnstalleerd moeten worden. 
-Anders faalt het installatiescript voor de webapplicatie.
-
-Om de API te installeren, klik op de link hieronder en volg alle instructies op.
+Voordat de webapplicatie geïnstalleerd wordt, is belangrijk dat de bijbehorende API al geïnstalleerd is. 
+In het geval dat dat niet het geval is, klik op de link hieronder om de API te installeren.
 
 [1. Installatie API](https://github.com/SmartEnergyOrg/Backend/blob/feature-documentation/README.md)
 
 ## Installatie
+
+### Reguliere installatie
 Voor het installeren van de webapplicatie moet allereerst de code gedownload worden van github.
 
 1. Klik op de groene knop **Code** en druk op **Download ZIP** om alle code in een ZIP-map te downloaden.
@@ -66,6 +67,17 @@ http://localhost:4200
 Door naar de bovenstaande url te navigeren, zal de browser een leeg dashboard laten zien.
 De applicatie is succesvol geïnstalleerd.
 ![Dashboard](https://user-images.githubusercontent.com/38434237/212761676-222472e7-3286-42f5-a175-200a6d75eb96.png)
+
+### Handmatig opstarten
+In het geval dat men de applicatie niet via de installatiescript wilt installeren, volg de onderstaande instructies op.
+
+1. Volg zoals bij de **Reguliere installatie** stap 1 tot 4.
+
+2. Voer de commando ```npm install``` uit om alle code die de webapplicatie nodig heeft te installeren.
+
+3. Om de applicatie aan te zetten, voer de commando ```ng serve``` uit.
+
+De webapplicatie draait nu op ```http://localhost:4200```
 
 ## Korte opstart
 De applicatie bied de mogelijkheid om een widget toe te voegen en het weer van een plaats te weergeven.
