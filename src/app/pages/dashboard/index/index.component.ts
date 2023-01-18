@@ -1,22 +1,7 @@
-import {
-  CdkDragDrop,
-  CdkDragEnter,
-  CdkDragMove,
-  moveItemInArray,
-} from '@angular/cdk/drag-drop';
-import { formatDate } from '@angular/common';
-import {
-  Component,
-  ElementRef,
-  LOCALE_ID,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { ChartType } from 'chart.js';
-import { interval, startWith, Subscription } from 'rxjs';
-import { DataPoint } from 'src/app/models/data-point.model';
-import { Graph } from 'src/app/models/graph.model';
+import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Widget } from 'src/app/models/widget.model';
+import { ModelMapper } from 'src/app/shared/mapping/model.mapper';
 import { WidgetService } from 'src/app/shared/widget/widget.service';
 
 @Component({
@@ -29,32 +14,32 @@ export class IndexComponent implements OnInit {
   widgets: Widget[] = [];
 
   constructor(
-    private readonly widgetService: WidgetService
+    private readonly widgetService: WidgetService,
+    private readonly modelMapper: ModelMapper
   ) {}
 
   ngOnInit(): void {
-    // this.widgets.push(
-    //   new Widget(1, "ENERGY Widget", 0, "mdi:icon", [
-    //     new Graph(0, "line", "QUERY", 3600, "#fff", [
-    //       new DataPoint("Gas (kWh)", 200, new Date()),
-    //       new DataPoint("Gas (kWh)", 300, new Date()),
-    //       new DataPoint("Gas (kWh)", 350, new Date()),
-    //       new DataPoint("Gas (kWh)", 230, new Date()),
-    //       new DataPoint("Gas (kWh)", 210, new Date()),
-    //     ])
-    //   ])
-    // )
+    this.widgetService.getAll().subscribe({
+      next: (response) => {
+        response.result.forEach((res: any) => {
+          const widget: Widget = this.modelMapper.mapToWidget(res);
+          this.widgetService.connect(widget);
+          this.widgets.push(widget);
+        });
+      },
+    });
   }
 
-  @ViewChild('dropListContainer') dropListContainer?: ElementRef;
-
-  dropListReceiverElement?: HTMLElement;
-  dragDropInfo?: {
-    dragIndex: number;
-    dropIndex: number;
-  };
-
   // DRAG AND DROP FUNCTIONS
+
+  // @ViewChild('dropListContainer') dropListContainer?: ElementRef;
+
+  // dropListReceiverElement?: HTMLElement;
+  // dragDropInfo?: {
+  //   dragIndex: number;
+  //   dropIndex: number;
+  // };
+
   // dragEntered(event: CdkDragEnter<number>) {
   //   const drag = event.item;
   //   const dropList = event.container;

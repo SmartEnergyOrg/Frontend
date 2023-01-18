@@ -1,0 +1,60 @@
+<div class="container">
+    <form #StoryForm="ngForm">
+        <div class="row pt-4">
+            <h1 class="col-12">Weather settings.</h1>
+        </div>
+        <hr />
+        <div class="Error_message text-center m-1 p-1" *ngIf="error">
+          <h3>{{error}}</h3>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-5 col-sm-6  theme-color-7 p-4 border-radius pt-4 shadow mb-3">
+            <div class="mb-3">
+              <label  class="form-label col-3" for="search">Zoekterm</label>
+              <input  class="col-6 form-control" type="text" [(ngModel)]="searchTerm" name="search_field" placeholder="Voer een woonplaats in" id="search">
+              <button class="btn theme-color-4 text-white col-3 mt-1" (click)="searchPlace()">Zoek</button>
+            </div>
+
+            <div class="mb-3">
+              <label for="name" class="form-label" >Stad</label>
+              <input [(ngModel)]="weatherSettings.name" type="text" name="name_field" id="name" class="form-control" placeholder="" disabled required>
+            </div>
+
+            <div class="mb-3">
+              <label for="country"class="form-label" >Land</label>
+              <input [(ngModel)]="weatherSettings.country" type="text" name="country_field" class="form-control" id="country" placeholder=""disabled required>
+            </div>
+
+            <div class="mb-3">
+              <label for="lat"class="form-label" >Lat</label>
+              <input [(ngModel)]="weatherSettings.lat" type="text" name="lat_field" class="form-control" id="lat" placeholder="" disabled required>
+            </div>
+
+            <div class="mb-3">
+              <label for="lon"class="form-label" >Lat</label>
+              <input [(ngModel)]="weatherSettings.lon" type="text" name="lon_field" class="form-control" id="lon" disabled required>
+            </div>
+            <button  class="btn theme-color-3 text-white" (click)="onSubmit()" [disabled]="!foundCity">Bevestig</button>
+          </div>
+          <div class="col-lg-7 col-sm-6 row justify-content-start p-4 border-radius mb-3">
+
+            <div class="row align-items-start">
+              <!-- Choices -->
+              <div class="col-lg-6 col-sm-12 card mt-1 p-0" *ngFor="let i of cityList">
+                <div class="card-header">
+                  <p class="">{{i.name}}</p>
+                </div>
+                <div class="card-body">
+                  Land: {{i.country}}
+                </div>
+                <button class="btn theme-color-2 text-white " (click)="choseCity(i)">Kies</button>
+              </div>
+              <!---End-->
+            </div>
+
+          </div>
+
+        </div>
+    </form>
+</div>

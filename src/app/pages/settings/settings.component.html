@@ -1,38 +1,38 @@
 <div class="container">
   <div class="row pt-4">
-    <div class="col-12"><h1>Instellingen</h1></div>
+    <div class="col-12">
+      <h1>Instellingen</h1>
+    </div>
   </div>
   <div class="row theme-color-7 p-4 border-radius">
     <div class="col-12">
-      <p>
-        Weer weergeven in navigatiebalk
-
-        <i class="fa-solid fa-temperature-half"></i>
-      </p>
-      <label class="switch">
-        <input type="checkbox" (change)="showWeatherInNavbar()" />
-        <span class="slider round"></span>
-      </label>
-      <p *ngIf="showText">Actie: weer uitschakelen in navbar</p>
-
+      <h3>Widgets Configuratie</h3>
+      <a class="btn theme-color-3 text-white" routerLink="create">Create Widget</a>
+      <a class="btn theme-color-2 text-white ms-1" routerLink="weather">Weather-settings</a>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Aantal Graphs</th>
+            <th>Opties</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let widget of this.widgets">
+            <td>{{ widget.id }}</td>
+            <td>{{ widget.title }}</td>
+            <td>{{ widget.graphs.length }}</td>
+            <td>
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-sm btn-secondary" routerLink="edit/{{ widget.id }}">Edit</button>
+                <button type="button" class="btn btn-sm btn-danger" routerLink="delete/{{ widget.id }}">Delete</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <hr />
-      <div>
-        <p>Daltarief aan/uit</p>
-        <label class="switch">
-          <input type="checkbox" (change)="disableOffPeakRate()" />
-          <span class="slider round"></span>
-        </label>
-      </div>
-
-      <div class="form-group">
-        <label for="peakrate">Piektarief</label>
-        <input type="number" name="peakrate" class="form-control" />
-      </div>
-
-      <div class="form-group" *ngIf="showOffPeakRate">
-        <label for="offpeakrate">Daltarief</label>
-        <input type="number" name="offpeakrate" class="form-control" />
-      </div>
     </div>
   </div>
 </div>

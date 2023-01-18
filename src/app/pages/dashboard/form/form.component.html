@@ -20,67 +20,110 @@
           <input type="text" name="title" #title="ngModel" class="form-control" [(ngModel)]="widget.title" />
         </div>
         <div class="mb-3">
-          <label for="range" class="form-label">Range</label>
-          <select [(ngModel)]="widget.range" name="range" #range="ngModel" class="form-control">
-            <option value="60">1 minute</option>
-            <option value="300">5 minutes</option>
-            <option value="900">15 minutes</option>
-            <option value="3600">1 hour</option>
-            <option value="10800">3 hours</option>
-            <option value="21600">6 hours</option>
-            <option value="43200">12 hours</option>
-            <option value="86400">1 day</option>
-            <option value="172800">2 days</option>
-            <option value="604800">7 days</option>
-            <option value="2592000">30 days</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="frequence" class="form-label">Update frequency</label>
-          <select [(ngModel)]="widget.frequence" name="frequence" #frequence="ngModel" class="form-control">
-            <option value="60">1 minute</option>
-            <option value="300">5 minutes</option>
-            <option value="900">15 minutes</option>
-            <option value="3600">1 hour</option>
-            <option value="10800">3 hours</option>
-            <option value="21600">6 hours</option>
-            <option value="43200">12 hours</option>
-            <option value="86400">1 day</option>
-          </select>
+          <label for="icon" class="form-label">Icon</label><br>
+          <div class="form-check form-check-inline mt-3 mb-3">
+            <input class="form-check-input" type="radio" name="icon" #icon="ngModel" [(ngModel)]="widget.icon"
+              value="fas fa-2xl fa-bolt-lightning">
+            <label class="form-check-label">
+              <i class="fas fa-2xl fa-bolt-lightning"></i>
+            </label>
+          </div>
+          <div class="form-check form-check-inline mb-3">
+            <input class="form-check-input" type="radio" name="icon" #icon="ngModel" [(ngModel)]="widget.icon"
+              value="far fa-2xl fa-lightbulb">
+            <label class="form-check-label">
+              <i class="far fa-2xl fa-lightbulb"></i>
+            </label>
+          </div>
+          <div class="form-check form-check-inline mb-3">
+            <input class="form-check-input" type="radio" name="icon" #icon="ngModel" [(ngModel)]="widget.icon"
+              value="fas fa-2xl fa-solar-panel">
+            <label class="form-check-label">
+              <i class="fas fa-2xl fa-solar-panel"></i>
+            </label>
+          </div>
+          <div class="form-check form-check-inline mb-3">
+            <input class="form-check-input" type="radio" name="icon" #icon="ngModel" [(ngModel)]="widget.icon"
+              value="fas fa-2xl fa-wind">
+            <label class="form-check-label">
+              <i class="fas fa-2xl fa-wind"></i>
+            </label>
+          </div>
+          <div class="form-check form-check-inline mb-3">
+            <input class="form-check-input" type="radio" name="icon" #icon="ngModel" [(ngModel)]="widget.icon"
+              value="fas fa-2xl fa-plug">
+            <label class="form-check-label">
+              <i class="fas fa-2xl fa-plug"></i>
+            </label>
+          </div>
+          <div class="form-check form-check-inline mb-3">
+            <input class="form-check-input" type="radio" name="icon" #icon="ngModel" [(ngModel)]="widget.icon"
+              value="fas fa-2xl fa-industry">
+            <label class="form-check-label">
+              <i class="fas fa-2xl fa-industry"></i>
+            </label>
+          </div>
+          <div class="form-check form-check-inline mb-3">
+            <input class="form-check-input" type="radio" name="icon" #icon="ngModel" [(ngModel)]="widget.icon"
+              value="fas fa-2xl fa-charging-station">
+            <label class="form-check-label">
+              <i class="fas fa-2xl fa-charging-station"></i>
+            </label>
+          </div>
+          <div class="form-check form-check-inline mb-3">
+            <input class="form-check-input" type="radio" name="icon" #icon="ngModel" [(ngModel)]="widget.icon"
+              value="fas fa-2xl fa-car-battery fa-solid">
+            <label class="form-check-label">
+              <i class="fas fa-2xl fa-car-battery fa-solid"></i>
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="icon" #icon="ngModel" [(ngModel)]="widget.icon"
+              value="fas fa-2xl fa-battery-three-quarters fa-solid">
+            <label class="form-check-label">
+              <i class="fas fa-2xl fa-battery-three-quarters fa-solid"></i>
+            </label>
+          </div>
         </div>
         <h3>Graphs</h3>
         <hr />
-        <div *ngFor="let graph of widget.graphs">
+        <div *ngFor="let graph of widget.graphs; let i = index">
           <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" name="name" #Name="ngModel" class="form-control" [(ngModel)]="graph.Name" />
+            <label for="queries" class="form-label">Query</label>
+            <textarea type="text" name="widget.graphs[{{i}}].query" #query="ngModel" class="form-control"
+              [(ngModel)]="widget.graphs[i].query"></textarea>
           </div>
+
+          <div class="mb-3">
+            <label for="interval" class="form-label">Interval (in seconds)</label>
+            <input type="number" min=5 class="form-control form-control" [(ngModel)]="widget.graphs[i].interval"
+              name="widgt.graphs[{{i}}]" #interval="ngModel">
+          </div>
+
           <div class="mb-3">
             <label for="chartType" class="form-label">Type</label>
-            <select [(ngModel)]="graph.Type" name="chartType" #Type="ngModel" class="form-control">
+            <select [(ngModel)]="widget.graphs[i].type" name="widget.graphs[{{i}}].type" #Type="ngModel"
+              class="form-select">
               <option value="bar">Bar Chart</option>
               <option value="line">Line Chart</option>
-              <option value="doughnut">Doughtnut Chart</option>
-              <option value="pie">Pie Chart</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="measurement" class="form-label">Measurement</label>
-            <select [(ngModel)]="graph.Measurement" name="measurement" #Measurement="ngModel" class="form-control">
-              <option value="solar">Solar</option>
-              <option value="wind">Wind</option>
+              <option value="SingleStat">Single Statistic</option>
             </select>
           </div>
           <div class="mb-3">
             <label for="color" class="form-label">Color</label>
-            <input type="color" class="form-control form-control-color" value="#563d7c" [(ngModel)]="graph.Color"
-              name="color" #Color="ngModel">
+            <input type="color" class="form-control form-control-color" value="#563d7c"
+              [(ngModel)]="widget.graphs[i].color" name="widget.graphs[{{i}}].color" #Color="ngModel">
           </div>
           <hr>
         </div>
         <div class="col-12">
-          <button type="button" class="btn theme-color-3 float-end text-white" (click)="addGraphToForm()">Add
-            graph</button>
+          <p style="color:red">{{this.lastError}}</p>
+        </div>
+        <div class="col-12">
+          <button type="button" class="btn btn-secondary float-end" (click)="addQueryToForm()">Add
+            Query</button>
+          <button type="button" class="btn btn-danger float-end" (click)="deleteQueryFromForm()">Delete
+            Query</button>
         </div>
         <div class="col-12">
           <button type="submit" class="btn theme-color-3 text-white" [disabled]="!widget$EditForm.valid">

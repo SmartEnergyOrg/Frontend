@@ -1,7 +1,31 @@
-<div class="card p-2 mt-md-3 border-0 rounded">
-  <div>
-    <img src="https://cdn-icons-png.flaticon.com/512/1245/1245596.png" style="width:30px;height:auto;" class="d-inline">
-    <h3 class="d-inline ms-2" style="vertical-align: middle;">{{ widget?.title }}</h3>
+<div class="card p-2 mt-md-3 border-0 rounded h-100">
+  <div class="mt-2 ms-1">
+    <i class="{{ widget.icon }} fa-2xl"></i>
+    <h3 class="d-inline ms-2" style="vertical-align: middle;">{{ widget.title }}</h3>
   </div>
-  <canvas id="{{ chartId }}"></canvas>
+
+  <!--If the widget is a singlestat, a widget with the last datapoint will show.-->
+  <div *ngIf="isSingleStat" class="row h-100 justify-content-center p-3">
+    <div *ngFor="let graph of widget.graphs" class="col-sm-6 text-center">
+      <div class="d-flex align-items-center justify-content-center h-100">
+        <div>
+          <h5 [style.color]=graph.color>{{ graph.last.getValue()?.value }} {{ graph.last.getValue()?.unit }}</h5>
+          <p class="text-secondary fw-bold">{{ graph.last.getValue()?.measurement }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--If the widget is not a singlestat, a regular graph will show.-->
+  <div *ngIf="!isSingleStat">
+    <div id="chart-container" *ngIf="!dataReceived">No data Available</div>
+    <canvas id="{{ chartId }}"></canvas>
+  </div>
+
+  <!-- Errors get handled here -->
+  <div class="alert alert-danger" *ngFor="let error of widget.errors">
+    <b>{{error.subject}}</b>
+    <p>{{error.message}}</p>
+  </div>
+
 </div>

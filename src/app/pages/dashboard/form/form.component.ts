@@ -1,9 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { of, Subscription, switchMap, tap } from 'rxjs';
+import { IGraph } from 'src/app/interfaces/graph.interface';
+import { IWidget } from 'src/app/interfaces/widget.interface';
 import { Graph } from 'src/app/models/graph.model';
 import { Widget } from 'src/app/models/widget.model';
 import { WidgetService } from 'src/app/shared/widget/widget.service';
+import { DataPoint } from '../../../models/data-point.model';
+import { D } from '@angular/cdk/keycodes';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { ModelMapper } from 'src/app/shared/mapping/model.mapper';
 
 @Component({
   selector: 'app-form',
@@ -14,24 +21,15 @@ export class FormComponent implements OnInit {
   componentExists = false;
   developerEnabled = false;
 
-  widget: Widget = {
-    id: undefined,
-    title: undefined,
-    range: undefined,
-    dashboardId: undefined,
-    frequence: undefined,
-    isActive: undefined,
-    position: undefined,
-    lastUpdated: undefined,
-    graphs: [{
-      "Name": undefined,
-      "Type": undefined,
-      "Measurement": undefined,
-      "Color": undefined
-    }],
-  };
+  private widgetMapper: ModelMapper = new ModelMapper();
+
+  widget = new Widget(0, '', 0, 'fa-solid fa-bolt-lightning', []);
+
+  graph!: IGraph;
 
   subscription: Subscription | undefined;
+
+  lastError: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -50,56 +48,54 @@ export class FormComponent implements OnInit {
             return of(this.widget);
           } else {
             console.log(
-              `${FormComponent.name} ngOnInit id = ${!params.get('id')}`
+              `${FormComponent.name} ngOnInit id = ${params.get('id')}`
             );
             this.componentExists = true;
-            return this.widgetService.getWidgetById(Number(params.get('id')));
+            return this.widgetService.getById(Number(params.get('id')));
           }
         }),
         tap(console.log)
       )
-      .subscribe((widget) => (this.widget = widget));
+      .subscribe((response) => {
+        this.widget = this.widgetMapper.mapToWidget(response.result);
+      });
   }
 
-  // deze functie wordt aangeroepen als het form wordt verzonden met de ngsubmit
   onSubmit() {
     console.log(`${FormComponent.name} onSubmit() called`);
-    console.log(`${FormComponent.name} onSubmit() componentExists ${this.componentExists}`);
+    console.log(
+      `${FormComponent.name} onSubmit() componentExists ${this.componentExists}`
+    );
 
     if (this.componentExists) {
-      this.widgetService.updateWidget(this.widget).subscribe(() => {
-        this.router.navigateByUrl('/dashboard');
+      this.widgetService.update(this.widget).subscribe({
+        next: (res) => {
+          this.router.navigate(['/']);
+          console.log(res);
+        },
+        error: (err) => {
+          console.log(err);
+          this.lastError = `${err.error.message}: ${err.error.result}`;
+        },
       });
     } else {
       // Create new entry
-      console.log(this.widget.range)
-      console.log(this.widget.frequence)
-      let newWidget = {
-        Widget: {
-          Title: this.widget.title,
-          DashboardId: 0,
-          Range: Number(this.widget.range),
-          Frequence: Number(this.widget.frequence),
-          IsActive: 1,
-          Position: 0,
-        },
-        Graphs: this.widget.graphs
-      }
-      this.widgetService.addWidget(newWidget).subscribe({
+      this.widgetService.create(this.widget).subscribe({
         next: (res) => {
-          console.log(res)
+          this.router.navigate(['/']);
+          console.log(res);
         },
         error: (err) => {
-          console.log(err)
-        }
-      })
-
-      // this.router.navigate(['../dashboard']);
+          console.log(err);
+          this.lastError = `${err.error.message}: ${err.error.result}`;
+        },
+      });
     }
   }
 
-  //show json in browser
+  //Show json in browser
   enableDeveloper() {
+    console.log(this.widget)
     this.developerEnabled = !this.developerEnabled;
     if (this.developerEnabled) {
       console.log(`${FormComponent.name} developer enabled`);
@@ -108,14 +104,13 @@ export class FormComponent implements OnInit {
     }
   }
 
-  addGraphToForm() {
-    let graph: Graph = {
-      Name: undefined,
-      Type: undefined,
-      Measurement: undefined,
-      Color: undefined
-    }
-    this.widget.graphs?.push(graph)
-    console.log(this.widget)
+  deleteQueryFromForm() {
+    this.widget.graphs?.pop();
+  }
+
+  addQueryToForm() {
+    this.widget.graphs?.push(new Graph(null, "bar", "", 5, "#c81030"));
+
+    console.log('New Query has been added');
   }
 }

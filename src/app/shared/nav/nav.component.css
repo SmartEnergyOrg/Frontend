@@ -1,3 +1,7 @@
-.navbar-logo {
-    height: 40px;
+.weather-background{
+    background-color: rgb(182, 182, 182);
+    color: black;
+    font-size: medium;
+    border-radius: 1pc;
+    text-align: center;
 }
