@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
-import { DashboardRoutingModule } from './pages/dashboard/dashboard-routing.module';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { DeleteFormComponent } from './pages/settings/delete-form/delete-form.component';
@@ -13,7 +12,7 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    component: DashboardIndexComponent
+    component: DashboardIndexComponent,
   },
   {
     path: 'settings/edit/:id',
@@ -29,16 +28,15 @@ const routes: Routes = [
   },
   {
     path: 'settings/delete/:id',
-    component: DeleteFormComponent
+    component: DeleteFormComponent,
   },
   {
     path: 'settings/weather',
-    component: WeatherSettingsComponent
+    component: WeatherSettingsComponent,
   },
 
   //Wild Card Route for 404 request
-  { path: '**', pathMatch: 'full',
-      component: PageNotFoundComponent },
+  { path: '**', pathMatch: 'full', component: PageNotFoundComponent },
 ];
 
 @NgModule({
