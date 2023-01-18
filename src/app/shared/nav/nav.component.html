@@ -1,23 +1,26 @@
 <!-- Navbar -->
 <nav class="navbar navbar-light bg-light shadow rounded-bottom">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/dashboard">
+    <a class="navbar-brand" routerLink="/">
       <img src="../../../assets/SmartEnergyLogo.png" alt="logo" height="80" />
-      <img
-        class="px-3"
-        src="../../../assets/AvansLogo.jpg"
-        alt="..."
-        height="60"
-      />
+      <img class="px-3" src="../../../assets/AvansLogo.jpg" alt="..." height="60" />
     </a>
+
     <div class="d-flex">
       <div *ngIf="ObservedWeather$ | async" class="weather-background pe-1">
         <p class="text-reset">
-          <img id="wicon" src="http://openweathermap.org/img/wn/{{ObservedWeather$.value?.weather?.[0]?.icon}}.png" alt="WeatherIcon">
+          <img id="wicon" src="http://openweathermap.org/img/wn/{{ObservedWeather$.value?.weather?.[0]?.icon}}.png"
+            alt="WeatherIcon">
           {{ ObservedWeather$.value?.main?.temp || 0 }} °C
-          {{ObservedWeather$.value?.name}}<br/>
+          {{ObservedWeather$.value?.name}}<br />
           Wind: {{ObservedWeather$.value?.wind?.speed}} m/s
         </p>
+        <div *ngIf="uvData">
+          UV index: {{ uvData.result.uv }}
+        </div>
+        <div *ngIf="!uvData">
+          No UV data available
+        </div>
       </div>
     </div>
   </div>

@@ -16,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { WeatherSettingsComponent } from './pages/settings/weather-settings/weather-settings.component';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { OpenUvService } from './shared/nav/uv.service';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,11 @@ import { MatInputModule } from '@angular/material/input';
     FormsModule,
     MatInputModule,
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'nl_NL' }, ModelMapper],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'nl_NL' },
+    ModelMapper,
+    OpenUvService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
