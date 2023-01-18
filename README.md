@@ -19,7 +19,7 @@ Hierin worden betrokken partijen op een rij gezet en geven alle personen aan die
 
 ### Ontwikkelaars
 Studenten
-|Xin|Silvester|Marcello|Jens|Mick|Joost|
+|Xin|Sylvester|Marcello|Jens|Mick|Joost|
 |----|----|----|----|----|----|
 
 ### Projectbegeleiders
