@@ -35,7 +35,7 @@ export class FormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private widgetService: WidgetService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.subscription = this.route.paramMap
@@ -70,7 +70,7 @@ export class FormComponent implements OnInit {
     if (this.componentExists) {
       this.widgetService.update(this.widget).subscribe({
         next: (res) => {
-          this.router.navigateByUrl('/dashboard');
+          this.router.navigate(['/']);
           console.log(res);
         },
         error: (err) => {
@@ -82,7 +82,7 @@ export class FormComponent implements OnInit {
       // Create new entry
       this.widgetService.create(this.widget).subscribe({
         next: (res) => {
-          this.router.navigateByUrl('/dashboard');
+          this.router.navigate(['/']);
           console.log(res);
         },
         error: (err) => {
@@ -90,8 +90,6 @@ export class FormComponent implements OnInit {
           this.lastError = `${err.error.message}: ${err.error.result}`;
         },
       });
-
-      // this.router.navigate(['../dashboard']);
     }
   }
 
@@ -106,8 +104,12 @@ export class FormComponent implements OnInit {
     }
   }
 
+  deleteQueryFromForm() {
+    this.widget.graphs?.pop();
+  }
+
   addQueryToForm() {
-    this.widget.graphs?.push(new Graph(0, "bar", "", 5, "#c81030"));
+    this.widget.graphs?.push(new Graph(null, "bar", "", 5, "#c81030"));
 
     console.log('New Query has been added');
   }

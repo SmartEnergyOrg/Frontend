@@ -18,6 +18,7 @@
 
   <!--If the widget is not a singlestat, a regular graph will show.-->
   <div *ngIf="!isSingleStat">
+    <div id="chart-container" *ngIf="!dataReceived">No data Available</div>
     <canvas id="{{ chartId }}"></canvas>
   </div>
 

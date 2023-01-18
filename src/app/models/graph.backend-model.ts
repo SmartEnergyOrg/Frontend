@@ -1,12 +1,12 @@
 export class GraphBackend {
-  GraphId: number;
+  GraphId: number | null;
   Type: string;
   Query: string;
   Interval: number;
   Color: string;
 
   constructor(
-    GraphId: number,
+    GraphId: number | null,
     Type: string,
     Query: string,
     Interval: number,

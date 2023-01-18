@@ -18,6 +18,7 @@ import { io } from 'socket.io-client';
 import { ModelMapper } from '../mapping/model.mapper';
 import { DataPoint } from 'src/app/models/data-point.model';
 import { IWidget } from 'src/app/interfaces/widget.interface';
+import { elements } from 'chart.js';
 
 @Injectable({
   providedIn: 'root',

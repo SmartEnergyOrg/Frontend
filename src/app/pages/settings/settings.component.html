@@ -5,10 +5,10 @@
   <div class="row theme-color-7 p-4 border-radius">
     <div class="col-12">
       <h3>Widgets Configuratie</h3>
-      <a class="btn theme-color-3 text-white" routerLink="/dashboard/create"
+      <a class="btn theme-color-3 text-white" routerLink="create"
         >Create Widget</a
       >
-      <a class="btn theme-color-2 text-white ms-1" routerLink="weather-settings"
+      <a class="btn theme-color-2 text-white ms-1" routerLink="weather"
         >Weather-settings</a
       >
       <table class="table">
@@ -29,8 +29,8 @@
             <td>{{ widget.graphs.length }}</td>
             <td>
               <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-sm btn-secondary" routerLink="/dashboard/{{ widget.id }}/edit">Edit</button>
-                <button type="button" class="btn btn-sm btn-danger" routerLink="/settings/delete-form/{{ widget.id }}">Delete</button>
+                <button type="button" class="btn btn-sm btn-secondary" routerLink="{{ widget.id }}/edit">Edit</button>
+                <button type="button" class="btn btn-sm btn-danger" routerLink="delete/{{ widget.id }}">Delete</button>
               </div>
             </td>
           </tr>
