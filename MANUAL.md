@@ -26,7 +26,7 @@ Studenten
 
 ## Introductie
 <div id="#Introduction">
-  <p>In opdracht van het Lectoraat Smart Energie, hebben studenten van de opleiding Informatica een energiemanagementsysteem ontwikkeld waarin gebruikers via een dashboard inzicht krijgen over hun energieverbruik. </p>
+  <p>In opdracht van het Lectoraat Smart Energy, hebben studenten van de opleiding Informatica een energiemanagementsysteem ontwikkeld waarin gebruikers via een dashboard inzicht krijgen over hun energieverbruik. </p>
 </div>
 
 Voordat de webapplicatie geïnstalleerd wordt, is belangrijk dat de bijbehorende API ook geïnstalleerd moeten worden. 
@@ -63,7 +63,7 @@ Als het installatiescript succesvol is uitgevoerd, dan is de webapplicatie via d
 http://localhost:4200
 ```
 
-Door naar de bovenstaande url te navigeren, zal de browser een leeg dashboard krijgen.
+Door naar de bovenstaande url te navigeren, zal de browser een leeg dashboard laten zien.
 De applicatie is succesvol geïnstalleerd.
 ![Dashboard](https://user-images.githubusercontent.com/38434237/212761676-222472e7-3286-42f5-a175-200a6d75eb96.png)
 
