@@ -6,7 +6,7 @@ import {
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting,
 } from '@angular/platform-browser-dynamic/testing';
-import './test.module';
+import '../src/app/test.module';
 
 declare const require: {
   context(
