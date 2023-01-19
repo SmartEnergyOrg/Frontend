@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   SERVER_API_URL: 'http://localhost:3333',
+  SOCKET_IO_URL: 'ws://localhost:9400'
 };
 
 /*

@@ -25,7 +25,7 @@ import { elements } from 'chart.js';
 })
 export class WidgetService {
   private readonly SERVER_API_URL = environment.SERVER_API_URL;
-  private readonly SOCKET = io('ws://localhost:9400');
+  private readonly SOCKET = io(environment.SOCKET_IO_URL);
 
   constructor(
     private readonly httpClient: HttpClient,
@@ -102,8 +102,6 @@ export class WidgetService {
   // It will return a observable
   // As parameter, will the method receive a object with the widget configuration
   // The receiveSocketPayload method will handle the receive of the payload.
-
-  // TODO Widget object is subject to change.
   private subscribe(widget: Widget) {
     console.log(`Subscribed to widget with ID ${widget.id}`);
 
