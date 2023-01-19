@@ -77,7 +77,7 @@ describe('WeatherSettingsComponent', () => {
     //Assert
 
     expect(component.cityList.length).toEqual(0);
-    expect(component.error).toEqual("Geen stad gevonden. Voer een bestaande woonplaats in");
+    expect(component.error).toEqual("No city found. Fill in an existing city");
   });
 
   it('City should have been succesfully been stored', () => {

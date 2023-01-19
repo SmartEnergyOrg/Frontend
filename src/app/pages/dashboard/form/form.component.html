@@ -4,10 +4,6 @@
       <h1 *ngIf="!componentExists">Create widget</h1>
       <h1 *ngIf="componentExists">Edit widget</h1>
     </div>
-    <div class="col-1">
-      <label for="enableDeveloperOptions">Developer</label>
-      <input type="checkbox" name="enableDeveloperOptions" (change)="enableDeveloper()" />
-    </div>
   </div>
   <hr />
   <div class="row theme-color-7 p-4 border-radius">
@@ -120,7 +116,7 @@
           <p style="color:red">{{this.lastError}}</p>
         </div>
         <div class="col-12">
-          <button type="button" class="btn btn-secondary float-end" (click)="addQueryToForm()">Add
+          <button type="button" class="btn btn-secondary float-end ms-2" (click)="addQueryToForm()">Add
             Query</button>
           <button type="button" class="btn btn-danger float-end" (click)="deleteQueryFromForm()">Delete
             Query</button>
@@ -133,13 +129,7 @@
       </form>
     </div>
     <div class="col-4">
-      <div *ngIf="!developerEnabled">
-        <img src="assets/images/stekker.png" alt="stekker" />
-      </div>
-      <div *ngIf="developerEnabled">
-        <pre>{{ widget | json }}
-        </pre>
-      </div>
+      <img src="assets/images/stekker.png" alt="stekker" />
     </div>
   </div>
 </div>

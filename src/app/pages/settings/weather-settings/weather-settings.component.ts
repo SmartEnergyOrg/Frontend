@@ -65,7 +65,7 @@ export class WeatherSettingsComponent implements OnInit, OnDestroy {
         this.foundCity = true;
         this.cityList = place;
       }else{
-        this.error = "Geen stad gevonden. Voer een bestaande woonplaats in";
+        this.error = "No city found. Fill in an existing city";
         this.cityList = [];
       }
     })
@@ -79,7 +79,7 @@ export class WeatherSettingsComponent implements OnInit, OnDestroy {
          this.weatherService.assignToConfig(this.weatherSettings);
          this.router.navigate(['..']);
        } else{
-         this.error = "Een is niet opgeslagen. Probeer het later nog eens.";
+         this.error = "Saving failed. Try again later.";
        }
 
     })
