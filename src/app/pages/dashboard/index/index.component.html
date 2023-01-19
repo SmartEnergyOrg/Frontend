@@ -1,23 +1,7 @@
-<!--
-DRAG AND DROP HTML
-
-<div #dropListContainer class="container-fluid" cdkDropListGroup>
-  <div class="row m-3">
-    <div class="col-6" *ngFor="let widget of widgets; let i = index">
-      <div cdkDropList [cdkDropListData]="i">
-        <div cdkDrag [cdkDragData]="i" (cdkDragEntered)="dragEntered($event)" (cdkDragMoved)="dragMoved($event)"
-          (cdkDragDropped)="dragDropped($event)">
-          <app-widget [widget]="widget"></app-widget>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
 <div class="container-fluid">
   <div class="row m-3 gy-3">
     <div class="col-12 col-sm-6 col-lg-4" *ngFor="let widget of widgets">
-        <app-widget [widget]="widget"></app-widget>
+      <app-widget [widget]="widget"></app-widget>
     </div>
   </div>
 </div>
