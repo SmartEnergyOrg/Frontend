@@ -9,7 +9,7 @@
     <div *ngFor="let graph of widget.graphs" class="col-sm-6 text-center">
       <div class="d-flex align-items-center justify-content-center h-100">
         <div>
-          <h5 [style.color]=graph.color>{{ graph.last.getValue()?.value }} {{ graph.last.getValue()?.unit }}</h5>
+          <h5 [style.color]=graph.color>{{ graph.last.getValue()?.value?.toFixed(2) }} {{ graph.last.getValue()?.unit }}</h5>
           <p class="text-secondary fw-bold">{{ graph.last.getValue()?.measurement }}</p>
         </div>
       </div>

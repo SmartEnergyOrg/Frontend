@@ -11,7 +11,7 @@ export class OpenUvService {
 
   async getData(lat: number, lon: number): Promise<OpenUvData | undefined> {
     const url = `https://api.openuv.io/api/v1/uv?lat=${lat}&lng=${lon}`;
-    const apiKey = 'openuv-42ytld0q6ty4-io';
+    const apiKey = 'openuv-cuyafptld2ww8n0-io';
     const headers = {
       'x-access-token': apiKey,
     };

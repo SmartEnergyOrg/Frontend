@@ -121,7 +121,7 @@ export class WidgetComponent implements OnInit {
                         milliseconds: 'mm:ss:fff',
                         second: 'HH:mm:ss',
                         minute: 'HH:mm',
-                        hour: 'HH:mm  DD MMM',
+                        hour: 'HH:mm DD MMM',
                         day: 'DD MMM YYYY',
                         week: 'DD MMM YYYY',
                         month: 'MMM YYYY',
@@ -143,8 +143,6 @@ export class WidgetComponent implements OnInit {
                     },
                   },
                 };
-
-                console.log('unit', datasets[0].unit);
 
                 for (let i = 1; i < numDatasets; i++) {
                   scales[`y${i}`] = {
@@ -173,7 +171,6 @@ export class WidgetComponent implements OnInit {
                   data: {
                     datasets: datasets,
                   },
-
                   options: {
                     locale: 'nl-NL',
                     plugins: {
