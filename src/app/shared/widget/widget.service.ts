@@ -151,28 +151,4 @@ export class WidgetService {
       });
     });
   }
-
-  // Handles connection to socket.
-  // Gives a console.log if connection has succeeded or failed
-  // connectToSocket() {
-  //   this.SOCKET.on('connect', () => {
-  //     console.log(this.SOCKET.connected);
-
-  //     if (this.SOCKET.connected) {
-  //       console.log("Socket is connected");
-  //       //Maybe automatic emit to subscribeGetGraphs
-
-  //     } else {
-  //       console.error("Socket connection has failed");
-  //     }
-  //   })
-  // }
-
-  // REPLACED BY SOCKET
-  // getDataOfWidget(widget: Widget) {
-  //   console.log(`${WidgetService.name} getDataOfWidget called`);
-  //   console.log(widget);
-
-  //   return this.httpClient.get<any>(`${this.SERVER_API_URL}/api/widgets/poll/${widget.id}?range=1h&steps=1m`);
-  // }
 }
